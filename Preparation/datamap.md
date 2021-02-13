@@ -1,4 +1,4 @@
-last update:
+last update: 13.2.2021
 
 #SK#
 
@@ -48,6 +48,8 @@ Trieda - zamestnanec
   - int kolkoHdinUcivJazykuCZ
   - int kolkoHdinUcivJazykuEN
   
+  //kazdy musi mat este list Stitkov...
+  
 3) Pocet studentov
 
 Trieda - Studijna skupina
@@ -64,6 +66,8 @@ Trieda - Studijna skupina
 *Poznamky
   
   //enumy na frontende by boli ideale take, ze si uzivatel nieco len zaklikne - priklad: LS vs ZS
+  
+4)   
       
 #EN#
 
