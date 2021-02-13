@@ -52,8 +52,4 @@
   
   //enumy na frontende by boli ideale take, ze si uzivatel nieco len zaklikne - priklad: LS vs ZS
   
-4)   
-      
-#EN#
-
-//comming soon
+# 4.
