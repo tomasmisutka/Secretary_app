@@ -4,60 +4,51 @@ last update: 13.2.2021
 
 # 1. Subject
   
-  - String skratka
-  - String nazov
-  - Zamestnanec vyucujuci
-  - int pocetHodinPrednasok
-  - int pocetHodinCviceni
-  - int pocetHodinSeminarov
-  - int pocetTyzdnovSemestra
-  - Enum vyucovaciJazyk //CZ,EN
-  - Enum typStudia //Prezencne, kombinovane
-  - int rocnik
-  - Enum semester //LS, ZS
-  - Enum sposobUkoncenia predmetu //zapocet, klasif. zapocet, skuska
-  - int predvolenaVelkostSkupiny
+  - String abbreviation
+  - String name
+  - Employee teacher
+  - int lectureCount
+  - int practiseCount
+  - int seminarCount
+  - int weeksCount
+  - Enum LANGUAGE //CZ,EN
+  - Enum TYPEOFSTUDY //Prezencne, kombinovane
+  - int YEAR
+  - Enum TERM //LS, ZS
+  - Enum CLASSIFICATION //zapocet, klasif. zapocet, skuska
+  - int defaultGroupSize
   
-*Poznamky*
-
+*NOTES*
     //predmety budeme davat do databazy SQL (moj pripad), a budu sa tam aspon zatial pridavat rucne, 
     //front-end: formular s pridanim predmetu...
     //tajomnik ma pod sebou zamestancov
     //bude pracovny stitok priradeny tajomnikom, a priradi tam zamestnanca k danemu predmetu
     
-2) Zemestnanci   
-    
-Trieda - zamestnanec
+# 2. Employees   
 
-*atributy*
-
-  - String meno
-  - String priezvisko
-  - String telCislo
-  - String pracCislo
+  - String name
+  - String surname
+  - String phoneNumber
+  - String workNumber
   - String email
-  - String pracovnyEmail
-  - Boolean jeDoktorant
-  - double druhPracovnehoUvazku // 0 - dohoda, 1 - full time, medzi tym uvazok na x %
-  - int kolkoHdinUcivJazykuCZ
-  - int kolkoHdinUcivJazykuEN
+  - String workMail
+  - Boolean isDoctorant
+  - double workLoad // 0 - dohoda, 1 - full time, medzi tym uvazok na x %
+  - int techedHoursCZ
+  - int techedHoursEN
   
-  //kazdy musi mat este list Stitkov...
+// everyone need own tag
   
-3) Pocet studentov
+# 3. Study group
 
-Trieda - Studijna skupina
-
-*atributy*
-
-  - String skratka
-  - String nazov
-  - Enum typStudia
-  - int rocnik
-  - Enum semester
-  - int pocetStudentov
+  - String abbreviation
+  - String name
+  - Enum TYPEOFSTUDY
+  - int year
+  - Enum TERM
+  - int studentsCount
   
-*Poznamky
+*NOTES
   
   //enumy na frontende by boli ideale take, ze si uzivatel nieco len zaklikne - priklad: LS vs ZS
   
