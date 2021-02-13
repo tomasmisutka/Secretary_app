@@ -1,12 +1,10 @@
 last update: 13.2.2021
 
-#SK
+# SK - MODELY
 
-MODELY:
-
-#1) Studijne plany
+## 1) Studijne plany
   
-  ##Trieda - Predmet
+  Trieda - Predmet
   
   - String skratka
   - String nazov
