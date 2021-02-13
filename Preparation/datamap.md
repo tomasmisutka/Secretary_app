@@ -2,7 +2,7 @@ last update: 13.2.2021
 
 # **** Models *****
 
-## 1. Subject
+# 1. Subject
   
   - String skratka
   - String nazov
