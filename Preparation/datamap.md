@@ -1,10 +1,8 @@
 last update: 13.2.2021
 
-# Models
+# **** Models *****
 
-## 1) Study plans
-
-# Class Subject
+## 1. Subject
   
   - String skratka
   - String nazov
