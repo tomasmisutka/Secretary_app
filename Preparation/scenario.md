@@ -8,6 +8,7 @@ Legenda - Caption
 
 
 #SK#
+
 ***** 1 *****
 
 // - Cielom tejto aplikacie je vytvorit aplikaciu pre tajomnika, ktory pri spusteni aplikacie nepotrebuje ziadnu autentifikaciu (velmi dolezite), teda staci, ked si aplikaciu naistaluje len do svojho PC
