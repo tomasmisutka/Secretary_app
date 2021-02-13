@@ -1,16 +1,70 @@
+last update:
+
+#SK#
+
 MODELY:
 
 1) Studijne plany
   
   Trieda - Predmet
-    atributy: - predmet, nazov, vyucujuci (zatial nie)*, pocet hodin prednasok, pocet hodin seminarov, pocet hodin cviceni, pocet tyzdnov, v ktorych sa prednasa, a jazyk v ktorom sa prednasa (CZ/EN), studium - (Prezencne, kombinovane), rocnik, semester (LS,ZS), sposob ukoncenia predmetu (zapocet, klasifikovany zapocet, skuska) este cislo defaultneho velkosti skupiny
-    
+  
+  *atributy*
+  
+  - String skratka
+  - String nazov
+  - Zamestnanec vyucujuci
+  - int pocetHodinPrednasok
+  - int pocetHodinCviceni
+  - int pocetHodinSeminarov
+  - int pocetTyzdnovSemestra
+  - Enum vyucovaciJazyk //CZ,EN
+  - Enum typStudia //Prezencne, kombinovane
+  - int rocnik
+  - Enum semester //LS, ZS
+  - Enum sposobUkoncenia predmetu //zapocet, klasif. zapocet, skuska
+  - int predvolenaVelkostSkupiny
+  
+*Poznamky*
+
     //predmety budeme davat do databazy SQL (moj pripad), a budu sa tam aspon zatial pridavat rucne, 
     //front-end: formular s pridanim predmetu...
     //tajomnik ma pod sebou zamestancov
-    //*tu bude pracovny stitok priradeny tajomnikom, a priradi tam samotneho zamestnanca
+    //bude pracovny stitok priradeny tajomnikom, a priradi tam zamestnanca k danemu predmetu
     
-2) Zemestnanec    
+2) Zemestnanci   
     
-    Trieda - zamestnanec
-      atributy: meno, priezvisko, mob. telefon, prac. telefon, email, pracovny email, je doktorant?, velkost pracovnej zmluvy (double medzi 0 a 1), //0 dohoda, 1 full time, cislo kolko hodin mu zabera vyuka v CZ, cislo hodin vyuky v EN
+Trieda - zamestnanec
+
+*atributy*
+
+  - String meno
+  - String priezvisko
+  - String telCislo
+  - String pracCislo
+  - String email
+  - String pracovnyEmail
+  - Boolean jeDoktorant
+  - double druhPracovnehoUvazku // 0 - dohoda, 1 - full time, medzi tym uvazok na x %
+  - int kolkoHdinUcivJazykuCZ
+  - int kolkoHdinUcivJazykuEN
+  
+3) Pocet studentov
+
+Trieda - Studijna skupina
+
+*atributy*
+
+  - String skratka
+  - String nazov
+  - Enum typStudia
+  - int rocnik
+  - Enum semester
+  - int pocetStudentov
+  
+*Poznamky
+  
+  //enumy na frontende by boli ideale take, ze si uzivatel nieco len zaklikne - priklad: LS vs ZS
+      
+#EN#
+
+//comming soon
