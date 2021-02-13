@@ -1,10 +1,10 @@
 last update: 13.2.2021
 
-# SK - MODELY
+# Models
 
-## 1) Studijne plany
-  
-  Trieda - Predmet
+## 1) Study plans
+
+# Class Subject
   
   - String skratka
   - String nazov
