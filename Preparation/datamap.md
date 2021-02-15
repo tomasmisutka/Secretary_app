@@ -5,7 +5,6 @@
 # 1. Study plan
 
   ## Class - Subject
-  
   - String abbreviation
   - String name
   - Employee teacher
