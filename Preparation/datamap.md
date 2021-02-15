@@ -1,8 +1,10 @@
-**last update: 13.2.2021**
+**last update: 15.2.2021**
 
 # **** Models *****
 
-# 1. Subject
+# 1. Study plan
+
+  ## Class - Subject
   
   - String abbreviation
   - String name
