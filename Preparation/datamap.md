@@ -18,6 +18,7 @@
   - Enum TERM //LS, ZS
   - Enum CLASSIFICATION //zapocet, klasif. zapocet, skuska
   - int defaultGroupSize
+  - array studyGroup //probably
   
 *NOTES*
     //predmety budeme davat do databazy SQL (moj pripad), a budu sa tam aspon zatial pridavat rucne, 
@@ -25,8 +26,9 @@
     //tajomnik ma pod sebou zamestancov
     //bude pracovny stitok priradeny tajomnikom, a priradi tam zamestnanca k danemu predmetu
     
-# 2. Employees   
+# 2. Institute staff
 
+  ## Class - Employee
   - String name
   - String surname
   - String phoneNumber
@@ -34,14 +36,16 @@
   - String email
   - String workMail
   - Boolean isDoctorant
-  - double workLoad // 0 - dohoda, 1 - full time, medzi tym uvazok na x %
+  - double workLoad // 0 - part time, 1 - full time, workload between 0.1 - 99.9%
   - int techedHoursCZ
   - int techedHoursEN
+  - array workLabel // probably every employee needs list of work labels
   
-// everyone need own tag
+  //everyone need own work label
   
-# 3. Study group
+# 3. Students count
 
+  ## Class - StudyGroup
   - String abbreviation
   - String name
   - Enum TYPEOFSTUDY
@@ -53,4 +57,12 @@
   
   //enumy na frontende by boli ideale take, ze si uzivatel nieco len zaklikne - priklad: LS vs ZS
   
-# 4.
+# 4. WorkLoad list
+
+  ## Class workLabel
+  - 
+  
+  // employees can not have more than 500 points from teaching! - they have a another work! , but not less, because they have a full time!
+  
+# Additional functionality
+  -
