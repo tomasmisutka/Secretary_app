@@ -65,4 +65,4 @@
   // employees can not have more than 500 points for teaching! - they have another work! , but not less, because they have a full time!
   
 # Additional functionality
-  -
+  - send changes to employee's email address (work email)
