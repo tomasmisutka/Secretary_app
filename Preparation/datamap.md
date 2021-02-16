@@ -61,7 +61,7 @@
 
   ## Class workLabel
   - 
-  
+  // every worklabel is created based on students grups count ... then should be visible for secretary to be able to match to any free employee
   // employees can not have more than 500 points for teaching! - they have another work! , but not less, because they have a full time!
   
 # Additional functionality
