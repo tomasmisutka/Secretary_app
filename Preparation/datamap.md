@@ -1,4 +1,4 @@
-**last update: 15.2.2021**
+**last update: 16.2.2021**
 
 # **** Models *****
 
@@ -62,7 +62,7 @@
   ## Class workLabel
   - 
   
-  // employees can not have more than 500 points from teaching! - they have a another work! , but not less, because they have a full time!
+  // employees can not have more than 500 points for teaching! - they have another work! , but not less, because they have a full time!
   
 # Additional functionality
   -
