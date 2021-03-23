@@ -1,3 +1,3 @@
-#CSharp - Secretary app
+JAVA - Secretary app
 
 this is used for AK8PO in UTB
