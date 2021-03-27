@@ -59,9 +59,9 @@
   - Enum language (cz,en)
   - List <Subject> subjects
   
-*NOTES
+*NOTES*
   
-  //enums on front-end size should be very simple and clickable - example: Present or Combined form in simple JRadioButton (JAVA)
+  - enums on front-end size should be very simple and clickable - example: Present or Combined form in simple JRadioButton component (JAVA)
   
 # 4. WorkLoad list
 
@@ -74,10 +74,11 @@
   - Int hoursCount
   - Int weeksCount
   - Enum language
-  - Int WorkloadPoints (12.5???) method ? 
+  - Int WorkloadPoints (12.5???) method ?
 *NOTES*
-  // every worklabel is created based on students grups count ... then should be visible for secretary to be able to match to any free employee
-  // employees can not have more than 500 points for teaching! - they have another work! , but not less, because they have a full time!
+
+  - every worklabel is created based on students grups count ... then should be visible for secretary to be able to match to any free employee
+  - employees can not have more than 500 points for teaching! - they have another work! , but not less, because they have a full time!
   
 # Additional functionality
   - send changes to employee's email address (job email)
