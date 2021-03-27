@@ -21,6 +21,7 @@
   - List <StudyGroup> studyGroup
   
 *NOTES*
+
     -front-end: add subject form
     
     -secretary is a leader of employees
