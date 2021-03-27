@@ -84,7 +84,7 @@
   
 # 5. Workload weights
 
-  -this will be pulled in application start from DB and saves it in any GlobalConfig class
+  -this will be pulled in application start from DB and saved in GlobalConfig class
   
   - double lectureHour (1.8)
   - double practiseHour (1.2)
