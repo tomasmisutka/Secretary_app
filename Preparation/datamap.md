@@ -75,6 +75,7 @@
   - Int weeksCount
   - Enum language
   - Int WorkloadPoints (12.5???) method ?
+ 
 *NOTES*
 
   -every worklabel is created based on students grups count ... then should be visible for secretary to be able to match to any free employee
