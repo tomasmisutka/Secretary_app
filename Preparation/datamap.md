@@ -87,6 +87,17 @@
   -this will be pulled in application start from DB and saves it in any GlobalConfig class
   
   - double lectureHour (1.8)
+  - double practiseHour (1.2)
+  - double seminarHour (1.2)
+  - double lectureHourEN (2.4)
+  - double practiseHourEN (1.8)
+  - double seminarHourEN (1.8)
+  - double midTermExamAward (0.2)
+  - double clasificatedExamAward (0.3)
+  - double examEward (0.4)
+  - double midTermExamEN (0.2)
+  - double clasificatedExamAwardEN (0.3)
+  - double examEN (0.4)
   
 # Additional functionality
 
