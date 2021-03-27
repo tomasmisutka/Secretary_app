@@ -22,7 +22,9 @@
   
 *NOTES*
     -front-end: add subject form
+    
     -secretary is a leader of employees
+    
     -secretary assign a workload to employee with current subject, and employee will be informed about changes through email
     
 # 2. Institute staff
