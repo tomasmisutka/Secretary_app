@@ -18,12 +18,12 @@
   - Enum TERM //summer, winter
   - Enum CLASSIFICATION //zapocet, klasif. zapocet, skuska
   - int defaultGroupSize (24 default, 12 can be, 0 in combined)
-  - List<StudyGroup> studyGroup
+  - List <StudyGroup> studyGroup
   
 *NOTES*
-    //front-end: add subject form
-    //secretary is a leader of employees
-    //secretary assign a workload to employee with current subject, and employee will be informed about changes through email
+    -front-end: add subject form
+    -secretary is a leader of employees
+    -secretary assign a workload to employee with current subject, and employee will be informed about changes through email
     
 # 2. Institute staff
 
@@ -39,7 +39,7 @@
   - double workLoad // 0 - part time, 1 - full time, workload between 0.01 - 0.99%
   - int techingCZHours //526? method?
   - int techingENHours //767? method?
-  - List<WorkLabel> workLabel
+  - List <WorkLabel> workLabel
   
   *NOTES*
   
@@ -54,7 +54,7 @@
   - Enum TERM (winter, summer)
   - int studentsCount (default 36)
   - Enum language (cz,en)
-  - List<Subject> subjects
+  - List <Subject> subjects
   
 *NOTES
   
