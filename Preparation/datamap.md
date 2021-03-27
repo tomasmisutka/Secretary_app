@@ -82,6 +82,12 @@
   
   -employees can not have more than 500 points for teaching! - they have another work! , but not less, because they have a full time!
   
+# 5. Workload weights
+
+  -this will be pulled in application start from DB and saves it in any GlobalConfig class
+  
+  - double lectureHour (1.8)
+  
 # Additional functionality
 
   -send changes to employee's email address (job email)
