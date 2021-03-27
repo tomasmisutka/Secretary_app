@@ -1,3 +1,3 @@
-JAVA - Secretary app
+## JAVA - Secretary app
 
-this is used for AK8PO in UTB
+- APP for AK8PO at UTB
