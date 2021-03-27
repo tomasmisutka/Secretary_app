@@ -1,24 +1,24 @@
-**last update: 16.2.2021**
+**last update: 27.3.2021**
 
 # **** Models *****
 
 # 1. Study plan
 
   ## Class - Subject
-  - String abbreviation
+  - String abbreviation (unique identificator)
   - String name
   - Employee teacher
   - int lectureCount
   - int practiseCount
   - int seminarCount
-  - int weeksCount
+  - int weeksCount (14 default, combined 1)
   - Enum LANGUAGE //CZ,EN
-  - Enum TYPEOFSTUDY //Prezencne, kombinovane
+  - Enum TYPEOFSTUDY //Present, combined
   - int YEAR
-  - Enum TERM //LS, ZS
+  - Enum TERM //summer, winter
   - Enum CLASSIFICATION //zapocet, klasif. zapocet, skuska
-  - int defaultGroupSize
-  - array studyGroup //probably
+  - int defaultGroupSize (24 default, 12 can be, 0 in combined)
+  - array studyGroup
   
 *NOTES*
     //predmety budeme davat do databazy SQL (moj pripad), a budu sa tam aspon zatial pridavat rucne, 
