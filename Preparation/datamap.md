@@ -18,51 +18,63 @@
   - Enum TERM //summer, winter
   - Enum CLASSIFICATION //zapocet, klasif. zapocet, skuska
   - int defaultGroupSize (24 default, 12 can be, 0 in combined)
-  - array studyGroup
+  - List<StudyGroup> studyGroup
   
 *NOTES*
-    //predmety budeme davat do databazy SQL (moj pripad), a budu sa tam aspon zatial pridavat rucne, 
-    //front-end: formular s pridanim predmetu...
-    //tajomnik ma pod sebou zamestancov
-    //bude pracovny stitok priradeny tajomnikom, a priradi tam zamestnanca k danemu predmetu
+    //front-end: add subject form
+    //secretary is a leader of employees
+    //secretary assign a workload to employee with current subject, and employee will be informed about changes through email
     
 # 2. Institute staff
 
   ## Class - Employee
   - String name
   - String surname
+  - String fullname (Name + Surname)
   - String phoneNumber
-  - String workNumber
+  - String jobPhone
   - String email
-  - String workMail
+  - String jobMail
   - Boolean isDoctorant
-  - double workLoad // 0 - part time, 1 - full time, workload between 0.1 - 99.9%
-  - int techedHoursCZ
-  - int techedHoursEN
-  - array workLabel // probably every employee needs list of work labels
+  - double workLoad // 0 - part time, 1 - full time, workload between 0.01 - 0.99%
+  - int techingCZHours //526? method?
+  - int techingENHours //767? method?
+  - List<WorkLabel> workLabel
   
-  //everyone need own work label
+  *NOTES*
   
 # 3. Students count
 
   ## Class - StudyGroup
   - String abbreviation
   - String name
-  - Enum TYPEOFSTUDY
+  - Enum StudyType (Bachelors,Masters)
+  - Enum StudyForm (present, combined)
   - int year
-  - Enum TERM
-  - int studentsCount
+  - Enum TERM (winter, summer)
+  - int studentsCount (default 36)
+  - Enum language (cz,en)
+  - List<Subject> subjects
   
 *NOTES
   
-  //enumy na frontende by boli ideale take, ze si uzivatel nieco len zaklikne - priklad: LS vs ZS
+  //enums on front-end size should be very simple and clickable - example: Present or Combined form in simple JRadioButton (JAVA)
   
 # 4. WorkLoad list
 
-  ## Class workLabel
-  - 
+  ## Class WorkLabel
+  - String name
+  - Employee employee (could be null)
+  - Subject subject (could be null)
+  - Enum type (lecture, seminar, practise, exam, clasification...)
+  - Int studentsCount
+  - Int hoursCount
+  - Int weeksCount
+  - Enum language
+  - Int WorkloadPoints (12.5???) method ? 
+*NOTES*
   // every worklabel is created based on students grups count ... then should be visible for secretary to be able to match to any free employee
   // employees can not have more than 500 points for teaching! - they have another work! , but not less, because they have a full time!
   
 # Additional functionality
-  - send changes to employee's email address (work email)
+  - send changes to employee's email address (job email)
