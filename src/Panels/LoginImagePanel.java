@@ -7,9 +7,12 @@ public class LoginImagePanel extends JPanel
 {
     public LoginImagePanel()
     {
-//        JLabel imageLabel = new JLabel();
-//        imageLabel.setIcon(new ImageIcon(getClass().getResource("/images/login_image.jpg")));
-//        imagePanel.add(imageLabel);
-        this.setBackground(Color.red);
+        super();
+        JLabel label = new JLabel();
+        this.setLayout(new BorderLayout());
+        label.setIcon(new ImageIcon("./src/Images/login_picture.jpg"));
+        label.setPreferredSize(new Dimension(500,500));
+        this.add(label, BorderLayout.CENTER);
+
     }
 }
