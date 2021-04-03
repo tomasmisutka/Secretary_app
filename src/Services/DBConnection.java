@@ -32,7 +32,6 @@ public class DBConnection
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();
-            System.out.println("SQL problem");
             return null;
         }
         return data;
