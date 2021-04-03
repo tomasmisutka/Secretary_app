@@ -1,6 +1,12 @@
 package Services;
-import java.sql.*;
-import java.util.ArrayList;
+
+import Common.WorkloadWeights;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBConnection
 {
@@ -8,32 +14,31 @@ public class DBConnection
     {
     }
 
-    public ArrayList<String> getDbUsers()
+    public WorkloadWeights getWorkLoadWeights()
     {
-        ArrayList<String> data = new ArrayList<String>();
-        try {
+        WorkloadWeights workloadWeights = null;
+        try
+        {
+
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/secretaryApp",
                     "student", "student");
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
 
-            String finalRecord = "";
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM WorkloadWeights");
 
-            while (resultSet.next()) {
-                finalRecord += resultSet.getString("name") + " ";
-                finalRecord += resultSet.getString("surname") + " ";
-                finalRecord += resultSet.getString("address") + " ";
-                finalRecord += resultSet.getString("phone") + " ";
-                finalRecord += resultSet.getString("email");
-
-                data.add(finalRecord);
-                finalRecord = "";
+            while (resultSet.next())
+            {
+                workloadWeights = new WorkloadWeights(resultSet.getDouble("LectureHour"), resultSet.getDouble("PractiseHour"),
+                        resultSet.getDouble("SeminarHour"), resultSet.getDouble("LectureHourEN"),
+                        resultSet.getDouble("PractiseHourEN"), resultSet.getDouble("SeminarHourEN"),
+                        resultSet.getDouble("MidTermExam"), resultSet.getDouble("ClassifiedExam"),
+                        resultSet.getDouble("Exam"), resultSet.getDouble("MidTermExamEN"),
+                        resultSet.getDouble("ClassifiedExamEN"), resultSet.getDouble("ExamEN"));
             }
-        }
-        catch (SQLException throwables) {
+        } catch (SQLException throwables)
+        {
             throwables.printStackTrace();
-            return null;
         }
-        return data;
+        return workloadWeights;
     }
 }
