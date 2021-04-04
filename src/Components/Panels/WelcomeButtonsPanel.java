@@ -1,17 +1,21 @@
 package Components.Panels;
 
+import Common.GlobalConfig;
+import Components.MyDialog;
+import Services.DBConnection;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonsPanel extends JPanel implements ActionListener
+public class WelcomeButtonsPanel extends JPanel implements ActionListener
 {
     private final JButton enter;
     private final JButton exit;
 
-    public ButtonsPanel()
+    public WelcomeButtonsPanel()
     {
         this.enter = new JButton("Enter");
         this.exit = new JButton("Exit");
@@ -30,14 +34,24 @@ public class ButtonsPanel extends JPanel implements ActionListener
         if (e.getSource() == this.exit)
             this.showDialog();
         if (e.getSource() == this.enter)
-            System.out.println("enter button pressed");
+            this.continueToDashBoard();
     }
 
     private void showDialog()
     {
-        int result = JOptionPane.showConfirmDialog(this,"Are you sure?", "Confirmation",
-                JOptionPane.YES_NO_OPTION);
+        int result = MyDialog.showConfirmationDialog(this, "Are you sure? You will exit this app...");
         if (result == JOptionPane.YES_OPTION)
             System.exit(0);
     }
+
+    private void continueToDashBoard()
+    {
+        DBConnection dbConnection = new DBConnection();
+        GlobalConfig globalConfig = dbConnection.getGlobalConfig();
+        if (globalConfig == null)
+            MyDialog.showErrorDialog(this, "DATABASE connection PROBLEM!!!");
+        else
+            System.out.println(globalConfig);
+    }
+
 }

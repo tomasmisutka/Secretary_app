@@ -3,18 +3,18 @@ package Components.Panels;
 import javax.swing.*;
 import java.awt.*;
 
-public class RoundedPanel extends JPanel
+public class CommonRoundedPanel extends JPanel
 {
     private int cornerRadius = 15;
     private Color backgroundColor;
 
-    public RoundedPanel(int radius)
+    public CommonRoundedPanel(int radius)
     {
         super();
         this.cornerRadius = radius;
     }
 
-    public RoundedPanel(Color background, int radius)
+    public CommonRoundedPanel(Color background, int radius)
     {
         super();
         this.backgroundColor = background;

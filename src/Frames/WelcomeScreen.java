@@ -1,7 +1,7 @@
 package Frames;
 
 import Components.WelcomeLabel;
-import Components.Panels.ButtonsPanel;
+import Components.Panels.WelcomeButtonsPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class WelcomeScreen extends JFrame
     private void initFrame()
     {
         WelcomeLabel welcomeLabel = new WelcomeLabel();
-        ButtonsPanel buttonsPanel = new ButtonsPanel();
+        WelcomeButtonsPanel buttonsPanel = new WelcomeButtonsPanel();
 
         this.setLayout(new BorderLayout());
         this.add(welcomeLabel,BorderLayout.CENTER);
