@@ -46,7 +46,7 @@
   
   *NOTES*
   
-# 3. Students count
+# 3. Students
 
   ## Class - StudyGroup
   - String abbreviation
