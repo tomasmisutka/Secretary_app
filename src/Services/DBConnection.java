@@ -1,6 +1,6 @@
 package Services;
 
-import Common.WorkloadWeights;
+import Common.GlobalConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,9 +14,9 @@ public class DBConnection
     {
     }
 
-    public WorkloadWeights getWorkLoadWeights()
+    public GlobalConfig getGlobalConfig()
     {
-        WorkloadWeights workloadWeights = null;
+        GlobalConfig globalConfig = null;
         try
         {
 
@@ -24,11 +24,11 @@ public class DBConnection
                     "student", "student");
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM WorkloadWeights");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM GlobalConfig");
 
             while (resultSet.next())
             {
-                workloadWeights = new WorkloadWeights(resultSet.getDouble("LectureHour"), resultSet.getDouble("PractiseHour"),
+                globalConfig = new GlobalConfig(resultSet.getDouble("LectureHour"), resultSet.getDouble("PractiseHour"),
                         resultSet.getDouble("SeminarHour"), resultSet.getDouble("LectureHourEN"),
                         resultSet.getDouble("PractiseHourEN"), resultSet.getDouble("SeminarHourEN"),
                         resultSet.getDouble("MidTermExam"), resultSet.getDouble("ClassifiedExam"),
@@ -39,6 +39,6 @@ public class DBConnection
         {
             throwables.printStackTrace();
         }
-        return workloadWeights;
+        return globalConfig;
     }
 }

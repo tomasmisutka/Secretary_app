@@ -1,6 +1,6 @@
 package Common;
 
-public class WorkloadWeights
+public class GlobalConfig
 {
     private final double lectureHour;
     private final double practiseHour;
@@ -15,9 +15,9 @@ public class WorkloadWeights
     private final double classifiedExamEN;
     private final double examEN;
 
-    public WorkloadWeights(double lectureHour, double practiseHour, double seminarHour, double lectureHourEN,
-                           double practiseHourEN, double seminarHourEN, double midTermExam, double classifiedExam,
-                           double exam, double midTermExamEN, double classifiedExamEN, double examEN)
+    public GlobalConfig(double lectureHour, double practiseHour, double seminarHour, double lectureHourEN,
+                        double practiseHourEN, double seminarHourEN, double midTermExam, double classifiedExam,
+                        double exam, double midTermExamEN, double classifiedExamEN, double examEN)
     {
         this.lectureHour = lectureHour;
         this.practiseHour = practiseHour;

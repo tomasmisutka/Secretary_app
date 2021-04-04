@@ -9,8 +9,8 @@ public class WorkLabel
     private Employee employee;
     private Subject subject;
     private EventType eventType;
-    private int studentsCount;
-    private int hoursCount;
+    private int studentsCount = 11;
+    private int hoursCount; //exams are not awarded!
     private int weeksCount;
     private Language language;
     private int workLoadPoints;

@@ -1,6 +1,6 @@
 package Components.Panels;
 
-import Common.WorkloadWeights;
+import Common.GlobalConfig;
 import Components.MyDialog;
 import Services.DBConnection;
 
@@ -47,11 +47,11 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
     private void continueToDashBoard()
     {
         DBConnection dbConnection = new DBConnection();
-        WorkloadWeights workloadWeights = dbConnection.getWorkLoadWeights();
-        if (workloadWeights == null)
+        GlobalConfig globalConfig = dbConnection.getGlobalConfig();
+        if (globalConfig == null)
             MyDialog.showErrorDialog(this, "DATABASE connection PROBLEM!!!");
         else
-            System.out.println(workloadWeights);
+            System.out.println(globalConfig);
     }
 
 }
