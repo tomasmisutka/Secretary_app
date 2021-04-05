@@ -2,6 +2,7 @@ package Components.Panels;
 
 import Common.GlobalConfig;
 import Components.MyDialog;
+import Frames.DashBoard;
 import Services.DBConnection;
 
 import javax.swing.*;
@@ -14,11 +15,13 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
 {
     private final JButton enter;
     private final JButton exit;
+    private final JFrame welcomeScreen;
 
-    public WelcomeButtonsPanel()
+    public WelcomeButtonsPanel(JFrame welcomeScreen)
     {
         this.enter = new JButton("Enter");
         this.exit = new JButton("Exit");
+        this.welcomeScreen = welcomeScreen;
         this.enter.addActionListener(this);
         this.exit.addActionListener(this);
         this.setBorder(new EmptyBorder(10, 0, 0, 0));
@@ -51,7 +54,10 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
         if (globalConfig == null)
             MyDialog.showErrorDialog(this, "DATABASE connection PROBLEM!!!");
         else
-            System.out.println(globalConfig);
+        {
+            this.welcomeScreen.dispose();
+            new DashBoard();
+        }
     }
 
 }
