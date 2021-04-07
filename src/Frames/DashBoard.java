@@ -1,6 +1,7 @@
 package Frames;
 
 import Components.Panels.DashBoardNavigationPanel;
+import Components.Panels.SidePanelLeft;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,18 +10,19 @@ public class DashBoard extends JFrame
 {
     public DashBoard()
     {
-        this.initFrame(new DashBoardNavigationPanel());
+        this.initFrame(new DashBoardNavigationPanel(), new SidePanelLeft());
     }
 
-    private void initFrame(JPanel navigationPanel)
+    private void initFrame(JPanel navigationPanel, JPanel leftPanel)
     {
         this.setLayout(new BorderLayout());
         this.setSize(new Dimension(1200,900));
         this.setMinimumSize(new Dimension(1200,900));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //panels add
+        //add panels
         this.add(navigationPanel, BorderLayout.NORTH);
+        this.add(leftPanel, BorderLayout.WEST);
 
         this.setVisible(true);
     }
