@@ -8,8 +8,10 @@ import java.awt.*;
 
 public class DashBoardSidePanelLeft extends JPanel
 {
-    public DashBoardSidePanelLeft()
+    private final WorkLabelsPanel labelsPanel;
+    public DashBoardSidePanelLeft(WorkLabelsPanel panel)
     {
+        this.labelsPanel = panel;
         this.createPanel();
     }
 
@@ -19,7 +21,7 @@ public class DashBoardSidePanelLeft extends JPanel
         this.setLayout(new GridBagLayout());
         this.setBorder(new EmptyBorder(10,5,10,5));
         CommonRoundedPanel secretaryInfo = new CommonRoundedPanel(Color.white, 30);
-        ButtonsLeftPanel middleButtons = new ButtonsLeftPanel();
+        ButtonsLeftPanel middleButtons = new ButtonsLeftPanel(this.labelsPanel);
         this.setSecretaryInfoPanel(secretaryInfo);
         this.add(secretaryInfo, new GridBagConstraints(0,0,1,1,1.0,1.0,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0),0,0));
