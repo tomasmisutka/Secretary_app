@@ -4,11 +4,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class WorkLabelsPanel extends JPanel
+public class DashBoardWorkLabelsPanel extends JPanel
 {
     private boolean isVisible = true;
 
-    public WorkLabelsPanel()
+    public DashBoardWorkLabelsPanel()
     {
         this.createPanel();
     }
