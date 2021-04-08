@@ -40,6 +40,7 @@ public class DashBoardNavigationPanel extends JPanel implements ActionListener
         this.leaveButton.setIcon(new ImageIcon("./src/Images/logout.png"));
         this.leaveButton.setFont(new Font("Arial", Font.ITALIC, 15));
         this.leaveButton.addActionListener(this);
+        this.leaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return leaveButton;
     }
 

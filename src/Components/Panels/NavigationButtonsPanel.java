@@ -18,8 +18,8 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
     {
         this.addEmployeeButton = new NavigationAddButton("add_employee.png", "Employee");
         this.addSubjectButton = new NavigationAddButton("add_subject.png", "Subject");
-        this.addStudyGroupButton = new NavigationAddButton("add_class.png", "Study group");
-        this.addWorkLabelButton = new NavigationAddButton("add_worklabel.png", "WorkLabel");
+        this.addStudyGroupButton = new NavigationAddButton("add_class.png", "Study Group");
+        this.addWorkLabelButton = new NavigationAddButton("add_worklabel.png", "Work Label");
         this.createPanel();
         this.addActionsListeners();
     }
@@ -34,13 +34,16 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
 
     private void createPanel()
     {
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
         this.setBackground(Color.white);
         this.setLayout(new GridBagLayout());
-        this.add(this.addEmployeeButton, gridBagConstraints);
-        this.add(this.addSubjectButton, gridBagConstraints);
-        this.add(this.addStudyGroupButton, gridBagConstraints);
-        this.add(this.addWorkLabelButton, gridBagConstraints);
+        this.add(this.addEmployeeButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 10, 0, 10), 0, 0));
+        this.add(this.addSubjectButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 10, 0, 10), 0, 0));
+        this.add(this.addStudyGroupButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 10, 0, 10), 0, 0));
+        this.add(this.addWorkLabelButton, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 10, 0, 10), 0, 0));
     }
 
     @Override

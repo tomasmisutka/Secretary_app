@@ -1,5 +1,6 @@
 package Components.Panels;
 
+import Common.Constants;
 import Common.GlobalConfig;
 import Components.MyDialog;
 import Frames.DashBoard;
@@ -25,7 +26,7 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
         this.enter.addActionListener(this);
         this.exit.addActionListener(this);
         this.setBorder(new EmptyBorder(10, 0, 0, 0));
-        this.setBackground(Color.black);
+        this.setBackground(Constants.secondaryColor);
         this.setPreferredSize(new Dimension(600, 60));
         this.add(enter);
         this.add(exit);

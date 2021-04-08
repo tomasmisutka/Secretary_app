@@ -22,5 +22,8 @@ public class NavigationAddButton extends JButton
         this.setIcon(new ImageIcon("./src/Images/" + this.imagePath));
         this.setVerticalTextPosition(JButton.BOTTOM);
         this.setHorizontalTextPosition(JButton.CENTER);
+        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.setPreferredSize(new Dimension(85,85));
+        this.setIconTextGap(10);
     }
 }
