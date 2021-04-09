@@ -13,12 +13,10 @@ public class ButtonsLeftPanel extends JPanel implements ActionListener
     private LeftPanelButton studyGroupButton;
     private LeftPanelButton subjectButton;
     private LeftPanelButton workLabelButton;
-    private final DashBoardWorkLabelsPanel labelsPanel;
     private final DashBoardBodyPanel bodyPanel;
 
-    public ButtonsLeftPanel(DashBoardWorkLabelsPanel labelsPanel, DashBoardBodyPanel bodyPanel)
+    public ButtonsLeftPanel(DashBoardBodyPanel bodyPanel)
     {
-        this.labelsPanel = labelsPanel;
         this.bodyPanel = bodyPanel;
         this.createPanel();
     }
@@ -57,6 +55,9 @@ public class ButtonsLeftPanel extends JPanel implements ActionListener
         if (e.getSource() == this.subjectButton)
             this.bodyPanel.showBody("studyGroups");
         if (e.getSource() == this.workLabelButton)
-            this.labelsPanel.changeVisibility();
+        {
+            DashBoardWorkLabelsPanel labelsPanel = DashBoardWorkLabelsPanel.getLabelsPanel();
+            labelsPanel.changeVisibility();
+        }
     }
 }

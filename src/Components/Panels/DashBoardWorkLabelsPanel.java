@@ -7,10 +7,18 @@ import java.awt.*;
 public class DashBoardWorkLabelsPanel extends JPanel
 {
     private boolean isVisible = true;
+    private final static DashBoardWorkLabelsPanel labelsPanel = new DashBoardWorkLabelsPanel();
 
-    public DashBoardWorkLabelsPanel()
+    private DashBoardWorkLabelsPanel()
     {
         this.createPanel();
+    }
+
+    public static DashBoardWorkLabelsPanel getLabelsPanel()
+    {
+        if (labelsPanel == null)
+            return new DashBoardWorkLabelsPanel();
+        return labelsPanel;
     }
 
     private void createPanel()

@@ -12,9 +12,9 @@ public class DashBoard extends JFrame
 {
     public DashBoard()
     {
-        DashBoardWorkLabelsPanel labelsPanel = new DashBoardWorkLabelsPanel();
+        DashBoardWorkLabelsPanel labelsPanel = DashBoardWorkLabelsPanel.getLabelsPanel();
         DashBoardBodyPanel bodyPanel = new DashBoardBodyPanel();
-        this.initFrame(new DashBoardNavigationPanel(), new DashBoardSidePanelLeft(labelsPanel, bodyPanel),
+        this.initFrame(new DashBoardNavigationPanel(), new DashBoardSidePanelLeft(bodyPanel),
                 labelsPanel, bodyPanel);
     }
 
