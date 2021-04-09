@@ -20,9 +20,11 @@ public class DashBoard extends JFrame
 
     private void initFrame(JPanel navigationPanel, JPanel leftPanel, JPanel workLabelsPanel, JPanel bodyPanel)
     {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setLayout(new BorderLayout());
-        this.setSize(new Dimension(1200, 900));
-        this.setMinimumSize(new Dimension(1200, 900));
+        this.setSize(new Dimension(1200, 750));
+        this.setMinimumSize(new Dimension(1200, 750));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //add panels
@@ -31,6 +33,7 @@ public class DashBoard extends JFrame
         this.add(workLabelsPanel, BorderLayout.EAST);
         this.add(bodyPanel, BorderLayout.CENTER);
 
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 }

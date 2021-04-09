@@ -10,8 +10,17 @@ import java.sql.Statement;
 
 public class DBConnection
 {
-    public DBConnection()
+    private static final DBConnection dbConnection = new DBConnection();
+
+    private DBConnection()
     {
+    }
+
+    public static DBConnection getDbConnection()
+    {
+        if (dbConnection == null)
+            return new DBConnection();
+        return dbConnection;
     }
 
     public GlobalConfig getGlobalConfig()
@@ -19,7 +28,6 @@ public class DBConnection
         GlobalConfig globalConfig = null;
         try
         {
-
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/secretaryApp",
                     "student", "student");
             Statement statement = connection.createStatement();

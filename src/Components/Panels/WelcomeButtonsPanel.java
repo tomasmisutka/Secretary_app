@@ -50,7 +50,7 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
 
     private void continueToDashBoard()
     {
-        DBConnection dbConnection = new DBConnection();
+        DBConnection dbConnection = DBConnection.getDbConnection();
         GlobalConfig globalConfig = dbConnection.getGlobalConfig();
         if (globalConfig == null)
             MyDialog.showErrorDialog(this, "DATABASE connection PROBLEM!!!");
