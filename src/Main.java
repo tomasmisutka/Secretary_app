@@ -7,11 +7,4 @@ public class Main
         new WelcomeScreen();
     }
 
-//        DBConnection connection = new DBConnection();
-//        ArrayList<String> test = connection.getDbUsers();
-//
-//        for (String record: test)
-//            System.out.println(record);
-
-
 }

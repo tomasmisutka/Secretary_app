@@ -19,8 +19,6 @@ public class WelcomeScreen extends JFrame
         WelcomeLabel welcomeLabel = new WelcomeLabel();
         WelcomeButtonsPanel buttonsPanel = new WelcomeButtonsPanel(this);
 
-//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-//        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setLayout(new BorderLayout());
         this.add(welcomeLabel,BorderLayout.CENTER);
         this.add(buttonsPanel,BorderLayout.SOUTH);
@@ -31,10 +29,5 @@ public class WelcomeScreen extends JFrame
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-    }
-
-    public void disposeFrame()
-    {
-        this.dispose();
     }
 }
