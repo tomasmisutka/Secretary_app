@@ -3,6 +3,7 @@ package Components.AddForms;
 import Common.Employee;
 import Common.Enums.FormPanelType;
 import Components.Panels.AddFormButtonsPanel;
+import Components.Panels.FormTitlePanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,14 +11,13 @@ import java.awt.*;
 
 public class AddEmployeeForm extends JFrame
 {
-    private static AddEmployeeForm addEmployeeForm = null;
+    private static AddEmployeeForm employeeForm = null;
     private final JTextField firstNameTextField = new JTextField("Name");
     private final JTextField lastNameTextField = new JTextField("Surname");
     private final JTextField privateEmailTextField = new JTextField("example@gmail.com");
     private final JTextField jobEmailTextField = new JTextField("secretary@utb.cz");
     private final JTextField workloadTextField = new JTextField("0");
     private final ButtonGroup doctoralGroup = new ButtonGroup();
-    private final AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Employee, this);
 
     private AddEmployeeForm()
     {
@@ -26,47 +26,37 @@ public class AddEmployeeForm extends JFrame
 
     public static AddEmployeeForm getInstance()
     {
-        if (addEmployeeForm == null)
-            return new AddEmployeeForm();
-        return addEmployeeForm;
+        if (employeeForm == null)
+            employeeForm = new AddEmployeeForm();
+        return employeeForm;
+    }
+
+    public static void setEmployeeFormAsNull()
+    {
+        employeeForm = null;
     }
 
     private void createContent()
     {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
-        JPanel titlePanel = new JPanel();
+        this.setLayout(new GridBagLayout());
+        FormTitlePanel titlePanel = new FormTitlePanel("Add new employee");
         JPanel dataPanel = new JPanel();
+        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Employee);
 
-        this.initTitlePanel(titlePanel);
         this.initDataPanel(dataPanel);
 
-        mainPanel.add(titlePanel, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0,
+        this.add(titlePanel, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        mainPanel.add(dataPanel, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
+        this.add(dataPanel, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
                 GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        mainPanel.add(this.buttonsPanel, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
+        this.add(buttonsPanel, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
                 GridBagConstraints.SOUTHWEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 
-        this.add(mainPanel);
         this.setSize(new Dimension(400, 450));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-    }
-
-    private void initTitlePanel(JPanel northPanel)
-    {
-        northPanel.setBackground(Color.white);
-        northPanel.setLayout(new BorderLayout());
-        northPanel.setBorder(new EmptyBorder(8, 20, 8, 0));
-        JLabel titleLabel = new JLabel();
-        titleLabel.setText("Add new employee");
-        titleLabel.setFont(new Font("Arial", Font.ITALIC, 18));
-        titleLabel.setIcon(new ImageIcon("./src/Images/logo_50x50.jpg"));
-        titleLabel.setIconTextGap(75);
-        northPanel.add(titleLabel, BorderLayout.WEST);
     }
 
     private void initDataPanel(JPanel dataPanel)

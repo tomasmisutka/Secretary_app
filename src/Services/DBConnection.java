@@ -1,7 +1,9 @@
 package Services;
 
+import Common.Constants;
 import Common.Employee;
 import Common.GlobalConfig;
+import Common.Subject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +15,7 @@ import java.sql.Types;
 
 public class DBConnection
 {
-    private static final DBConnection dbConnection = new DBConnection();
+    private static DBConnection dbConnection = null;
 
     private DBConnection()
     {
@@ -22,7 +24,7 @@ public class DBConnection
     public static DBConnection getDbConnection()
     {
         if (dbConnection == null)
-            return new DBConnection();
+            dbConnection = new DBConnection();
         return dbConnection;
     }
 
@@ -32,7 +34,7 @@ public class DBConnection
         try
         {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/secretaryApp",
-                    "student", "student");
+                    Constants.dbLoginName, Constants.dbLoginPassword);
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM GlobalConfig");
@@ -62,7 +64,7 @@ public class DBConnection
                     "WorkPointsEN, IsDoctoral, WorkLoad, WorkLabelID)" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/secretaryApp",
-                    "student", "student");
+                    Constants.dbLoginName, Constants.dbLoginPassword);
             PreparedStatement prepareStatement = connection.prepareStatement(insertQuery);
             prepareStatement.setString(1, employee.getFirstName());
             prepareStatement.setString(2, employee.getLastName());
@@ -74,6 +76,39 @@ public class DBConnection
             prepareStatement.setBoolean(8, employee.isDoctoral());
             prepareStatement.setDouble(9, employee.getWorkLoad());
             prepareStatement.setNull(10, Types.INTEGER);
+
+            prepareStatement.execute();
+            connection.close();
+
+        } catch (SQLException throwable)
+        {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean sendSubjectToDB(Subject newSubject)
+    {
+        Connection connection = null;
+        try
+        {
+            String insertQuery = "INSERT INTO Subjects (Abbreviation, WeeksCount, LecturesCount, PractisesCount, SeminarsCount, Classification, " +
+                    "TeachLanguage, ClassSize, StudyGroupID)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/secretaryApp",
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(insertQuery);
+            prepareStatement.setString(1,newSubject.getAbbreviation());
+            prepareStatement.setInt(2,newSubject.getWeeksCount());
+            prepareStatement.setInt(3,newSubject.getLecturesCount());
+            prepareStatement.setInt(4,newSubject.getPracticesCount());
+            prepareStatement.setInt(5,newSubject.getSeminarsCount());
+            prepareStatement.setString(6,newSubject.getClassification().toString());
+            prepareStatement.setString(7,newSubject.getLanguage().toString());
+            prepareStatement.setInt(8,newSubject.getDefaultGroupSize());
+            prepareStatement.setNull(9, Types.INTEGER);
 
             prepareStatement.execute();
             connection.close();

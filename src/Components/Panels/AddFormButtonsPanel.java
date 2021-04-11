@@ -1,9 +1,9 @@
 package Components.Panels;
 
 import Common.Constants;
-import Common.Employee;
 import Common.Enums.FormPanelType;
 import Components.AddForms.AddEmployeeForm;
+import Components.AddForms.AddSubjectForm;
 import Components.MyDialog;
 import Services.DBConnection;
 
@@ -18,15 +18,11 @@ public class AddFormButtonsPanel extends CommonRoundedPanel implements ActionLis
     private final JButton submitButton = new JButton("Submit");
     private final JButton cancelButton = new JButton("Cancel");
     private final FormPanelType formPanelType;
-    private final AddEmployeeForm frame;
-    private Employee employee;
 
-    public AddFormButtonsPanel(FormPanelType formPanelType, AddEmployeeForm frame)
+    public AddFormButtonsPanel(FormPanelType formPanelType)
     {
         super(Constants.secondaryColor, 10);
         this.formPanelType = formPanelType;
-        this.frame = frame;
-        this.employee = new Employee();
         this.createPanel();
     }
 
@@ -47,19 +43,52 @@ public class AddFormButtonsPanel extends CommonRoundedPanel implements ActionLis
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == this.cancelButton)
-            this.frame.dispose();
         if (this.formPanelType == FormPanelType.Employee)
+            this.employeeFormAction(e);
+        if (this.formPanelType == FormPanelType.Subject)
+            this.subjectFormAction(e);
+    }
+
+    private void employeeFormAction(ActionEvent e)
+    {
+        AddEmployeeForm employeeForm = AddEmployeeForm.getInstance();
+        if (e.getSource() == this.cancelButton)
         {
-            if (e.getSource() == this.submitButton)
+            employeeForm.dispose();
+            AddEmployeeForm.setEmployeeFormAsNull();
+        }
+
+        if (e.getSource() == this.submitButton)
+        {
+            boolean isSuccessfulCreatedEmployee = DBConnection.getDbConnection().sendEmployeeToDB(employeeForm.getNewEmployee());
+            if (!isSuccessfulCreatedEmployee)
+                MyDialog.showErrorDialog(this, "CAN NOT INSERT THE EMPLOYEE TO DATABASE");
+            else
             {
-                this.employee = this.frame.getNewEmployee();
-                DBConnection dbConnection = DBConnection.getDbConnection();
-                boolean isSuccessfulCreatedEmployee = dbConnection.sendEmployeeToDB(this.employee);
-                if (!isSuccessfulCreatedEmployee)
-                    MyDialog.showErrorDialog(this, "CAN NOT INSERT THE EMPLOYEE TO DATABASE");
-                else
-                    this.frame.dispose();
+                employeeForm.dispose();
+                AddEmployeeForm.setEmployeeFormAsNull();
+            }
+        }
+    }
+
+    private void subjectFormAction(ActionEvent e)
+    {
+        AddSubjectForm subjectForm = AddSubjectForm.getInstance();
+        if (e.getSource() == this.cancelButton)
+        {
+            subjectForm.dispose();
+            AddSubjectForm.setSubjectFormAsNull();
+        }
+
+        if (e.getSource() == this.submitButton)
+        {
+            boolean isSuccessfulCreatedSubject = DBConnection.getDbConnection().sendSubjectToDB(subjectForm.getNewSubject());
+            if (!isSuccessfulCreatedSubject)
+                MyDialog.showErrorDialog(this, "CAN NOT INSERT THE SUBJECT TO DATABASE");
+            else
+            {
+                subjectForm.dispose();
+                AddSubjectForm.setSubjectFormAsNull();
             }
         }
     }

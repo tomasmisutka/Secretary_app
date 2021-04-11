@@ -1,6 +1,7 @@
 package Components.Panels;
 
 import Components.AddForms.AddEmployeeForm;
+import Components.AddForms.AddSubjectForm;
 import Components.NavigationAddButton;
 
 import javax.swing.*;
@@ -53,7 +54,7 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
         if (e.getSource() == this.addEmployeeButton)
             AddEmployeeForm.getInstance();
         if (e.getSource() == this.addSubjectButton)
-            System.out.println("Add subject form");
+            AddSubjectForm.getInstance();
         if (e.getSource() == this.addStudyGroupButton)
             System.out.println("Add study group form");
         if (e.getSource() == this.addWorkLabelButton)
