@@ -3,6 +3,7 @@ package Services;
 import Common.Constants;
 import Common.Employee;
 import Common.GlobalConfig;
+import Common.StudyGroup;
 import Common.Subject;
 
 import java.sql.Connection;
@@ -118,6 +119,11 @@ public class DBConnection
             throwable.printStackTrace();
             return false;
         }
+        return true;
+    }
+
+    public boolean sendStudyGroupToDB(StudyGroup newStudyGroup)
+    {
         return true;
     }
 }

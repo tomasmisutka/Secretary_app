@@ -3,6 +3,7 @@ package Components.Panels;
 import Common.Constants;
 import Common.Enums.FormPanelType;
 import Components.AddForms.AddEmployeeForm;
+import Components.AddForms.AddStudyGroupForm;
 import Components.AddForms.AddSubjectForm;
 import Components.MyDialog;
 import Services.DBConnection;
@@ -47,6 +48,8 @@ public class AddFormButtonsPanel extends CommonRoundedPanel implements ActionLis
             this.employeeFormAction(e);
         if (this.formPanelType == FormPanelType.Subject)
             this.subjectFormAction(e);
+        if (this.formPanelType == FormPanelType.Study_Group)
+            this.studyGroupAction(e);
     }
 
     private void employeeFormAction(ActionEvent e)
@@ -88,6 +91,28 @@ public class AddFormButtonsPanel extends CommonRoundedPanel implements ActionLis
             else
             {
                 subjectForm.dispose();
+                AddSubjectForm.setSubjectFormAsNull();
+            }
+        }
+    }
+
+    private void studyGroupAction(ActionEvent e)
+    {
+        AddStudyGroupForm studyGroupForm = AddStudyGroupForm.getInstance();
+        if (e.getSource() == this.cancelButton)
+        {
+            studyGroupForm.dispose();
+            AddStudyGroupForm.setStudyGroupFormAsNull();
+        }
+
+        if (e.getSource() == this.submitButton)
+        {
+            boolean isSuccessfulCreatedSubject = DBConnection.getDbConnection().sendStudyGroupToDB(studyGroupForm.getNewStudyGroup());
+            if (!isSuccessfulCreatedSubject)
+                MyDialog.showErrorDialog(this, "CAN NOT INSERT THE STUDY GROUP TO DATABASE");
+            else
+            {
+                studyGroupForm.dispose();
                 AddSubjectForm.setSubjectFormAsNull();
             }
         }
