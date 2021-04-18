@@ -1,6 +1,11 @@
 package Components.AddForms;
 
+import Common.Constants;
 import Common.Enums.FormPanelType;
+import Common.Enums.Language;
+import Common.Enums.StudyForm;
+import Common.Enums.StudyType;
+import Common.Enums.Term;
 import Common.StudyGroup;
 import Components.Panels.AddFormButtonsPanel;
 import Components.Panels.FormTitlePanel;
@@ -11,32 +16,18 @@ import java.awt.*;
 
 public class AddStudyGroupForm extends JFrame
 {
-    private static AddStudyGroupForm studyGroupForm = null;
-    private final JTextField abbreviationTextField = new JTextField("KYB");
-    private final Integer[] yearComboBoxValues = {1,2,3,4,5};
-    private final JComboBox<Integer> yearComboBox = new JComboBox<>(yearComboBoxValues);
-    private final ButtonGroup termGroup = new ButtonGroup();
-    private final JTextField studentsCounterTextField = new JTextField("36");
-    private final ButtonGroup studyFormGroup = new ButtonGroup();
-    private final ButtonGroup studyTypeGroup = new ButtonGroup();
-    private final ButtonGroup languageGroup = new ButtonGroup();
+    private static final JTextField abbreviationTextField = new JTextField("KYB");
+    private static final Integer[] yearComboBoxValues = {1, 2, 3, 4, 5};
+    private static final JComboBox<Integer> yearComboBox = new JComboBox<>(yearComboBoxValues);
+    private static final ButtonGroup termGroup = new ButtonGroup();
+    private static final JTextField studentsCounterTextField = new JTextField("36");
+    private static final ButtonGroup studyFormGroup = new ButtonGroup();
+    private static final ButtonGroup studyTypeGroup = new ButtonGroup();
+    private static final ButtonGroup languageGroup = new ButtonGroup();
 
-    private AddStudyGroupForm()
+    public AddStudyGroupForm()
     {
-        super();
         this.createContent();
-    }
-
-    public static AddStudyGroupForm getInstance()
-    {
-        if (studyGroupForm == null)
-            studyGroupForm = new AddStudyGroupForm();
-        return studyGroupForm;
-    }
-
-    public static void setStudyGroupFormAsNull()
-    {
-        studyGroupForm = null;
     }
 
     private void createContent()
@@ -44,7 +35,7 @@ public class AddStudyGroupForm extends JFrame
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new study group");
         JPanel dataPanel = new JPanel();
-        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Study_Group);
+        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Study_Group, this);
 
         this.initDataPanel(dataPanel);
 
@@ -84,87 +75,111 @@ public class AddStudyGroupForm extends JFrame
         JLabel languageLabel = new JLabel("Language:");
         languageLabel.setFont(contentFont);
 
-        JRadioButton termWinter = new JRadioButton("WINTER");
+        JRadioButton termWinter = new JRadioButton(Constants.winterRadioButtonText);
         termWinter.setFont(contentFont);
-        termWinter.setActionCommand("WINTER");
-        termWinter.setSelected(true);
-        JRadioButton termSummer = new JRadioButton("SUMMER");
+        termWinter.setActionCommand(Constants.winterRadioButtonText);
+        JRadioButton termSummer = new JRadioButton(Constants.summerRadioButtonText);
         termSummer.setFont(contentFont);
-        termSummer.setActionCommand("SUMMER");
-        this.termGroup.add(termWinter);
-        this.termGroup.add(termSummer);
+        termSummer.setActionCommand(Constants.summerRadioButtonText);
+        termGroup.add(termWinter);
+        termGroup.add(termSummer);
+        termGroup.setSelected(termWinter.getModel(), true);
 
-        JRadioButton studyFormPresent = new JRadioButton("PRESENT");
+        JRadioButton studyFormPresent = new JRadioButton(Constants.presentFormButtonText);
         studyFormPresent.setFont(contentFont);
-        studyFormPresent.setActionCommand("PRESENT");
-        studyFormPresent.setSelected(true);
-        JRadioButton studyFormCombined = new JRadioButton("COMBINED");
+        studyFormPresent.setActionCommand(Constants.presentFormButtonText);
+        JRadioButton studyFormCombined = new JRadioButton(Constants.combinedFormButtonText);
         studyFormCombined.setFont(contentFont);
-        studyFormCombined.setActionCommand("COMBINED");
-        this.studyFormGroup.add(studyFormPresent);
-        this.studyFormGroup.add(studyFormCombined);
+        studyFormCombined.setActionCommand(Constants.combinedFormButtonText);
+        studyFormGroup.add(studyFormPresent);
+        studyFormGroup.add(studyFormCombined);
+        studyFormGroup.setSelected(studyFormPresent.getModel(), true);
 
-        JRadioButton studyTypeBachelors = new JRadioButton("BACHELORS");
+        JRadioButton studyTypeBachelors = new JRadioButton(Constants.bachelorsTypeButtonText);
         studyTypeBachelors.setFont(contentFont);
-        studyTypeBachelors.setActionCommand("BACHELORS");
-        studyTypeBachelors.setSelected(true);
-        JRadioButton studyTypeMasters = new JRadioButton("MASTERS");
+        studyTypeBachelors.setActionCommand(Constants.bachelorsTypeButtonText);
+        JRadioButton studyTypeMasters = new JRadioButton(Constants.mastersTypeButtonText);
         studyTypeMasters.setFont(contentFont);
-        studyTypeMasters.setActionCommand("MASTERS");
-        this.studyTypeGroup.add(studyTypeBachelors);
-        this.studyTypeGroup.add(studyTypeMasters);
+        studyTypeMasters.setActionCommand(Constants.mastersTypeButtonText);
+        studyTypeGroup.add(studyTypeBachelors);
+        studyTypeGroup.add(studyTypeMasters);
+        studyTypeGroup.setSelected(studyTypeBachelors.getModel(), true);
 
-        JRadioButton languageCZ = new JRadioButton("CZ");
+        JRadioButton languageCZ = new JRadioButton(Constants.czLanguageText);
         languageCZ.setFont(contentFont);
-        languageCZ.setActionCommand("CZ");
-        languageCZ.setSelected(true);
-        JRadioButton languageEN = new JRadioButton("EN");
+        languageCZ.setActionCommand(Constants.czLanguageText);
+        JRadioButton languageEN = new JRadioButton(Constants.enLanguageText);
         languageEN.setFont(contentFont);
-        languageEN.setActionCommand("EN");
-        this.languageGroup.add(languageCZ);
-        this.languageGroup.add(languageEN);
+        languageEN.setActionCommand(Constants.enLanguageText);
+        languageGroup.add(languageCZ);
+        languageGroup.add(languageEN);
+        languageGroup.setSelected(languageCZ.getModel(), true);
 
-        dataPanel.add(abbreviationLabel, new GridBagConstraints(0,0,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,0,5,0),0,0));
-        dataPanel.add(this.abbreviationTextField, new GridBagConstraints(1,0,2,1,1.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5,5,5,0),0,0));
-        dataPanel.add(yearLabel, new GridBagConstraints(0,1,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,0,5,0),0,0));
-        dataPanel.add(this.yearComboBox, new GridBagConstraints(1,1,2,1,1.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5,5,5,0),0,0));
-        dataPanel.add(termLabel, new GridBagConstraints(0,2,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,0,5,0),0,0));
-        dataPanel.add(termWinter, new GridBagConstraints(1,2,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
-        dataPanel.add(termSummer, new GridBagConstraints(2,2,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
-        dataPanel.add(studentsCountLabel, new GridBagConstraints(0,3,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,0,5,0),0,0));
-        dataPanel.add(this.studentsCounterTextField, new GridBagConstraints(1,3,2,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5,5,5,0),0,0));
-        dataPanel.add(studyFormLabel, new GridBagConstraints(0,4,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,0,5,0),0,0));
-        dataPanel.add(studyFormPresent, new GridBagConstraints(1,4,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
-        dataPanel.add(studyFormCombined, new GridBagConstraints(2,4,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
-        dataPanel.add(studyTypeLabel, new GridBagConstraints(0,5,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,0,5,0),0,0));
-        dataPanel.add(studyTypeBachelors, new GridBagConstraints(1,5,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
-        dataPanel.add(studyTypeMasters, new GridBagConstraints(2,5,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
-        dataPanel.add(languageLabel, new GridBagConstraints(0,6,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,0,5,0),0,0));
-        dataPanel.add(languageCZ, new GridBagConstraints(1,6,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
-        dataPanel.add(languageEN, new GridBagConstraints(2,6,1,1,0.0,0.0,
-                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5,5,5,0),0,0));
+        dataPanel.add(abbreviationLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
+        dataPanel.add(abbreviationTextField, new GridBagConstraints(1, 0, 2, 1, 1.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(yearLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
+        dataPanel.add(yearComboBox, new GridBagConstraints(1, 1, 2, 1, 1.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(termLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
+        dataPanel.add(termWinter, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(termSummer, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(studentsCountLabel, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
+        dataPanel.add(studentsCounterTextField, new GridBagConstraints(1, 3, 2, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(studyFormLabel, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
+        dataPanel.add(studyFormPresent, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(studyFormCombined, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(studyTypeLabel, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
+        dataPanel.add(studyTypeBachelors, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(studyTypeMasters, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(languageLabel, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
+        dataPanel.add(languageCZ, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
+        dataPanel.add(languageEN, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0,
+                GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 0), 0, 0));
 
     }
 
-    public StudyGroup getNewStudyGroup()
+    public static StudyGroup getNewStudyGroup()
     {
-        return null;
+        StudyGroup newStudyGroup = new StudyGroup();
+
+        Integer currentYear = (Integer) yearComboBox.getSelectedItem();
+        Term selectedTerm = Term.WINTER;
+        if (termGroup.getSelection().getActionCommand().equals("SUMMER"))
+            selectedTerm = Term.SUMMER;
+        Integer studentsCounter = new Integer(studentsCounterTextField.getText());
+        StudyForm selectedStudyForm = StudyForm.PRESENT;
+        if (studyFormGroup.getSelection().getActionCommand().equals("COMBINED"))
+            selectedStudyForm = StudyForm.COMBINED;
+        StudyType selectedStudyType = StudyType.BACHELORS;
+        if (studyTypeGroup.getSelection().getActionCommand().equals("MASTERS"))
+            selectedStudyType = StudyType.MASTERS;
+        Language selectedLanguage = Language.CZ;
+        if (languageGroup.getSelection().getActionCommand().equals("EN"))
+            selectedLanguage = Language.EN;
+
+        newStudyGroup.setAbbreviation(abbreviationTextField.getText());
+        newStudyGroup.setYear(currentYear);
+        newStudyGroup.setTerm(selectedTerm);
+        newStudyGroup.setStudentsCount(studentsCounter);
+        newStudyGroup.setStudyForm(selectedStudyForm);
+        newStudyGroup.setStudyType(selectedStudyType);
+        newStudyGroup.setLanguage(selectedLanguage);
+        return newStudyGroup;
     }
 }

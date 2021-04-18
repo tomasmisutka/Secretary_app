@@ -1,5 +1,6 @@
 package Components.AddForms;
 
+import Common.Constants;
 import Common.Enums.Classification;
 import Common.Enums.FormPanelType;
 import Common.Enums.Language;
@@ -13,32 +14,19 @@ import java.awt.*;
 
 public class AddSubjectForm extends JFrame
 {
-    private static AddSubjectForm subjectForm = null;
-    private final JTextField abbreviationTextField = new JTextField("AK8PO");
-    private final JTextField weeksCountTextField = new JTextField("14");
-    private final JTextField lecturesTextField = new JTextField("1");
-    private final JTextField practiseTextField = new JTextField("3");
-    private final JTextField seminarTextField = new JTextField("2");
-    private final JComboBox<Classification> classificationComboBox = new JComboBox<>(Classification.values());
-    private final ButtonGroup languageGroup = new ButtonGroup();
-    private final Integer[] groupSizeComboBoxValues = {24, 12, 0};
-    private final JComboBox<Integer> groupSizeComboBox = new JComboBox<>(groupSizeComboBoxValues);
+    private static final JTextField abbreviationTextField = new JTextField("AK8PO");
+    private static final JTextField weeksCountTextField = new JTextField("14");
+    private static final JTextField lecturesTextField = new JTextField("1");
+    private static final JTextField practiseTextField = new JTextField("3");
+    private static final JTextField seminarTextField = new JTextField("2");
+    private static final JComboBox<Classification> classificationComboBox = new JComboBox<>(Classification.values());
+    private static final ButtonGroup languageGroup = new ButtonGroup();
+    private static final Integer[] groupSizeComboBoxValues = {24, 12, 0};
+    private static final JComboBox<Integer> groupSizeComboBox = new JComboBox<>(groupSizeComboBoxValues);
 
-    private AddSubjectForm()
+    public AddSubjectForm()
     {
         this.createContent();
-    }
-
-    public static AddSubjectForm getInstance()
-    {
-        if (subjectForm == null)
-            subjectForm = new AddSubjectForm();
-        return subjectForm;
-    }
-
-    public static void setSubjectFormAsNull()
-    {
-        subjectForm = null;
     }
 
     private void createContent()
@@ -46,7 +34,7 @@ public class AddSubjectForm extends JFrame
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new subject");
         JPanel dataPanel = new JPanel();
-        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Subject);
+        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Subject, this);
 
         this.initDataPanel(dataPanel);
 
@@ -87,39 +75,39 @@ public class AddSubjectForm extends JFrame
         JLabel groupSizeLabel = new JLabel("Group size:");
         groupSizeLabel.setFont(contentFont);
 
-        JRadioButton czLanguage = new JRadioButton("CZ");
-        czLanguage.setActionCommand("CZ");
-        czLanguage.setSelected(true);
+        JRadioButton czLanguage = new JRadioButton(Constants.czLanguageText);
+        czLanguage.setActionCommand(Constants.czLanguageText);
         czLanguage.setFont(contentFont);
-        JRadioButton enLanguage = new JRadioButton("EN");
-        enLanguage.setActionCommand("EN");
+        JRadioButton enLanguage = new JRadioButton(Constants.enLanguageText);
+        enLanguage.setActionCommand(Constants.enLanguageText);
         enLanguage.setFont(contentFont);
-        this.languageGroup.add(czLanguage);
-        this.languageGroup.add(enLanguage);
+        languageGroup.add(czLanguage);
+        languageGroup.add(enLanguage);
+        languageGroup.setSelected(czLanguage.getModel(), true);
 
         dataPanel.add(abbreviationLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(this.abbreviationTextField, new GridBagConstraints(1, 0, 2, 1, 1.0, 0.0,
+        dataPanel.add(abbreviationTextField, new GridBagConstraints(1, 0, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(weekCountLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(this.weeksCountTextField, new GridBagConstraints(1, 1, 2, 1, 1.0, 0.0,
+        dataPanel.add(weeksCountTextField, new GridBagConstraints(1, 1, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(lectureLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(this.lecturesTextField, new GridBagConstraints(1, 2, 2, 1, 1.0, 0.0,
+        dataPanel.add(lecturesTextField, new GridBagConstraints(1, 2, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(practiseLabel, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(this.practiseTextField, new GridBagConstraints(1, 3, 2, 1, 1.0, 0.0,
+        dataPanel.add(practiseTextField, new GridBagConstraints(1, 3, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(seminarLabel, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(this.seminarTextField, new GridBagConstraints(1, 4, 2, 1, 1.0, 0.0,
+        dataPanel.add(seminarTextField, new GridBagConstraints(1, 4, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(classificationLabel, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(this.classificationComboBox, new GridBagConstraints(1, 5, 2, 1, 1.0, 0.0,
+        dataPanel.add(classificationComboBox, new GridBagConstraints(1, 5, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(languageLabel, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
@@ -129,26 +117,28 @@ public class AddSubjectForm extends JFrame
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(groupSizeLabel, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(this.groupSizeComboBox, new GridBagConstraints(1, 7, 2, 1, 1.0, 0.0,
+        dataPanel.add(groupSizeComboBox, new GridBagConstraints(1, 7, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
 
     }
 
-    public Subject getNewSubject()
+    public static Subject getNewSubject()
     {
         Subject subject = new Subject();
-        subject.setAbbreviation(this.abbreviationTextField.getText());
-        subject.setWeeksCount(new Integer(this.weeksCountTextField.getText()));
-        subject.setLecturesCount(new Integer(this.lecturesTextField.getText()));
-        subject.setPracticesCount(new Integer(this.practiseTextField.getText()));
-        subject.setSeminarsCount(new Integer(this.seminarTextField.getText()));
-        Classification selectedClassification = (Classification) this.classificationComboBox.getSelectedItem();
-        subject.setClassification(selectedClassification);
+
+        Classification selectedClassification = (Classification) classificationComboBox.getSelectedItem();
         Language selectedLanguage = Language.CZ;
-        if (this.languageGroup.getSelection().getActionCommand().equals("EN"))
+        if (languageGroup.getSelection().getActionCommand().equals("EN"))
             selectedLanguage = Language.EN;
+        Integer selectedGroupSize = (Integer) groupSizeComboBox.getSelectedItem();
+
+        subject.setAbbreviation(abbreviationTextField.getText());
+        subject.setWeeksCount(new Integer(weeksCountTextField.getText()));
+        subject.setLecturesCount(new Integer(lecturesTextField.getText()));
+        subject.setPracticesCount(new Integer(practiseTextField.getText()));
+        subject.setSeminarsCount(new Integer(seminarTextField.getText()));
+        subject.setClassification(selectedClassification);
         subject.setLanguage(selectedLanguage);
-        Integer selectedGroupSize = (Integer) this.groupSizeComboBox.getSelectedItem();
         subject.setDefaultGroupSize(selectedGroupSize);
         return subject;
     }

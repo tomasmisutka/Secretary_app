@@ -5,6 +5,7 @@ import Common.Enums.FormPanelType;
 import Components.AddForms.AddEmployeeForm;
 import Components.AddForms.AddStudyGroupForm;
 import Components.AddForms.AddSubjectForm;
+import Components.AddForms.AddWorkLabelForm;
 import Components.MyDialog;
 import Services.DBConnection;
 
@@ -19,11 +20,13 @@ public class AddFormButtonsPanel extends CommonRoundedPanel implements ActionLis
     private final JButton submitButton = new JButton("Submit");
     private final JButton cancelButton = new JButton("Cancel");
     private final FormPanelType formPanelType;
+    private final JFrame parent;
 
-    public AddFormButtonsPanel(FormPanelType formPanelType)
+    public AddFormButtonsPanel(FormPanelType formPanelType, JFrame parent)
     {
         super(Constants.secondaryColor, 10);
         this.formPanelType = formPanelType;
+        this.parent = parent;
         this.createPanel();
     }
 
@@ -31,7 +34,7 @@ public class AddFormButtonsPanel extends CommonRoundedPanel implements ActionLis
     {
         this.setSize(new Dimension(100, 100));
         this.setLayout(new GridBagLayout());
-        this.setBorder(new EmptyBorder(5, 0, 5, 0));
+        this.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         this.submitButton.setPreferredSize(new Dimension(100, 30));
         this.cancelButton.setPreferredSize(new Dimension(100, 30));
@@ -50,71 +53,67 @@ public class AddFormButtonsPanel extends CommonRoundedPanel implements ActionLis
             this.subjectFormAction(e);
         if (this.formPanelType == FormPanelType.Study_Group)
             this.studyGroupAction(e);
+        if (this.formPanelType == FormPanelType.Work_Label)
+            this.workLabelAction(e);
     }
 
     private void employeeFormAction(ActionEvent e)
     {
-        AddEmployeeForm employeeForm = AddEmployeeForm.getInstance();
         if (e.getSource() == this.cancelButton)
-        {
-            employeeForm.dispose();
-            AddEmployeeForm.setEmployeeFormAsNull();
-        }
+            this.parent.dispose();
 
         if (e.getSource() == this.submitButton)
         {
-            boolean isSuccessfulCreatedEmployee = DBConnection.getDbConnection().sendEmployeeToDB(employeeForm.getNewEmployee());
+            boolean isSuccessfulCreatedEmployee = DBConnection.getInstance().sendEmployeeToDB(AddEmployeeForm.getNewEmployee());
             if (!isSuccessfulCreatedEmployee)
                 MyDialog.showErrorDialog(this, "CAN NOT INSERT THE EMPLOYEE TO DATABASE");
             else
-            {
-                employeeForm.dispose();
-                AddEmployeeForm.setEmployeeFormAsNull();
-            }
+                this.parent.dispose();
         }
     }
 
     private void subjectFormAction(ActionEvent e)
     {
-        AddSubjectForm subjectForm = AddSubjectForm.getInstance();
         if (e.getSource() == this.cancelButton)
-        {
-            subjectForm.dispose();
-            AddSubjectForm.setSubjectFormAsNull();
-        }
+            this.parent.dispose();
 
         if (e.getSource() == this.submitButton)
         {
-            boolean isSuccessfulCreatedSubject = DBConnection.getDbConnection().sendSubjectToDB(subjectForm.getNewSubject());
+            boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendSubjectToDB(AddSubjectForm.getNewSubject());
             if (!isSuccessfulCreatedSubject)
                 MyDialog.showErrorDialog(this, "CAN NOT INSERT THE SUBJECT TO DATABASE");
             else
-            {
-                subjectForm.dispose();
-                AddSubjectForm.setSubjectFormAsNull();
-            }
+                this.parent.dispose();
         }
     }
 
     private void studyGroupAction(ActionEvent e)
     {
-        AddStudyGroupForm studyGroupForm = AddStudyGroupForm.getInstance();
         if (e.getSource() == this.cancelButton)
-        {
-            studyGroupForm.dispose();
-            AddStudyGroupForm.setStudyGroupFormAsNull();
-        }
+            this.parent.dispose();
 
         if (e.getSource() == this.submitButton)
         {
-            boolean isSuccessfulCreatedSubject = DBConnection.getDbConnection().sendStudyGroupToDB(studyGroupForm.getNewStudyGroup());
+            boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendStudyGroupToDB(AddStudyGroupForm.getNewStudyGroup());
             if (!isSuccessfulCreatedSubject)
                 MyDialog.showErrorDialog(this, "CAN NOT INSERT THE STUDY GROUP TO DATABASE");
             else
-            {
-                studyGroupForm.dispose();
-                AddSubjectForm.setSubjectFormAsNull();
-            }
+                this.parent.dispose();
+        }
+    }
+
+    private void workLabelAction(ActionEvent e)
+    {
+        if (e.getSource() == this.cancelButton)
+            this.parent.dispose();
+
+        if (e.getSource() == this.submitButton)
+        {
+            boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendWorkLabelToDB(AddWorkLabelForm.getNewWorkLabel());
+            if (!isSuccessfulCreatedSubject)
+                MyDialog.showErrorDialog(this, "CAN NOT INSERT THE WORK LABEL TO DATABASE");
+            else
+                this.parent.dispose();
         }
     }
 }

@@ -5,6 +5,7 @@ import Common.Employee;
 import Common.GlobalConfig;
 import Common.StudyGroup;
 import Common.Subject;
+import Common.WorkLabel;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,7 +23,7 @@ public class DBConnection
     {
     }
 
-    public static DBConnection getDbConnection()
+    public static DBConnection getInstance()
     {
         if (dbConnection == null)
             dbConnection = new DBConnection();
@@ -38,16 +39,16 @@ public class DBConnection
                     Constants.dbLoginName, Constants.dbLoginPassword);
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM GlobalConfig");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM global_configs");
 
             while (resultSet.next())
             {
-                globalConfig = new GlobalConfig(resultSet.getDouble("LectureHour"), resultSet.getDouble("PractiseHour"),
-                        resultSet.getDouble("SeminarHour"), resultSet.getDouble("LectureHourEN"),
-                        resultSet.getDouble("PractiseHourEN"), resultSet.getDouble("SeminarHourEN"),
-                        resultSet.getDouble("MidTermExam"), resultSet.getDouble("ClassifiedExam"),
-                        resultSet.getDouble("Exam"), resultSet.getDouble("MidTermExamEN"),
-                        resultSet.getDouble("ClassifiedExamEN"), resultSet.getDouble("ExamEN"));
+                globalConfig = new GlobalConfig(resultSet.getDouble("hour_lecture"), resultSet.getDouble("hour_practise"),
+                        resultSet.getDouble("hour_seminar"), resultSet.getDouble("hour_lecture_en"),
+                        resultSet.getDouble("hour_practise_en"), resultSet.getDouble("hour_seminar_en"),
+                        resultSet.getDouble("mid_term_exam"), resultSet.getDouble("classified_exam"),
+                        resultSet.getDouble("exam"), resultSet.getDouble("mid_term_exam_en"),
+                        resultSet.getDouble("classified_exam_en"), resultSet.getDouble("exam_en"));
             }
         } catch (SQLException throwable)
         {
@@ -123,6 +124,11 @@ public class DBConnection
     }
 
     public boolean sendStudyGroupToDB(StudyGroup newStudyGroup)
+    {
+        return true;
+    }
+
+    public boolean sendWorkLabelToDB(WorkLabel newWorkLabel)
     {
         return true;
     }

@@ -3,6 +3,7 @@ package Components.Panels;
 import Components.AddForms.AddEmployeeForm;
 import Components.AddForms.AddStudyGroupForm;
 import Components.AddForms.AddSubjectForm;
+import Components.AddForms.AddWorkLabelForm;
 import Components.NavigationAddButton;
 
 import javax.swing.*;
@@ -53,12 +54,12 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == this.addEmployeeButton)
-            AddEmployeeForm.getInstance();
+            new AddEmployeeForm();
         if (e.getSource() == this.addSubjectButton)
-            AddSubjectForm.getInstance();
+            new AddSubjectForm();
         if (e.getSource() == this.addStudyGroupButton)
-            AddStudyGroupForm.getInstance();
+            new AddStudyGroupForm();
         if (e.getSource() == this.addWorkLabelButton)
-            System.out.println("Add work label form");
+            new AddWorkLabelForm();
     }
 }

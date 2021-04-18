@@ -14,4 +14,78 @@ public class StudyGroup
     private StudyForm studyForm;
     private StudyType studyType;
     private Language language;
+
+    public StudyGroup()
+    {
+    }
+
+    public String getAbbreviation()
+    {
+        return abbreviation;
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    public Term getTerm()
+    {
+        return term;
+    }
+
+    public int getStudentsCount()
+    {
+        return studentsCount;
+    }
+
+    public StudyForm getStudyForm()
+    {
+        return studyForm;
+    }
+
+    public StudyType getStudyType()
+    {
+        return studyType;
+    }
+
+    public Language getLanguage()
+    {
+        return language;
+    }
+
+    public void setAbbreviation(String abbreviation)
+    {
+        this.abbreviation = abbreviation;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+
+    public void setTerm(Term term)
+    {
+        this.term = term;
+    }
+
+    public void setStudentsCount(int studentsCount)
+    {
+        this.studentsCount = studentsCount;
+    }
+
+    public void setStudyForm(StudyForm studyForm)
+    {
+        this.studyForm = studyForm;
+    }
+
+    public void setStudyType(StudyType studyType)
+    {
+        this.studyType = studyType;
+    }
+
+    public void setLanguage(Language language)
+    {
+        this.language = language;
+    }
 }

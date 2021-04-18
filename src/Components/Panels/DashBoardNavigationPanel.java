@@ -1,6 +1,7 @@
 package Components.Panels;
 
 import Components.MyDialog;
+import Frames.DashBoard;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -49,7 +50,7 @@ public class DashBoardNavigationPanel extends JPanel implements ActionListener
     {
         if (e.getSource() == this.leaveButton)
         {
-            int result = MyDialog.showConfirmationDialog(this, "Do you want to exit?");
+            int result = MyDialog.showConfirmationDialog(DashBoard.getInstance(), "Do you want to exit?");
             if (result == JOptionPane.YES_OPTION)
                 System.exit(0);
         }

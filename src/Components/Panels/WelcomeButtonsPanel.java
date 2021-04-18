@@ -43,21 +43,21 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
 
     private void showDialog()
     {
-        int result = MyDialog.showConfirmationDialog(this, "Are you sure? You will exit this app...");
+        int result = MyDialog.showConfirmationDialog(this.welcomeScreen, "Are you sure? You will exit this app...");
         if (result == JOptionPane.YES_OPTION)
             System.exit(0);
     }
 
     private void continueToDashBoard()
     {
-        DBConnection dbConnection = DBConnection.getDbConnection();
+        DBConnection dbConnection = DBConnection.getInstance();
         GlobalConfig globalConfig = dbConnection.getGlobalConfig();
         if (globalConfig == null)
-            MyDialog.showErrorDialog(this, "DATABASE connection PROBLEM!!!");
+            MyDialog.showErrorDialog(this.welcomeScreen, "DATABASE connection PROBLEM!!!");
         else
         {
             this.welcomeScreen.dispose();
-            new DashBoard();
+            DashBoard.getInstance();
         }
     }
 
