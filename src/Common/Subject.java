@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class Subject
 {
-    private String abbreviation;
-    private int weeksCount;
-    private int lecturesCount;
-    private int practicesCount;
-    private int seminarsCount;
-    private Classification classification;
-    private Language language;
-    private int defaultGroupSize;
-    private ArrayList<StudyGroup> studyGroups;
+    private String abbreviation = "";
+    private int weeksCount = 14;
+    private int lecturesCount = 0;
+    private int practicesCount = 0;
+    private int seminarsCount = 0;
+    private Classification classification = Classification.EXAM;
+    private Language language = Language.CZ;
+    private int defaultGroupSize = 24;
+    private ArrayList<StudyGroup> studyGroups = new ArrayList<>();
 
     public Subject()
     {

@@ -170,7 +170,7 @@ public class AddStudyGroupForm extends JFrame
     {
         StudyGroup newStudyGroup = new StudyGroup();
 
-        Integer currentYear = (Integer) yearComboBox.getSelectedItem();
+        Integer studyYear = (Integer) yearComboBox.getSelectedItem();
         Term selectedTerm = Term.WINTER;
         if (termGroup.getSelection().getActionCommand().equals("SUMMER"))
             selectedTerm = Term.SUMMER;
@@ -186,12 +186,13 @@ public class AddStudyGroupForm extends JFrame
             selectedLanguage = Language.EN;
 
         newStudyGroup.setAbbreviation(abbreviationTextField.getText());
-        newStudyGroup.setYear(currentYear);
+        newStudyGroup.setYear(studyYear == null ? 2021 : studyYear);
         newStudyGroup.setTerm(selectedTerm);
         newStudyGroup.setStudentsCount(studentsCounter);
         newStudyGroup.setStudyForm(selectedStudyForm);
         newStudyGroup.setStudyType(selectedStudyType);
         newStudyGroup.setLanguage(selectedLanguage);
+
         return newStudyGroup;
     }
 }

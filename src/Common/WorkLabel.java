@@ -5,15 +5,15 @@ import Common.Enums.Language;
 
 public class WorkLabel
 {
-    private String name;
-    private Employee employee;
-    private Subject subject;
-    private EventType eventType;
+    private String name = "";
+    private Employee employee = null;
+    private Subject subject = null;
+    private EventType eventType = EventType.LECTURE;
     private int studentsCount = 11;
-    private int hoursCount; //exams are not awarded!
-    private int weeksCount;
-    private Language language;
-    private int totalPoints;
+    private int hoursCount = 0;
+    private int weeksCount = 0;
+    private Language language = Language.CZ;
+    private int totalPoints = 0;
 
     public WorkLabel()
     {

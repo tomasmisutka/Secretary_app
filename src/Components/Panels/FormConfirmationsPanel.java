@@ -2,10 +2,10 @@ package Components.Panels;
 
 import Common.Constants;
 import Common.Enums.FormPanelType;
+import Common.Message;
 import Components.AddForms.AddEmployeeForm;
 import Components.AddForms.AddStudyGroupForm;
 import Components.AddForms.AddSubjectForm;
-import Components.AddForms.AddWorkLabelForm;
 import Components.MessageDialog;
 import Services.DBConnection;
 
@@ -56,8 +56,6 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
             this.subjectFormAction(e);
         if (this.formPanelType == FormPanelType.Study_Group)
             this.studyGroupAction(e);
-        if (this.formPanelType == FormPanelType.Work_Label)
-            this.workLabelAction(e);
     }
 
     private void employeeFormAction(ActionEvent e)
@@ -72,7 +70,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
         {
             boolean isSuccessfulCreatedEmployee = DBConnection.getInstance().sendEmployeeToDB(AddEmployeeForm.getNewEmployee());
             if (!isSuccessfulCreatedEmployee)
-                MessageDialog.showErrorDialog(this, "CAN NOT INSERT THE EMPLOYEE TO DATABASE");
+                MessageDialog.showErrorDialog(this, Message.DB_EMPLOYEE_ERROR);
             else
             {
                 AddEmployeeForm.releaseInstance();
@@ -93,7 +91,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
         {
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendSubjectToDB(AddSubjectForm.getNewSubject());
             if (!isSuccessfulCreatedSubject)
-                MessageDialog.showErrorDialog(this, "CAN NOT INSERT THE SUBJECT TO DATABASE");
+                MessageDialog.showErrorDialog(this, Message.DB_SUBJECT_ERROR);
             else
             {
                 AddSubjectForm.releaseInstance();
@@ -114,31 +112,10 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
         {
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendStudyGroupToDB(AddStudyGroupForm.getNewStudyGroup());
             if (!isSuccessfulCreatedSubject)
-                MessageDialog.showErrorDialog(this, "CAN NOT INSERT THE STUDY GROUP TO DATABASE");
+                MessageDialog.showErrorDialog(this, Message.DB_STUDY_GROUP_ERROR);
             else
             {
                 AddStudyGroupForm.releaseInstance();
-                this.parent.dispose();
-            }
-        }
-    }
-
-    private void workLabelAction(ActionEvent e)
-    {
-        if (e.getSource() == this.cancelButton)
-        {
-            AddWorkLabelForm.releaseInstance();
-            this.parent.dispose();
-        }
-
-        if (e.getSource() == this.submitButton)
-        {
-            boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendWorkLabelToDB(AddWorkLabelForm.getNewWorkLabel());
-            if (!isSuccessfulCreatedSubject)
-                MessageDialog.showErrorDialog(this, "CAN NOT INSERT THE WORK LABEL TO DATABASE");
-            else
-            {
-                AddWorkLabelForm.releaseInstance();
                 this.parent.dispose();
             }
         }

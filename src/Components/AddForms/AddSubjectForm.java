@@ -16,7 +16,6 @@ public class AddSubjectForm extends JFrame
 {
     private static int instanceCounter = 0;
     private static final JTextField abbreviationTextField = new JTextField("AK8PO");
-    private static final JTextField weeksCountTextField = new JTextField("14");
     private static final JTextField lecturesTextField = new JTextField("1");
     private static final JTextField practiseTextField = new JTextField("3");
     private static final JTextField seminarTextField = new JTextField("2");
@@ -72,8 +71,6 @@ public class AddSubjectForm extends JFrame
 
         JLabel abbreviationLabel = new JLabel("Abbreviation:");
         abbreviationLabel.setFont(contentFont);
-        JLabel weekCountLabel = new JLabel("Weeks:");
-        weekCountLabel.setFont(contentFont);
         JLabel lectureLabel = new JLabel("Lectures:");
         lectureLabel.setFont(contentFont);
         JLabel practiseLabel = new JLabel("Practises:");
@@ -100,10 +97,6 @@ public class AddSubjectForm extends JFrame
         dataPanel.add(abbreviationLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
         dataPanel.add(abbreviationTextField, new GridBagConstraints(1, 0, 2, 1, 1.0, 0.0,
-                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
-        dataPanel.add(weekCountLabel, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-        dataPanel.add(weeksCountTextField, new GridBagConstraints(1, 1, 2, 1, 1.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(lectureLabel, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
@@ -145,13 +138,12 @@ public class AddSubjectForm extends JFrame
         Integer selectedGroupSize = (Integer) groupSizeComboBox.getSelectedItem();
 
         subject.setAbbreviation(abbreviationTextField.getText());
-        subject.setWeeksCount(new Integer(weeksCountTextField.getText()));
         subject.setLecturesCount(new Integer(lecturesTextField.getText()));
         subject.setPracticesCount(new Integer(practiseTextField.getText()));
         subject.setSeminarsCount(new Integer(seminarTextField.getText()));
         subject.setClassification(selectedClassification);
         subject.setLanguage(selectedLanguage);
-        subject.setDefaultGroupSize(selectedGroupSize);
+        subject.setDefaultGroupSize(selectedGroupSize == null ? 12 : selectedGroupSize);
         return subject;
     }
 }

@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class Employee
 {
-    private String firstName;
-    private String lastName;
-    private String fullName;
-    private String privateEmail;
-    private String jobEmail;
-    private boolean isDoctoral;
-    private double workLoad;
+    private String firstName = "";
+    private String lastName = "";
+    private String fullName = "";
+    private String privateEmail = "";
+    private String jobEmail = "";
+    private boolean isDoctoral = false;
+    private double workLoad = 0;
     private int workPoints = 0;
     private int workPointsEN = 0;
-    private ArrayList<WorkLabel> workLabels;
+    private ArrayList<WorkLabel> workLabels = new ArrayList<>();
 
     public Employee()
     {

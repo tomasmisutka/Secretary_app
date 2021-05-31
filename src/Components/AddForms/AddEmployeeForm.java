@@ -17,7 +17,6 @@ public class AddEmployeeForm extends JFrame
     private static final JTextField lastNameTextField = new JTextField("Surname");
     private static final JTextField privateEmailTextField = new JTextField("example@gmail.com");
     private static final JTextField jobEmailTextField = new JTextField("secretary@utb.cz");
-    private static final JTextField workloadTextField = new JTextField("0");
     private static final ButtonGroup doctoralGroup = new ButtonGroup();
 
     public AddEmployeeForm()
@@ -76,8 +75,6 @@ public class AddEmployeeForm extends JFrame
         jobEmailLabel.setFont(contentFont);
         JLabel isDoctoralLabel = new JLabel("Is doctoral:");
         isDoctoralLabel.setFont(contentFont);
-        JLabel workLoadLabel = new JLabel("Workload (0 - 1):");
-        workLoadLabel.setFont(contentFont);
 
         JRadioButton isDoctoralYes = new JRadioButton(Constants.yesButtonText);
         JRadioButton isDoctoralNo = new JRadioButton(Constants.noButtonText);
@@ -111,10 +108,6 @@ public class AddEmployeeForm extends JFrame
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
         dataPanel.add(isDoctoralNo, new GridBagConstraints(2, 4, 1, 1, 0.1, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
-        dataPanel.add(workLoadLabel, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
-                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
-        dataPanel.add(workloadTextField, new GridBagConstraints(1, 5, 2, 1, 1.0, 0.0,
-                GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
     }
 
     public static Employee getNewEmployee()
@@ -123,10 +116,7 @@ public class AddEmployeeForm extends JFrame
 
         String name = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
-        boolean isDoctoral = false;
-        if (doctoralGroup.getSelection().getActionCommand().equals("YES"))
-            isDoctoral = true;
-        Double workload = new Double(workloadTextField.getText());
+        boolean isDoctoral = doctoralGroup.getSelection().getActionCommand().equals("YES");
 
         employee.setFirstName(name);
         employee.setLastName(lastName);
@@ -134,7 +124,7 @@ public class AddEmployeeForm extends JFrame
         employee.setPrivateEmail(privateEmailTextField.getText());
         employee.setJobEmail(jobEmailTextField.getText());
         employee.setDoctoral(isDoctoral);
-        employee.setWorkLoad(workload);
+        employee.setWorkLoad(0);
         employee.setWorkPoints(0);
         employee.setWorkPointsEN(0);
         return employee;

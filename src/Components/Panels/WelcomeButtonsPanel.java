@@ -2,6 +2,7 @@ package Components.Panels;
 
 import Common.Constants;
 import Common.GlobalConfig;
+import Common.Message;
 import Components.MessageDialog;
 import Frames.Dashboard;
 import Services.DBConnection;
@@ -43,7 +44,7 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
 
     private void showDialog()
     {
-        int result = MessageDialog.showConfirmationDialog(this.welcomeScreen, "Are you sure? You will exit this app...");
+        int result = MessageDialog.showConfirmationDialog(this.welcomeScreen, Message.EXIT_APP);
         if (result == JOptionPane.YES_OPTION)
             System.exit(0);
     }
@@ -53,7 +54,7 @@ public class WelcomeButtonsPanel extends JPanel implements ActionListener
         DBConnection dbConnection = DBConnection.getInstance();
         GlobalConfig globalConfig = dbConnection.getGlobalConfig();
         if (globalConfig == null)
-            MessageDialog.showErrorDialog(this.welcomeScreen, "DATABASE connection PROBLEM!!!");
+            MessageDialog.showErrorDialog(this.welcomeScreen, Message.DB_CONNECTION_ERROR);
         else
         {
             this.welcomeScreen.dispose();

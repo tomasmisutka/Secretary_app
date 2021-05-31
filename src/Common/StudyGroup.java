@@ -7,13 +7,13 @@ import Common.Enums.Term;
 
 public class StudyGroup
 {
-    private String abbreviation;
-    private int year;
-    private Term term;
+    private String abbreviation = "";
+    private int year = 2021;
+    private Term term = Term.WINTER;
     private int studentsCount = 36;
-    private StudyForm studyForm;
-    private StudyType studyType;
-    private Language language;
+    private StudyForm studyForm = StudyForm.PRESENT;
+    private StudyType studyType = StudyType.BACHELORS;
+    private Language language = Language.CZ;
 
     public StudyGroup()
     {

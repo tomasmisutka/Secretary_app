@@ -3,7 +3,6 @@ package Components.Panels;
 import Components.AddForms.AddEmployeeForm;
 import Components.AddForms.AddStudyGroupForm;
 import Components.AddForms.AddSubjectForm;
-import Components.AddForms.AddWorkLabelForm;
 import Components.NavigationAddButton;
 
 import javax.swing.*;
@@ -16,14 +15,12 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
     private final NavigationAddButton addEmployeeButton;
     private final NavigationAddButton addSubjectButton;
     private final NavigationAddButton addStudyGroupButton;
-    private final NavigationAddButton addWorkLabelButton;
 
     public NavigationButtonsPanel()
     {
         this.addEmployeeButton = new NavigationAddButton("add_employee.png", "Employee");
         this.addSubjectButton = new NavigationAddButton("add_subject.png", "Subject");
         this.addStudyGroupButton = new NavigationAddButton("add_class.png", "Study Group");
-        this.addWorkLabelButton = new NavigationAddButton("add_worklabel.png", "Work Label");
         this.createPanel();
         this.addActionsListeners();
     }
@@ -33,7 +30,6 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
         this.addEmployeeButton.addActionListener(this);
         this.addSubjectButton.addActionListener(this);
         this.addStudyGroupButton.addActionListener(this);
-        this.addWorkLabelButton.addActionListener(this);
     }
 
     private void createPanel()
@@ -45,8 +41,6 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
         this.add(this.addSubjectButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 10, 0, 10), 0, 0));
         this.add(this.addStudyGroupButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 10, 0, 10), 0, 0));
-        this.add(this.addWorkLabelButton, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 10, 0, 10), 0, 0));
     }
 
@@ -63,8 +57,5 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
         if (e.getSource() == this.addStudyGroupButton)
             if (AddStudyGroupForm.getInstanceCounter() < 1)
                 new AddStudyGroupForm();
-        if (e.getSource() == this.addWorkLabelButton)
-            if (AddWorkLabelForm.getInstanceCounter() < 1)
-                new AddWorkLabelForm();
     }
 }
