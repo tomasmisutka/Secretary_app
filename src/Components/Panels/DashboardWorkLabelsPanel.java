@@ -4,20 +4,20 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class DashBoardWorkLabelsPanel extends JPanel
+public class DashboardWorkLabelsPanel extends JPanel
 {
     private boolean isVisible = true;
-    private final static DashBoardWorkLabelsPanel labelsPanel = new DashBoardWorkLabelsPanel();
+    private final static DashboardWorkLabelsPanel labelsPanel = new DashboardWorkLabelsPanel();
 
-    private DashBoardWorkLabelsPanel()
+    private DashboardWorkLabelsPanel()
     {
         this.createPanel();
     }
 
-    public static DashBoardWorkLabelsPanel getLabelsPanel()
+    public static DashboardWorkLabelsPanel getLabelsPanel()
     {
         if (labelsPanel == null)
-            return new DashBoardWorkLabelsPanel();
+            return new DashboardWorkLabelsPanel();
         return labelsPanel;
     }
 

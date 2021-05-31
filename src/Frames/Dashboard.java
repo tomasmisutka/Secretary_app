@@ -1,29 +1,29 @@
 package Frames;
 
-import Components.Panels.DashBoardBodyPanel;
-import Components.Panels.DashBoardNavigationPanel;
-import Components.Panels.DashBoardSidePanelLeft;
-import Components.Panels.DashBoardWorkLabelsPanel;
+import Components.Panels.DashboardBodyPanel;
+import Components.Panels.DashboardNavigationPanel;
+import Components.Panels.DashboardSidePanelLeft;
+import Components.Panels.DashboardWorkLabelsPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class DashBoard extends JFrame
+public class Dashboard extends JFrame
 {
-    private static DashBoard dashBoard = null;
+    private static Dashboard dashBoard = null;
 
-    private DashBoard()
+    private Dashboard()
     {
-        DashBoardWorkLabelsPanel labelsPanel = DashBoardWorkLabelsPanel.getLabelsPanel();
-        DashBoardBodyPanel bodyPanel = new DashBoardBodyPanel();
-        this.initFrame(new DashBoardNavigationPanel(), new DashBoardSidePanelLeft(bodyPanel),
+        DashboardWorkLabelsPanel labelsPanel = DashboardWorkLabelsPanel.getLabelsPanel();
+        DashboardBodyPanel bodyPanel = new DashboardBodyPanel();
+        this.initFrame(new DashboardNavigationPanel(), new DashboardSidePanelLeft(bodyPanel),
                 labelsPanel, bodyPanel);
     }
 
-    public static DashBoard getInstance()
+    public static Dashboard getInstance()
     {
         if (dashBoard == null)
-            dashBoard = new DashBoard();
+            dashBoard = new Dashboard();
         return dashBoard;
     }
 

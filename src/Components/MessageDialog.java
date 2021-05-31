@@ -3,7 +3,7 @@ package Components;
 import javax.swing.*;
 import java.awt.*;
 
-public class MyDialog
+public class MessageDialog
 {
     public static int showConfirmationDialog(Component parentComponent, String message)
     {

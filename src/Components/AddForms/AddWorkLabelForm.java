@@ -5,7 +5,7 @@ import Common.Enums.EventType;
 import Common.Enums.FormPanelType;
 import Common.Enums.Language;
 import Common.WorkLabel;
-import Components.Panels.AddFormButtonsPanel;
+import Components.Panels.FormConfirmationsPanel;
 import Components.Panels.FormTitlePanel;
 
 import javax.swing.*;
@@ -14,6 +14,7 @@ import java.awt.*;
 
 public class AddWorkLabelForm extends JFrame
 {
+    private static int instanceCounter = 0;
     private static final JTextField nameTextField = new JTextField("Practise AK8PO");
     private static final JComboBox<EventType> eventTypeComboBox = new JComboBox<>(EventType.values());
     private static final JTextField studentsCountTextField = new JTextField("11");
@@ -24,12 +25,23 @@ public class AddWorkLabelForm extends JFrame
         this.createPanel();
     }
 
+    public static int getInstanceCounter()
+    {
+        return instanceCounter;
+    }
+
+    public static void releaseInstance()
+    {
+        instanceCounter = 0;
+    }
+
     private void createPanel()
     {
+        instanceCounter++;
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new subject");
         JPanel dataPanel = new JPanel();
-        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Subject, this);
+        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Work_Label, this);
 
         this.initDataPanel(dataPanel);
 
@@ -110,8 +122,7 @@ public class AddWorkLabelForm extends JFrame
 //        newWorkLabel.setWeeksCount();
         newWorkLabel.setLanguage(selectedLanguage);
 //        newWorkLabel.setTotalPoints();
-
-        return null;
+        return newWorkLabel;
     }
 
     private static EventType getSelectedEvent()

@@ -6,11 +6,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class DashBoardSidePanelLeft extends JPanel
+public class DashboardSidePanelLeft extends JPanel
 {
-    private final DashBoardBodyPanel bodyPanel;
+    private final DashboardBodyPanel bodyPanel;
 
-    public DashBoardSidePanelLeft(DashBoardBodyPanel bodyPanel)
+    public DashboardSidePanelLeft(DashboardBodyPanel bodyPanel)
     {
         this.bodyPanel = bodyPanel;
         this.createPanel();

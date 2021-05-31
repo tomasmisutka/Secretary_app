@@ -7,7 +7,7 @@ import Common.Enums.StudyForm;
 import Common.Enums.StudyType;
 import Common.Enums.Term;
 import Common.StudyGroup;
-import Components.Panels.AddFormButtonsPanel;
+import Components.Panels.FormConfirmationsPanel;
 import Components.Panels.FormTitlePanel;
 
 import javax.swing.*;
@@ -16,6 +16,7 @@ import java.awt.*;
 
 public class AddStudyGroupForm extends JFrame
 {
+    private static int instanceCounter = 0;
     private static final JTextField abbreviationTextField = new JTextField("KYB");
     private static final Integer[] yearComboBoxValues = {1, 2, 3, 4, 5};
     private static final JComboBox<Integer> yearComboBox = new JComboBox<>(yearComboBoxValues);
@@ -30,12 +31,23 @@ public class AddStudyGroupForm extends JFrame
         this.createContent();
     }
 
+    public static int getInstanceCounter()
+    {
+        return instanceCounter;
+    }
+
+    public static void releaseInstance()
+    {
+        instanceCounter = 0;
+    }
+
     private void createContent()
     {
+        instanceCounter++;
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new study group");
         JPanel dataPanel = new JPanel();
-        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Study_Group, this);
+        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Study_Group, this);
 
         this.initDataPanel(dataPanel);
 

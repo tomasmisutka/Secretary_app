@@ -54,12 +54,17 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == this.addEmployeeButton)
-            new AddEmployeeForm();
+            if (AddEmployeeForm.getInstancesCounter() < 1)
+                new AddEmployeeForm();
+
         if (e.getSource() == this.addSubjectButton)
-            new AddSubjectForm();
+            if (AddSubjectForm.getInstanceCounter() < 1)
+                new AddSubjectForm();
         if (e.getSource() == this.addStudyGroupButton)
-            new AddStudyGroupForm();
+            if (AddStudyGroupForm.getInstanceCounter() < 1)
+                new AddStudyGroupForm();
         if (e.getSource() == this.addWorkLabelButton)
-            new AddWorkLabelForm();
+            if (AddWorkLabelForm.getInstanceCounter() < 1)
+                new AddWorkLabelForm();
     }
 }

@@ -5,7 +5,7 @@ import Common.Enums.Classification;
 import Common.Enums.FormPanelType;
 import Common.Enums.Language;
 import Common.Subject;
-import Components.Panels.AddFormButtonsPanel;
+import Components.Panels.FormConfirmationsPanel;
 import Components.Panels.FormTitlePanel;
 
 import javax.swing.*;
@@ -14,6 +14,7 @@ import java.awt.*;
 
 public class AddSubjectForm extends JFrame
 {
+    private static int instanceCounter = 0;
     private static final JTextField abbreviationTextField = new JTextField("AK8PO");
     private static final JTextField weeksCountTextField = new JTextField("14");
     private static final JTextField lecturesTextField = new JTextField("1");
@@ -29,12 +30,23 @@ public class AddSubjectForm extends JFrame
         this.createContent();
     }
 
+    public static int getInstanceCounter()
+    {
+        return instanceCounter;
+    }
+
+    public static void releaseInstance()
+    {
+        instanceCounter = 0;
+    }
+
     private void createContent()
     {
+        instanceCounter++;
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new subject");
         JPanel dataPanel = new JPanel();
-        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Subject, this);
+        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Subject, this);
 
         this.initDataPanel(dataPanel);
 

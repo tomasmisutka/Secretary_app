@@ -3,10 +3,10 @@ package Components.Panels;
 import javax.swing.*;
 import java.awt.*;
 
-public class DashBoardBodyPanel extends JPanel
+public class DashboardBodyPanel extends JPanel
 {
     private final CardLayout cardLayout;
-    public DashBoardBodyPanel()
+    public DashboardBodyPanel()
     {
         this.cardLayout = new CardLayout();
         this.createPanel();

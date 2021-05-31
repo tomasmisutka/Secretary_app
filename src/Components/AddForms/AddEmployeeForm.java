@@ -3,7 +3,7 @@ package Components.AddForms;
 import Common.Constants;
 import Common.Employee;
 import Common.Enums.FormPanelType;
-import Components.Panels.AddFormButtonsPanel;
+import Components.Panels.FormConfirmationsPanel;
 import Components.Panels.FormTitlePanel;
 
 import javax.swing.*;
@@ -12,6 +12,7 @@ import java.awt.*;
 
 public class AddEmployeeForm extends JFrame
 {
+    private static int numberOfInstances = 0;
     private static final JTextField firstNameTextField = new JTextField("Name");
     private static final JTextField lastNameTextField = new JTextField("Surname");
     private static final JTextField privateEmailTextField = new JTextField("example@gmail.com");
@@ -24,12 +25,23 @@ public class AddEmployeeForm extends JFrame
         this.createContent();
     }
 
+    public static int getInstancesCounter()
+    {
+        return numberOfInstances;
+    }
+
+    public static void releaseInstance()
+    {
+        numberOfInstances = 0;
+    }
+
     private void createContent()
     {
+        numberOfInstances++;
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new employee");
         JPanel dataPanel = new JPanel();
-        AddFormButtonsPanel buttonsPanel = new AddFormButtonsPanel(FormPanelType.Employee, this);
+        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Employee, this);
 
         this.initDataPanel(dataPanel);
 
@@ -75,7 +87,7 @@ public class AddEmployeeForm extends JFrame
         isDoctoralNo.setFont(contentFont);
         doctoralGroup.add(isDoctoralYes);
         doctoralGroup.add(isDoctoralNo);
-        doctoralGroup.setSelected(isDoctoralNo.getModel(),true);
+        doctoralGroup.setSelected(isDoctoralNo.getModel(), true);
 
         dataPanel.add(firstNameLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 0), 0, 0));
