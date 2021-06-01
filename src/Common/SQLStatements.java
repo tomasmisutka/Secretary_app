@@ -1,6 +1,7 @@
 package Common;
 
-public interface SqlStatements {
+public interface SQLStatements
+{
     String CONNECTION = "jdbc:mysql://localhost:3306/secretary";
     String SELECT_GLOBAL_CONFIGS_STATEMENT = "SELECT * FROM global_configs";
     String NEW_EMPLOYEE_STATEMENT = "INSERT INTO employees (first_name, last_name, full_name, private_email, job_email," +
@@ -10,4 +11,6 @@ public interface SqlStatements {
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     String NEW_STUDY_GROUP_STATEMENT = "INSERT INTO study_groups (abbreviation, study_year, term, students_count, " +
             "study_form, study_type, study_language) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String NEW_WORK_LABEL_STATEMENT = "INSERT INTO work_labels (name, employee_id, subject_id, event_type, students_count," +
+            " hours_count, weeks_count, language_used, total_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 }

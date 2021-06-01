@@ -31,11 +31,11 @@ public class DBConnection
         GlobalConfig globalConfig = null;
         try
         {
-            Connection connection = DriverManager.getConnection(SqlStatements.CONNECTION,
+            Connection connection = DriverManager.getConnection(SQLStatements.CONNECTION,
                     Constants.dbLoginName, Constants.dbLoginPassword);
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(SqlStatements.SELECT_GLOBAL_CONFIGS_STATEMENT);
+            ResultSet resultSet = statement.executeQuery(SQLStatements.SELECT_GLOBAL_CONFIGS_STATEMENT);
 
             while (resultSet.next())
             {
@@ -60,9 +60,9 @@ public class DBConnection
         try
         {
 
-            connection = DriverManager.getConnection(SqlStatements.CONNECTION,
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
                     Constants.dbLoginName, Constants.dbLoginPassword);
-            PreparedStatement prepareStatement = connection.prepareStatement(SqlStatements.NEW_EMPLOYEE_STATEMENT);
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_EMPLOYEE_STATEMENT);
             prepareStatement.setString(1, employee.getFirstName().toLowerCase());
             prepareStatement.setString(2, employee.getLastName().toLowerCase());
             prepareStatement.setString(3, employee.getFullName().toLowerCase());
@@ -91,10 +91,10 @@ public class DBConnection
         Connection connection = null;
         try
         {
-            connection = DriverManager.getConnection(SqlStatements.CONNECTION,
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
                     Constants.dbLoginName, Constants.dbLoginPassword);
 
-            PreparedStatement prepareStatement = connection.prepareStatement(SqlStatements.NEW_SUBJECT_STATEMENT);
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_SUBJECT_STATEMENT);
             prepareStatement.setString(1, newSubject.getAbbreviation().toLowerCase());
             prepareStatement.setInt(2, newSubject.getWeeksCount());
             prepareStatement.setInt(3, newSubject.getLecturesCount());
@@ -105,6 +105,7 @@ public class DBConnection
             prepareStatement.setInt(8, newSubject.getDefaultGroupSize());
             prepareStatement.setNull(9, Types.INTEGER);
 
+            //todo here will be private method to calculate and create new work labels
             prepareStatement.execute();
             connection.close();
 
@@ -122,16 +123,16 @@ public class DBConnection
         Connection connection = null;
         try
         {
-            connection = DriverManager.getConnection(SqlStatements.CONNECTION,
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
                     Constants.dbLoginName, Constants.dbLoginPassword);
 
-            PreparedStatement prepareStatement = connection.prepareStatement(SqlStatements.NEW_STUDY_GROUP_STATEMENT);
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_STUDY_GROUP_STATEMENT);
             prepareStatement.setString(1, newStudyGroup.getAbbreviation().toLowerCase());
             prepareStatement.setInt(2, newStudyGroup.getYear());
-            prepareStatement.setString(3,newStudyGroup.getTerm().toString().toLowerCase());
+            prepareStatement.setString(3, newStudyGroup.getTerm().toString().toLowerCase());
             prepareStatement.setInt(4, newStudyGroup.getStudentsCount());
-            prepareStatement.setString(5,newStudyGroup.getStudyForm().toString().toLowerCase());
-            prepareStatement.setString(6,newStudyGroup.getStudyType().toString().toLowerCase());
+            prepareStatement.setString(5, newStudyGroup.getStudyForm().toString().toLowerCase());
+            prepareStatement.setString(6, newStudyGroup.getStudyType().toString().toLowerCase());
             prepareStatement.setString(7, newStudyGroup.getLanguage().toString().toLowerCase());
 
             prepareStatement.execute();
@@ -146,8 +147,33 @@ public class DBConnection
     }
 
     /* This method sends new WorkLabel to DB */
-    public boolean sendWorkLabelToDB(WorkLabel newWorkLabel)
+    private boolean sendWorkLabelToDB(WorkLabel newWorkLabel)
     {
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_WORK_LABEL_STATEMENT);
+            prepareStatement.setString(1, newWorkLabel.getName());
+            prepareStatement.setNull(2, Types.INTEGER);
+            prepareStatement.setNull(3, Types.INTEGER);
+            prepareStatement.setString(4, newWorkLabel.getEventType().toString().toLowerCase());
+            prepareStatement.setInt(5, newWorkLabel.getStudentsCount());
+            prepareStatement.setInt(6, newWorkLabel.getHoursCount());
+            prepareStatement.setInt(7, newWorkLabel.getWeeksCount());
+            prepareStatement.setString(8, newWorkLabel.getLanguage().toString().toLowerCase());
+            prepareStatement.setInt(9, newWorkLabel.getTotalPoints());
+
+            prepareStatement.execute();
+            connection.close();
+
+        } catch (SQLException throwable)
+        {
+            throwable.printStackTrace();
+            return false;
+        }
         return true;
     }
 }
