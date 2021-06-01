@@ -4,6 +4,7 @@ import Common.*;
 import Components.MessageDialog;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBConnection
 {
@@ -122,6 +123,45 @@ public class DBConnection
             return Constants.ERROR_OCCURS;
         }
         return Constants.NAME_AVAILABLE;
+    }
+
+    public ArrayList<Employee> getAllEmployees()
+    {
+        ArrayList<Employee> employees = new ArrayList<>();
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_ALL_EMPLOYEES_STATEMENT);
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            while (resultSet.next())
+            {
+                Employee employee = new Employee();
+
+                employee.setId(resultSet.getInt("id"));
+                employee.setFirstName(resultSet.getString("first_name"));
+                employee.setLastName(resultSet.getString("last_name"));
+                employee.setFullName(resultSet.getString("full_name"));
+                employee.setPrivateEmail(resultSet.getString("private_email"));
+                employee.setJobEmail(resultSet.getString("job_email"));
+                employee.setWorkPoints(resultSet.getInt("work_points"));
+                employee.setWorkPointsEN(resultSet.getInt("work_points_en"));
+                employee.setDoctoral(resultSet.getBoolean("is_doctoral"));
+                employee.setWorkLoad(resultSet.getDouble("work_load"));
+
+                employees.add(employee);
+            }
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return employees;
+        }
+        return employees;
     }
 
 

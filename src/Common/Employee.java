@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Employee
 {
+    private int id = 0;
     private String firstName = "";
     private String lastName = "";
     private String fullName = "";
@@ -17,6 +18,11 @@ public class Employee
 
     public Employee()
     {
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public void setFirstName(String firstName)
@@ -67,6 +73,11 @@ public class Employee
     public void setWorkLabels(ArrayList<WorkLabel> workLabels)
     {
         this.workLabels = workLabels;
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public String getFirstName()
