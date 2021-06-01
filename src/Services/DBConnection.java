@@ -1,14 +1,9 @@
 package Services;
 
 import Common.*;
+import Components.MessageDialog;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
+import java.sql.*;
 
 public class DBConnection
 {
@@ -62,10 +57,30 @@ public class DBConnection
 
             connection = DriverManager.getConnection(SQLStatements.CONNECTION,
                     Constants.dbLoginName, Constants.dbLoginPassword);
+
+            int sameFullNameCounter = 0;
+            String originalFullName = employee.getFullName();
+            while (true)
+            {
+                sameFullNameCounter++;
+                int userExistential = this.checkFullNameExistential(connection, employee);
+
+                if (userExistential == Constants.ERROR_OCCURS)
+                {
+                    MessageDialog.showErrorDialog(null, Message.DB_EMPLOYEE_NAME_CHECK_ERROR);
+                    return false;
+                }
+                if (userExistential == Constants.NAME_AVAILABLE)
+                    break;
+
+                if (userExistential == Constants.EMPLOYEE_EXISTS)
+                    employee.setFullName(originalFullName + sameFullNameCounter);
+            }
+
             PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_EMPLOYEE_STATEMENT);
-            prepareStatement.setString(1, employee.getFirstName().toLowerCase());
-            prepareStatement.setString(2, employee.getLastName().toLowerCase());
-            prepareStatement.setString(3, employee.getFullName().toLowerCase());
+            prepareStatement.setString(1, employee.getFirstName());
+            prepareStatement.setString(2, employee.getLastName());
+            prepareStatement.setString(3, employee.getFullName());
             prepareStatement.setString(4, employee.getPrivateEmail().toLowerCase());
             prepareStatement.setString(5, employee.getJobEmail().toLowerCase());
             prepareStatement.setInt(6, employee.getWorkPoints());
@@ -84,6 +99,31 @@ public class DBConnection
         }
         return true;
     }
+
+    /* This method check, if this full name already exists in DB
+        return 0 - any error occurs
+        return 1 - this employee name already exists
+        return 2 - this name is available
+    * */
+    private int checkFullNameExistential(Connection connection, Employee employee)
+    {
+        try
+        {
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.COMPARE_EMPLOYEE_NAME_STATEMENT);
+            prepareStatement.setString(1, employee.getFullName());
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            if (resultSet.next())
+                return Constants.EMPLOYEE_EXISTS;
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return Constants.ERROR_OCCURS;
+        }
+        return Constants.NAME_AVAILABLE;
+    }
+
 
     /* This method sends new Subject to DB*/
     public boolean sendSubjectToDB(Subject newSubject)

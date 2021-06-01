@@ -20,14 +20,9 @@ public class DashboardBodyPanel extends JPanel
         JPanel subjectsPanel = new JPanel();
         JPanel studyGroupsPanel = new JPanel();
 
-        employeesPanel.setBackground(Color.green);
-        subjectsPanel.setBackground(Color.blue);
-        studyGroupsPanel.setBackground(Color.magenta);
-
         this.add(employeesPanel, "employees");
         this.add(subjectsPanel, "subjects");
         this.add(studyGroupsPanel, "studyGroups");
-
         this.showBody("employees");
     }
 

@@ -23,4 +23,8 @@ public interface Constants
     String czLanguageText = "CZ";
     String enLanguageText = "EN";
 
+    //DB constants
+    int ERROR_OCCURS = 0;
+    int EMPLOYEE_EXISTS = 1;
+    int NAME_AVAILABLE = 2;
 }

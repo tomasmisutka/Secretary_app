@@ -13,4 +13,5 @@ public interface SQLStatements
             "study_form, study_type, study_language) VALUES (?, ?, ?, ?, ?, ?, ?)";
     String NEW_WORK_LABEL_STATEMENT = "INSERT INTO work_labels (name, employee_id, subject_id, event_type, students_count," +
             " hours_count, weeks_count, language_used, total_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String COMPARE_EMPLOYEE_NAME_STATEMENT = "SELECT full_name FROM employees WHERE full_name = ?";
 }
