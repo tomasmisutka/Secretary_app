@@ -2,6 +2,7 @@ package Services;
 
 import Common.*;
 import Components.MessageDialog;
+import Components.Panels.DashboardBodyPanel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class DBConnection
 
             int sameFullNameCounter = 0;
             String originalFullName = employee.getFullName();
+            String originalLastName = employee.getLastName();
             while (true)
             {
                 sameFullNameCounter++;
@@ -75,7 +77,11 @@ public class DBConnection
                     break;
 
                 if (userExistential == Constants.EMPLOYEE_EXISTS)
+                {
                     employee.setFullName(originalFullName + sameFullNameCounter);
+                    employee.setLastName(originalLastName + sameFullNameCounter);
+                }
+
             }
 
             PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_EMPLOYEE_STATEMENT);
@@ -98,6 +104,7 @@ public class DBConnection
             throwable.printStackTrace();
             return false;
         }
+        DashboardBodyPanel.repaintEmployeesPanel();
         return true;
     }
 

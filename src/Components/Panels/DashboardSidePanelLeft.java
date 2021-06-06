@@ -25,9 +25,9 @@ public class DashboardSidePanelLeft extends JPanel
         ButtonsLeftPanel middleButtons = new ButtonsLeftPanel(this.bodyPanel);
         this.setSecretaryInfoPanel(secretaryInfo);
         this.add(secretaryInfo, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         this.add(middleButtons, new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
-                GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+                GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
     }
 
     private void setSecretaryInfoPanel(CommonRoundedPanel secretaryInfo)

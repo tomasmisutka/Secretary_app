@@ -24,8 +24,9 @@ public class DashboardWorkLabelsPanel extends JPanel
     private void createPanel()
     {
         this.setBorder(new EmptyBorder(10, 5, 10, 5));
-        this.setBackground(Color.red);
+        this.setBackground(Color.lightGray);
         this.setVisible(isVisible);
+        this.initContent();
     }
 
     public void changeVisibility()
@@ -33,4 +34,10 @@ public class DashboardWorkLabelsPanel extends JPanel
         this.isVisible = !this.isVisible;
         this.createPanel();
     }
+
+    private void initContent()
+    {
+
+    }
+
 }
