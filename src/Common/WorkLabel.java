@@ -5,6 +5,7 @@ import Common.Enums.Language;
 
 public class WorkLabel
 {
+    private int id;
     private String name = "";
     private Employee employee = null;
     private Subject subject = null;
@@ -17,6 +18,11 @@ public class WorkLabel
 
     public WorkLabel()
     {
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public String getName()
@@ -62,6 +68,11 @@ public class WorkLabel
     public int getTotalPoints()
     {
         return totalPoints;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public void setName(String name)

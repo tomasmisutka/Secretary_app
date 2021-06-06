@@ -1,6 +1,9 @@
 package Services;
 
 import Common.*;
+import Common.Enums.Classification;
+import Common.Enums.EventType;
+import Common.Enums.Language;
 import Components.MessageDialog;
 import Components.Panels.DashboardBodyPanel;
 
@@ -256,6 +259,7 @@ public class DBConnection
             prepareStatement.execute();
             connection.close();
 
+
         } catch (SQLException throwable)
         {
             throwable.printStackTrace();
@@ -263,4 +267,119 @@ public class DBConnection
         }
         return true;
     }
+
+    public ArrayList<WorkLabel> getAllWorkLabels()
+    {
+        ArrayList<WorkLabel> workLabels = new ArrayList<>();
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_ALL_WORK_LABELS_STATEMENT);
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            while (resultSet.next())
+            {
+                WorkLabel workLabel = new WorkLabel();
+
+                workLabel.setId(resultSet.getInt("id"));
+                workLabel.setName(resultSet.getString("name"));
+                workLabel.setEmployee(this.getEmployeeById(0));
+                workLabel.setSubject(this.getSubjectById(0));
+                workLabel.setEventType(EventType.valueOf(resultSet.getString("event_type").toUpperCase()));
+                workLabel.setStudentsCount(resultSet.getInt("students_count"));
+                workLabel.setHoursCount(resultSet.getInt("hours_count"));
+                workLabel.setWeeksCount(resultSet.getInt("weeks_count"));
+                workLabel.setLanguage(Language.valueOf(resultSet.getString("language_used").toUpperCase()));
+                workLabel.setTotalPoints(resultSet.getInt("total_points"));
+
+                workLabels.add(workLabel);
+            }
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return workLabels;
+        }
+        return workLabels;
+    }
+
+    private Employee getEmployeeById(int id)
+    {
+        Employee employee = null;
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_EMPLOYEE_BY_ID);
+            prepareStatement.setInt(1, id);
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            if (resultSet.next())
+            {
+                employee = new Employee();
+                employee.setId(resultSet.getInt("id"));
+                employee.setFirstName(resultSet.getString("first_name"));
+                employee.setLastName(resultSet.getString("last_name"));
+                employee.setFullName(resultSet.getString("full_name"));
+                employee.setPrivateEmail(resultSet.getString("private_email"));
+                employee.setJobEmail(resultSet.getString("job_email"));
+                employee.setWorkPoints(resultSet.getInt("work_points"));
+                employee.setWorkPointsEN(resultSet.getInt("work_points_en"));
+                employee.setDoctoral(resultSet.getBoolean("is_doctoral"));
+                employee.setWorkLoad(resultSet.getDouble("work_load"));
+            }
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return null;
+        }
+        return employee;
+    }
+
+    private Subject getSubjectById(int id)
+    {
+        Subject subject = null;
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_SUBJECT_BY_ID);
+            prepareStatement.setInt(1, id);
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            if (resultSet.next())
+            {
+                subject = new Subject();
+                subject.setId(resultSet.getInt("id"));
+                subject.setAbbreviation(resultSet.getString("abbreviation"));
+                subject.setWeeksCount(resultSet.getInt("weeks_count"));
+                subject.setLecturesCount(resultSet.getInt("lectures_count"));
+                subject.setPracticesCount(resultSet.getInt("practises_count"));
+                subject.setSeminarsCount(resultSet.getInt("seminars_count"));
+                subject.setClassification(Classification.valueOf(resultSet.getString("classification").toUpperCase()));
+                subject.setLanguage(Language.valueOf(resultSet.getString("teach_language").toUpperCase()));
+                subject.setDefaultGroupSize(resultSet.getInt("class_size"));
+                //todo - here will be maybe implementation to add new studygroup to array list
+//                subject.get(resultSet.getDouble("study_group_id"));
+            }
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return null;
+        }
+        return subject;
+    }
+
 }

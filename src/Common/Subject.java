@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Subject
 {
+    private int id;
     private String abbreviation = "";
     private int weeksCount = 14;
     private int lecturesCount = 0;
@@ -19,6 +20,11 @@ public class Subject
 
     public Subject()
     {
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public String getAbbreviation()
@@ -64,6 +70,11 @@ public class Subject
     public ArrayList<StudyGroup> getStudyGroups()
     {
         return studyGroups;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public void setAbbreviation(String abbreviation)

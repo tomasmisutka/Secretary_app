@@ -37,18 +37,19 @@ public class DashboardNavigationPanel extends JPanel implements ActionListener
 
     private JButton getLeaveButton()
     {
-        this.leaveButton = new JButton("LEAVE");
-        this.leaveButton.setIcon(new ImageIcon("./src/Images/logout.png"));
-        this.leaveButton.setFont(new Font("Arial", Font.ITALIC, 15));
-        this.leaveButton.addActionListener(this);
-        this.leaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        leaveButton = new JButton("LEAVE");
+        leaveButton.setIcon(new ImageIcon("./src/Images/logout.png"));
+        leaveButton.setFont(new Font("Arial", Font.ITALIC, 15));
+        leaveButton.addActionListener(this);
+        leaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        leaveButton.setBorderPainted(false);
         return leaveButton;
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == this.leaveButton)
+        if (e.getSource() == leaveButton)
         {
             int result = MessageDialog.showConfirmationDialog(Dashboard.getInstance(), "Do you want to exit?");
             if (result == JOptionPane.YES_OPTION)
