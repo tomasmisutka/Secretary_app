@@ -15,7 +15,11 @@ public interface SQLStatements
             " hours_count, weeks_count, language_used, total_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     String COMPARE_EMPLOYEE_NAME_STATEMENT = "SELECT full_name FROM employees WHERE full_name = ?";
     String GET_ALL_EMPLOYEES_STATEMENT = "SELECT * FROM employees";
-    String GET_ALL_WORK_LABELS_STATEMENT = "SELECT * FROM work_labels";
+    String GET_UNASSIGNED_WORK_LABELS_STATEMENT = "SELECT * FROM work_labels WHERE employee_id = 0";
     String GET_EMPLOYEE_BY_ID = "SELECT * FROM employees WHERE id = ?";
     String GET_SUBJECT_BY_ID = "SELECT * FROM subjects WHERE id = ?";
+    String REMOVE_EMPLOYEE_BY_ID = "DELETE FROM employees WHERE id = ?";
+    String GET_EMPLOYEE_ID = "SELECT id FROM employees WHERE full_name = ?";
+    String UPDATE_EMPLOYEE_ID_IN_WORK_LABEL = "UPDATE work_labels SET employee_id = ? WHERE id = ?";
+    String GET_WORK_LABELS_ASSIGNED_TO_EMPLOYEE = "SELECT * FROM work_labels WHERE employee_id = ?";
 }

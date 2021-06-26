@@ -16,6 +16,10 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
     private final NavigationAddButton addSubjectButton;
     private final NavigationAddButton addStudyGroupButton;
 
+    private AddEmployeeForm addEmployeeForm;
+    private AddStudyGroupForm addStudyGroupForm;
+    private AddSubjectForm addSubjectForm;
+
     public NavigationButtonsPanel()
     {
         this.addEmployeeButton = new NavigationAddButton("add_employee.png", "Employee");
@@ -48,14 +52,27 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == this.addEmployeeButton)
+        {
             if (AddEmployeeForm.getInstancesCounter() < 1)
-                new AddEmployeeForm();
+                addEmployeeForm = new AddEmployeeForm();
+            else
+                addEmployeeForm.requestFocus();
+        }
 
         if (e.getSource() == this.addSubjectButton)
+        {
             if (AddSubjectForm.getInstanceCounter() < 1)
-                new AddSubjectForm();
+                addSubjectForm = new AddSubjectForm();
+            else
+                addSubjectForm.requestFocus();
+        }
+
         if (e.getSource() == this.addStudyGroupButton)
+        {
             if (AddStudyGroupForm.getInstanceCounter() < 1)
-                new AddStudyGroupForm();
+                addStudyGroupForm = new AddStudyGroupForm();
+            else
+                addStudyGroupForm.requestFocus();
+        }
     }
 }

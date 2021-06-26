@@ -56,7 +56,7 @@ public class ButtonsLeftPanel extends JPanel implements ActionListener
             this.bodyPanel.showBody("studyGroups");
         if (e.getSource() == this.workLabelButton)
         {
-            DashboardWorkLabelsPanel labelsPanel = DashboardWorkLabelsPanel.getLabelsPanel();
+            WorkLabelsPanel labelsPanel = WorkLabelsPanel.getInstance();
             labelsPanel.changeVisibility();
         }
     }

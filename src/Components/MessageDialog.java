@@ -13,7 +13,7 @@ public class MessageDialog
 
     public static void showErrorDialog(Component parentComponent, String message)
     {
-        JOptionPane.showMessageDialog(parentComponent,message,"Failure",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parentComponent, message, "Failure", JOptionPane.ERROR_MESSAGE);
     }
 
 }

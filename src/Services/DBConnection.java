@@ -5,7 +5,6 @@ import Common.Enums.Classification;
 import Common.Enums.EventType;
 import Common.Enums.Language;
 import Components.MessageDialog;
-import Components.Panels.DashboardBodyPanel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,7 +58,6 @@ public class DBConnection
         Connection connection = null;
         try
         {
-
             connection = DriverManager.getConnection(SQLStatements.CONNECTION,
                     Constants.dbLoginName, Constants.dbLoginPassword);
 
@@ -84,9 +82,7 @@ public class DBConnection
                     employee.setFullName(originalFullName + sameFullNameCounter);
                     employee.setLastName(originalLastName + sameFullNameCounter);
                 }
-
             }
-
             PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_EMPLOYEE_STATEMENT);
             prepareStatement.setString(1, employee.getFirstName());
             prepareStatement.setString(2, employee.getLastName());
@@ -98,8 +94,15 @@ public class DBConnection
             prepareStatement.setBoolean(8, employee.isDoctoral());
             prepareStatement.setDouble(9, employee.getWorkLoad());
             prepareStatement.setNull(10, Types.INTEGER);
-
             prepareStatement.execute();
+
+            prepareStatement = connection.prepareStatement(SQLStatements.GET_EMPLOYEE_ID);
+            prepareStatement.setString(1, employee.getFullName());
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            if (resultSet.next())
+                employee.setId(resultSet.getInt("id"));
+
             connection.close();
 
         } catch (SQLException throwable)
@@ -107,7 +110,6 @@ public class DBConnection
             throwable.printStackTrace();
             return false;
         }
-        DashboardBodyPanel.repaintEmployeesPanel();
         return true;
     }
 
@@ -227,7 +229,6 @@ public class DBConnection
 
             prepareStatement.execute();
             connection.close();
-
         } catch (SQLException throwable)
         {
             throwable.printStackTrace();
@@ -258,8 +259,6 @@ public class DBConnection
 
             prepareStatement.execute();
             connection.close();
-
-
         } catch (SQLException throwable)
         {
             throwable.printStackTrace();
@@ -268,7 +267,7 @@ public class DBConnection
         return true;
     }
 
-    public ArrayList<WorkLabel> getAllWorkLabels()
+    public ArrayList<WorkLabel> getUnassignedWorkLabels()
     {
         ArrayList<WorkLabel> workLabels = new ArrayList<>();
         Connection connection = null;
@@ -277,7 +276,7 @@ public class DBConnection
             connection = DriverManager.getConnection(SQLStatements.CONNECTION,
                     Constants.dbLoginName, Constants.dbLoginPassword);
 
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_ALL_WORK_LABELS_STATEMENT);
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_UNASSIGNED_WORK_LABELS_STATEMENT);
             ResultSet resultSet = prepareStatement.executeQuery();
 
             while (resultSet.next())
@@ -369,7 +368,7 @@ public class DBConnection
                 subject.setClassification(Classification.valueOf(resultSet.getString("classification").toUpperCase()));
                 subject.setLanguage(Language.valueOf(resultSet.getString("teach_language").toUpperCase()));
                 subject.setDefaultGroupSize(resultSet.getInt("class_size"));
-                //todo - here will be maybe implementation to add new studygroup to array list
+                //todo - here will be maybe implementation to add new study group to array list
 //                subject.get(resultSet.getDouble("study_group_id"));
             }
             connection.close();
@@ -382,4 +381,87 @@ public class DBConnection
         return subject;
     }
 
+    public boolean deleteEmployeeById(int employeeId)
+    {
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.REMOVE_EMPLOYEE_BY_ID);
+            prepareStatement.setInt(1, employeeId);
+
+            prepareStatement.executeUpdate();
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateEmployeeIdInWorkLabel(int employeeId, int workLabelID)
+    {
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.UPDATE_EMPLOYEE_ID_IN_WORK_LABEL);
+            prepareStatement.setInt(1, employeeId);
+            prepareStatement.setInt(2, workLabelID);
+            prepareStatement.executeUpdate();
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public ArrayList<WorkLabel> getWorkLabelsAssignedToEmployee(int employeeId)
+    {
+        ArrayList<WorkLabel> workLabels = new ArrayList<>();
+        Connection connection;
+
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_WORK_LABELS_ASSIGNED_TO_EMPLOYEE);
+            prepareStatement.setInt(1, employeeId);
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            while (resultSet.next())
+            {
+                WorkLabel workLabel = new WorkLabel();
+                workLabel.setId(resultSet.getInt("id"));
+                workLabel.setName(resultSet.getString("name"));
+                workLabel.setEmployee(this.getEmployeeById(resultSet.getInt("employee_id")));
+                workLabel.setSubject(this.getSubjectById(resultSet.getInt("subject_id")));
+                workLabel.setEventType(EventType.valueOf(resultSet.getString("event_type").toUpperCase()));
+                workLabel.setStudentsCount(resultSet.getInt("students_count"));
+                workLabel.setHoursCount(resultSet.getInt("hours_count"));
+                workLabel.setWeeksCount(resultSet.getInt("weeks_count"));
+                workLabel.setLanguage(Language.valueOf(resultSet.getString("language_used").toUpperCase()));
+                workLabel.setTotalPoints(resultSet.getInt("total_points"));
+
+                workLabels.add(workLabel);
+            }
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return workLabels;
+        }
+        return workLabels;
+    }
 }

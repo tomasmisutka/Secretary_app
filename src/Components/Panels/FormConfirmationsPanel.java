@@ -68,7 +68,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
 
         if (e.getSource() == this.submitButton)
         {
-            boolean isSuccessfulCreatedEmployee = DBConnection.getInstance().sendEmployeeToDB(AddEmployeeForm.getNewEmployee());
+            boolean isSuccessfulCreatedEmployee = EmployeesPanel.getInstance().addNewEmployee(AddEmployeeForm.getNewEmployee());
             if (!isSuccessfulCreatedEmployee)
                 MessageDialog.showErrorDialog(this, Message.DB_EMPLOYEE_ERROR);
             else
@@ -89,6 +89,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
 
         if (e.getSource() == this.submitButton)
         {
+            //todo - here will be call not dbConnection but Subject panel
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendSubjectToDB(AddSubjectForm.getNewSubject());
             if (!isSuccessfulCreatedSubject)
                 MessageDialog.showErrorDialog(this, Message.DB_SUBJECT_ERROR);
@@ -110,6 +111,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
 
         if (e.getSource() == this.submitButton)
         {
+            //todo - here will be call not dbConnection but study group panel
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendStudyGroupToDB(AddStudyGroupForm.getNewStudyGroup());
             if (!isSuccessfulCreatedSubject)
                 MessageDialog.showErrorDialog(this, Message.DB_STUDY_GROUP_ERROR);

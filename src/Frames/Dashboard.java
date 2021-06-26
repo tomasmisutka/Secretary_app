@@ -3,7 +3,7 @@ package Frames;
 import Components.Panels.DashboardBodyPanel;
 import Components.Panels.DashboardNavigationPanel;
 import Components.Panels.DashboardSidePanelLeft;
-import Components.Panels.DashboardWorkLabelsPanel;
+import Components.Panels.WorkLabelsPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class Dashboard extends JFrame
 
     private Dashboard()
     {
-        DashboardWorkLabelsPanel labelsPanel = DashboardWorkLabelsPanel.getLabelsPanel();
+        WorkLabelsPanel labelsPanel = WorkLabelsPanel.getInstance();
         DashboardBodyPanel bodyPanel = new DashboardBodyPanel();
         this.initFrame(new DashboardNavigationPanel(), new DashboardSidePanelLeft(bodyPanel),
                 labelsPanel, bodyPanel);
