@@ -1,6 +1,5 @@
 package Components.Panels;
 
-import Common.Constants;
 import Common.Employee;
 import Common.WorkLabel;
 import Components.WorkLabelComponent;
@@ -50,44 +49,53 @@ public class WorkLabelsPanel extends JPanel
 
         for (WorkLabel workLabel : workLabels)
         {
-            WorkLabelComponent workLabelComponent = new WorkLabelComponent(Constants.secondaryColor, 15,
-                    workLabel);
+            WorkLabelComponent workLabelComponent = new WorkLabelComponent(workLabel);
             this.add(workLabelComponent);
-//            this.add(Box.createVerticalStrut(7));
         }
     }
 
-    public void assignWorkLabelToEmployee(WorkLabelComponent workLabelToDelete, Employee employee)
+    public boolean assignWorkLabelToEmployee(WorkLabelComponent workLabelToDelete, Employee employee)
     {
         boolean success = DBConnection.getInstance().updateEmployeeIdInWorkLabel(employee.getId(),
                 workLabelToDelete.getWorkLabel().getId());
         if (success)
         {
             workLabels.remove(workLabelToDelete.getWorkLabel());
-            int indexToRemove = getWorkLabelPositionToRemove(workLabelToDelete);
-            this.remove(indexToRemove);
+            this.remove(workLabelToDelete);
+//            int indexToRemove = getWorkLabelPositionToRemove(workLabelToDelete);
+//            this.remove(indexToRemove);
             this.revalidate();
             this.repaint();
         }
+        return success;
     }
 
-    private int getWorkLabelPositionToRemove(WorkLabelComponent workLabelComponent)
+
+    // todo - maybe use it later
+//    private int getWorkLabelPositionToRemove(WorkLabelComponent workLabelComponent)
+//    {
+//        int index = 0;
+//        for (Component component : this.getComponents())
+//        {
+//            if (component instanceof WorkLabelComponent)
+//            {
+//                if (((WorkLabelComponent) component).getWorkLabel().getId() == workLabelComponent.getWorkLabel().getId())
+//                    break;
+//                else
+//                    index++;
+//            }
+//        }
+//        return index;
+//    }
+
+    public void addWorkLabelToPanel(WorkLabelComponent workLabelComponent)
     {
-        int index = 0;
-        for (Component component : this.getComponents())
+        boolean success = DBConnection.getInstance().updateEmployeeIdInWorkLabel(0, workLabelComponent.getWorkLabel().getId());
+        if (success)
         {
-            if (component instanceof WorkLabelComponent)
-            {
-                if (((WorkLabelComponent) component).getWorkLabel().getId() == workLabelComponent.getWorkLabel().getId())
-                    break;
-                else
-                    index++;
-            }
+            workLabels.add(workLabelComponent.getWorkLabel());
+            this.add(workLabelComponent);
+            this.revalidate();
         }
-        return index;
     }
-
-
-    //todo here will be method to add new work label
-    //todo - don't forget to make revalidate on panel - (this.revalidate and maybe this.repaint also)
 }

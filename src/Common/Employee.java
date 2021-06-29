@@ -133,7 +133,7 @@ public class Employee
     @Override
     public String toString()
     {
-        return "Full name: " + this.fullName + ", private email: " + this.privateEmail + ", job email: " + this.jobEmail + ", is doctoral: " +
+        return "ID: " + this.id + ", Full name: " + this.fullName + ", private email: " + this.privateEmail + ", job email: " + this.jobEmail + ", is doctoral: " +
                 this.isDoctoral + ", workload: " + this.workLoad + ", work points " + this.workPoints + ", work points EN: " +
                 this.workPointsEN;
     }

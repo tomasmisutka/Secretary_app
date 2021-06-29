@@ -52,9 +52,9 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
     {
         if (this.formPanelType == FormPanelType.Employee)
             this.employeeFormAction(e);
-        if (this.formPanelType == FormPanelType.Subject)
+        else if (this.formPanelType == FormPanelType.Subject)
             this.subjectFormAction(e);
-        if (this.formPanelType == FormPanelType.Study_Group)
+        else
             this.studyGroupAction(e);
     }
 
@@ -65,8 +65,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
             AddEmployeeForm.releaseInstance();
             this.parent.dispose();
         }
-
-        if (e.getSource() == this.submitButton)
+        else if (e.getSource() == this.submitButton)
         {
             boolean isSuccessfulCreatedEmployee = EmployeesPanel.getInstance().addNewEmployee(AddEmployeeForm.getNewEmployee());
             if (!isSuccessfulCreatedEmployee)
@@ -86,10 +85,9 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
             AddSubjectForm.releaseInstance();
             this.parent.dispose();
         }
-
-        if (e.getSource() == this.submitButton)
+        else if (e.getSource() == this.submitButton)
         {
-            //todo - here will be call not dbConnection but Subject panel
+            //todo - here will be called nor dbConnection but Subject panel instead
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendSubjectToDB(AddSubjectForm.getNewSubject());
             if (!isSuccessfulCreatedSubject)
                 MessageDialog.showErrorDialog(this, Message.DB_SUBJECT_ERROR);
@@ -108,8 +106,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
             AddStudyGroupForm.releaseInstance();
             this.parent.dispose();
         }
-
-        if (e.getSource() == this.submitButton)
+        else if (e.getSource() == this.submitButton)
         {
             //todo - here will be call not dbConnection but study group panel
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendStudyGroupToDB(AddStudyGroupForm.getNewStudyGroup());

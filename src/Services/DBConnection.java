@@ -67,7 +67,7 @@ public class DBConnection
             while (true)
             {
                 sameFullNameCounter++;
-                int userExistential = this.checkFullNameExistential(connection, employee);
+                int userExistential = this.checkFullNameExistential(connection, employee.getFullName());
 
                 if (userExistential == Constants.ERROR_OCCURS)
                 {
@@ -84,27 +84,20 @@ public class DBConnection
                 }
             }
             PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_EMPLOYEE_STATEMENT);
-            prepareStatement.setString(1, employee.getFirstName());
-            prepareStatement.setString(2, employee.getLastName());
-            prepareStatement.setString(3, employee.getFullName());
-            prepareStatement.setString(4, employee.getPrivateEmail().toLowerCase());
-            prepareStatement.setString(5, employee.getJobEmail().toLowerCase());
-            prepareStatement.setInt(6, employee.getWorkPoints());
-            prepareStatement.setInt(7, employee.getWorkPointsEN());
-            prepareStatement.setBoolean(8, employee.isDoctoral());
-            prepareStatement.setDouble(9, employee.getWorkLoad());
-            prepareStatement.setNull(10, Types.INTEGER);
+            prepareStatement.setInt(1, employee.getId());
+            prepareStatement.setString(2, employee.getFirstName());
+            prepareStatement.setString(3, employee.getLastName());
+            prepareStatement.setString(4, employee.getFullName());
+            prepareStatement.setString(5, employee.getPrivateEmail().toLowerCase());
+            prepareStatement.setString(6, employee.getJobEmail().toLowerCase());
+            prepareStatement.setInt(7, employee.getWorkPoints());
+            prepareStatement.setInt(8, employee.getWorkPointsEN());
+            prepareStatement.setBoolean(9, employee.isDoctoral());
+            prepareStatement.setDouble(10, employee.getWorkLoad());
+            prepareStatement.setNull(11, Types.INTEGER);
             prepareStatement.execute();
 
-            prepareStatement = connection.prepareStatement(SQLStatements.GET_EMPLOYEE_ID);
-            prepareStatement.setString(1, employee.getFullName());
-            ResultSet resultSet = prepareStatement.executeQuery();
-
-            if (resultSet.next())
-                employee.setId(resultSet.getInt("id"));
-
             connection.close();
-
         } catch (SQLException throwable)
         {
             throwable.printStackTrace();
@@ -118,12 +111,12 @@ public class DBConnection
         return 1 - this employee name already exists
         return 2 - this name is available
     * */
-    private int checkFullNameExistential(Connection connection, Employee employee)
+    private int checkFullNameExistential(Connection connection, String employeesFullName)
     {
         try
         {
             PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.COMPARE_EMPLOYEE_NAME_STATEMENT);
-            prepareStatement.setString(1, employee.getFullName());
+            prepareStatement.setString(1, employeesFullName);
             ResultSet resultSet = prepareStatement.executeQuery();
 
             if (resultSet.next())
@@ -137,6 +130,7 @@ public class DBConnection
         return Constants.NAME_AVAILABLE;
     }
 
+    /* This method return all employees from DB */
     public ArrayList<Employee> getAllEmployees()
     {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -196,9 +190,8 @@ public class DBConnection
             prepareStatement.setString(7, newSubject.getLanguage().toString().toLowerCase());
             prepareStatement.setInt(8, newSubject.getDefaultGroupSize());
             prepareStatement.setNull(9, Types.INTEGER);
-
-            //todo here will be private method to calculate and create new work labels
             prepareStatement.execute();
+            //todo here will be private method to calculate and create new work labels
             connection.close();
 
         } catch (SQLException throwable)
@@ -247,6 +240,7 @@ public class DBConnection
                     Constants.dbLoginName, Constants.dbLoginPassword);
 
             PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_WORK_LABEL_STATEMENT);
+            prepareStatement.setInt(1, this.getAvailableIndex(SQLStatements.TABLE_NAME_WORK_LABELS));
             prepareStatement.setString(1, newWorkLabel.getName());
             prepareStatement.setNull(2, Types.INTEGER);
             prepareStatement.setNull(3, Types.INTEGER);
@@ -265,6 +259,31 @@ public class DBConnection
             return false;
         }
         return true;
+    }
+
+    /* Method return the smallest available id from table */
+    public int getAvailableIndex(String tableNameWorkLabels)
+    {
+        int availableIndex = 0;
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+            String AVAILABLE_ID_QUERY = SQLStatements.GET_AVAILABLE_ID.replace("$table_name", tableNameWorkLabels);
+            PreparedStatement prepareStatement = connection.prepareStatement(AVAILABLE_ID_QUERY);
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+            if (resultSet.next())
+                availableIndex = resultSet.getInt(1);
+            connection.close();
+
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            return availableIndex;
+        }
+        return availableIndex;
     }
 
     public ArrayList<WorkLabel> getUnassignedWorkLabels()

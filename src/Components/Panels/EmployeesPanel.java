@@ -46,7 +46,7 @@ public class EmployeesPanel extends JPanel
         return success;
     }
 
-    public void removeEmployee(EmployeeCard employeeCard)
+    public void deleteEmployee(EmployeeCard employeeCard)
     {
         boolean success = DBConnection.getInstance().deleteEmployeeById(employeeCard.getEmployee().getId());
         if (success)

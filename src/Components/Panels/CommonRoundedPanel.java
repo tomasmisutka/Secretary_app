@@ -8,6 +8,8 @@ public class CommonRoundedPanel extends JPanel
     private int cornerRadius = 15;
     private Color backgroundColor;
 
+    public CommonRoundedPanel() {}
+
     public CommonRoundedPanel(int radius)
     {
         super();
@@ -38,5 +40,15 @@ public class CommonRoundedPanel extends JPanel
         graphics2D.fillRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height); //draws a border
         graphics2D.setColor(this.backgroundColor);
         graphics2D.fillRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height); //draws a background color
+    }
+
+    public void setCornerRadius(int cornerRadius)
+    {
+        this.cornerRadius = cornerRadius;
+    }
+
+    public void setBackgroundColor(Color backgroundColor)
+    {
+        this.backgroundColor = backgroundColor;
     }
 }

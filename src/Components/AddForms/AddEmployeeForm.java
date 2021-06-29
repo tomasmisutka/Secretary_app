@@ -3,8 +3,11 @@ package Components.AddForms;
 import Common.Constants;
 import Common.Employee;
 import Common.Enums.FormPanelType;
+import Common.SQLStatements;
+import Common.SettingsChecker;
 import Components.Panels.FormConfirmationsPanel;
 import Components.Panels.FormTitlePanel;
+import Services.DBConnection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -117,7 +120,10 @@ public class AddEmployeeForm extends JFrame
         String name = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
         boolean isDoctoral = doctoralGroup.getSelection().getActionCommand().equals("YES");
+        int employeeNewID = SettingsChecker.checkAndConvertEmployeesNewID(DBConnection.getInstance().getAvailableIndex
+                (SQLStatements.TABLE_NAME_EMPLOYEES));
 
+        employee.setId(employeeNewID);
         employee.setFirstName(name);
         employee.setLastName(lastName);
         employee.setFullName(name + " " + lastName);

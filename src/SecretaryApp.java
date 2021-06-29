@@ -1,6 +1,6 @@
 import Frames.WelcomeScreen;
 
-public class Main
+public class SecretaryApp
 {
     public static void main(String[] args)
     {

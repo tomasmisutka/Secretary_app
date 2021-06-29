@@ -10,4 +10,5 @@ public interface Message
     String DB_WORK_LABEL_ERROR = "CAN NOT INSERT THE WORK LABEL TO DATABASE";
     String DB_EMPLOYEE_NAME_CHECK_ERROR = "ERROR WHILE CHECKING NAME IN DATABASE";
     String CONFIRM_REMOVE_EMPLOYEE = "Are you sure, that you want to delete employee ";
+    String WORK_LABEL_NOT_ASSIGNED = "Work label was not assigned to employee";
 }
