@@ -47,7 +47,7 @@ public class AddStudyGroupForm extends JFrame
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new study group");
         JPanel dataPanel = new JPanel();
-        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Study_Group, this);
+        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Study_Group, this, false); // todo - edit later maybe
 
         this.initDataPanel(dataPanel);
 

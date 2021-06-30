@@ -6,11 +6,12 @@ import Components.WrapLayout;
 import Services.DBConnection;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class EmployeesPanel extends JPanel
 {
-    private static ArrayList<Employee> employees = new ArrayList<>();
+    private ArrayList<Employee> employees = new ArrayList<>();
     private static EmployeesPanel employeesPanel = null;
 
     private EmployeesPanel()
@@ -46,6 +47,11 @@ public class EmployeesPanel extends JPanel
         return success;
     }
 
+    public boolean updateEmployee(Employee employee)
+    {
+        return DBConnection.getInstance().updateEmployee(employee);
+    }
+
     public void deleteEmployee(EmployeeCard employeeCard)
     {
         boolean success = DBConnection.getInstance().deleteEmployeeById(employeeCard.getEmployee().getId());
@@ -56,6 +62,22 @@ public class EmployeesPanel extends JPanel
             this.revalidate();
             this.repaint();
         }
+    }
+
+    public boolean revalidateAfterUpdate(Employee employee)
+    {
+        boolean success = false;
+        for (Component component : this.getComponents())
+        {
+            EmployeeCard employeeCard = (EmployeeCard)component;
+            if (employeeCard.getEmployee().getId() == employee.getId())
+            {
+                employeeCard.revalidateTitlePanel(employee);
+                success = true;
+                break;
+            }
+        }
+        return success;
     }
 
 }

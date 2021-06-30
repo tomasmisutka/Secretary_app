@@ -16,14 +16,22 @@ import java.awt.*;
 public class AddEmployeeForm extends JFrame
 {
     private static int numberOfInstances = 0;
+    private final boolean editMode;
+    private static boolean isEditingMode;
+    private static int employeeID;
     private static final JTextField firstNameTextField = new JTextField("Name");
     private static final JTextField lastNameTextField = new JTextField("Surname");
     private static final JTextField privateEmailTextField = new JTextField("example@gmail.com");
     private static final JTextField jobEmailTextField = new JTextField("secretary@utb.cz");
     private static final ButtonGroup doctoralGroup = new ButtonGroup();
+    private static final JRadioButton isDoctoralYes = new JRadioButton(Constants.yesButtonText);
+    private static final JRadioButton isDoctoralNo = new JRadioButton(Constants.noButtonText);
 
-    public AddEmployeeForm()
+    public AddEmployeeForm(boolean editMode, int idEmployee)
     {
+        this.editMode = editMode;
+        isEditingMode = this.editMode;
+        employeeID = idEmployee;
         this.createContent();
     }
 
@@ -40,10 +48,14 @@ public class AddEmployeeForm extends JFrame
     private void createContent()
     {
         numberOfInstances++;
+        Employee employeeEdition = null;
+        if (editMode)
+            employeeEdition = DBConnection.getInstance().getEmployeeById(employeeID);
+
         this.setLayout(new GridBagLayout());
-        FormTitlePanel titlePanel = new FormTitlePanel("Add new employee");
+        FormTitlePanel titlePanel = new FormTitlePanel(!editMode ? "Add new employee" : "Employee's edition");
         JPanel dataPanel = new JPanel();
-        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Employee, this);
+        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Employee, this, editMode);
 
         this.initDataPanel(dataPanel);
 
@@ -53,6 +65,9 @@ public class AddEmployeeForm extends JFrame
                 GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         this.add(buttonsPanel, new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
                 GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+
+        if (editMode)
+            this.updateContent(employeeEdition);
 
         this.setSize(new Dimension(400, 450));
         this.setResizable(false);
@@ -79,8 +94,6 @@ public class AddEmployeeForm extends JFrame
         JLabel isDoctoralLabel = new JLabel("Is doctoral:");
         isDoctoralLabel.setFont(contentFont);
 
-        JRadioButton isDoctoralYes = new JRadioButton(Constants.yesButtonText);
-        JRadioButton isDoctoralNo = new JRadioButton(Constants.noButtonText);
         isDoctoralYes.setActionCommand(Constants.yesButtonText);
         isDoctoralNo.setActionCommand(Constants.noButtonText);
         isDoctoralYes.setFont(contentFont);
@@ -113,7 +126,7 @@ public class AddEmployeeForm extends JFrame
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 5, 0), 0, 0));
     }
 
-    public static Employee getNewEmployee()
+    public static Employee getEmployee()
     {
         Employee employee = new Employee();
 
@@ -123,7 +136,10 @@ public class AddEmployeeForm extends JFrame
         int employeeNewID = SettingsChecker.checkAndConvertEmployeesNewID(DBConnection.getInstance().getAvailableIndex
                 (SQLStatements.TABLE_NAME_EMPLOYEES));
 
-        employee.setId(employeeNewID);
+        if (isEditingMode)
+            employee.setId(employeeID);
+        else
+            employee.setId(employeeNewID);
         employee.setFirstName(name);
         employee.setLastName(lastName);
         employee.setFullName(name + " " + lastName);
@@ -135,4 +151,15 @@ public class AddEmployeeForm extends JFrame
         employee.setWorkPointsEN(0);
         return employee;
     }
+
+    private void updateContent(Employee employee)
+    {
+        firstNameTextField.setText(employee.getFirstName());
+        lastNameTextField.setText(employee.getLastName());
+        privateEmailTextField.setText(employee.getPrivateEmail());
+        jobEmailTextField.setText(employee.getJobEmail());
+        boolean isDoctoral = employee.isDoctoral();
+        doctoralGroup.setSelected(isDoctoral ? isDoctoralYes.getModel() : isDoctoralNo.getModel(), true);
+    }
+
 }

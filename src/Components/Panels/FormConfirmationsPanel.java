@@ -1,6 +1,7 @@
 package Components.Panels;
 
 import Common.Constants;
+import Common.Employee;
 import Common.Enums.FormPanelType;
 import Common.Message;
 import Components.AddForms.AddEmployeeForm;
@@ -21,12 +22,14 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
     private final JButton cancelButton = new JButton("Cancel");
     private final FormPanelType formPanelType;
     private final JFrame parent;
+    private final boolean editMode;
 
-    public FormConfirmationsPanel(FormPanelType formPanelType, JFrame parent)
+    public FormConfirmationsPanel(FormPanelType formPanelType, JFrame parent, boolean editMode)
     {
         super(Constants.secondaryColor, 10);
         this.formPanelType = formPanelType;
         this.parent = parent;
+        this.editMode = editMode;
         this.createPanel();
     }
 
@@ -64,11 +67,19 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
         {
             AddEmployeeForm.releaseInstance();
             this.parent.dispose();
-        }
-        else if (e.getSource() == this.submitButton)
+        } else if (e.getSource() == this.submitButton)
         {
-            boolean isSuccessfulCreatedEmployee = EmployeesPanel.getInstance().addNewEmployee(AddEmployeeForm.getNewEmployee());
-            if (!isSuccessfulCreatedEmployee)
+            boolean success;
+            if (editMode)
+            {
+                Employee newEmployee = AddEmployeeForm.getEmployee();
+                success = EmployeesPanel.getInstance().updateEmployee(newEmployee);
+                if (success)
+                    success = EmployeesPanel.getInstance().revalidateAfterUpdate(newEmployee);
+            } else
+                success = EmployeesPanel.getInstance().addNewEmployee(AddEmployeeForm.getEmployee());
+
+            if (!success)
                 MessageDialog.showErrorDialog(this, Message.DB_EMPLOYEE_ERROR);
             else
             {
@@ -84,8 +95,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
         {
             AddSubjectForm.releaseInstance();
             this.parent.dispose();
-        }
-        else if (e.getSource() == this.submitButton)
+        } else if (e.getSource() == this.submitButton)
         {
             //todo - here will be called nor dbConnection but Subject panel instead
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendSubjectToDB(AddSubjectForm.getNewSubject());
@@ -105,8 +115,7 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
         {
             AddStudyGroupForm.releaseInstance();
             this.parent.dispose();
-        }
-        else if (e.getSource() == this.submitButton)
+        } else if (e.getSource() == this.submitButton)
         {
             //todo - here will be call not dbConnection but study group panel
             boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendStudyGroupToDB(AddStudyGroupForm.getNewStudyGroup());

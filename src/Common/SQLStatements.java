@@ -27,4 +27,6 @@ public interface SQLStatements
     String UPDATE_EMPLOYEE_ID_IN_WORK_LABEL = "UPDATE " + TABLE_NAME_WORK_LABELS + " SET employee_id = ? WHERE id = ?";
     String GET_WORK_LABELS_ASSIGNED_TO_EMPLOYEE = "SELECT * FROM " + TABLE_NAME_WORK_LABELS + " WHERE employee_id = ?";
     String GET_AVAILABLE_ID = "SELECT MIN( id + 1 ) FROM $table_name WHERE id + 1 NOT IN (SELECT id FROM $table_name)";
+    String UPDATE_EMPLOYEE_BY_ID = "UPDATE " + TABLE_NAME_EMPLOYEES + " SET first_name = ?, last_name = ?, full_name = ?, " +
+            "private_email = ?, job_email = ?, work_points = ?, work_points_en = ?, is_doctoral = ?, work_load = ? WHERE id = ?";
 }

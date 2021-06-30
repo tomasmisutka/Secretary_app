@@ -54,7 +54,7 @@ public class NavigationButtonsPanel extends JPanel implements ActionListener
         if (e.getSource() == this.addEmployeeButton)
         {
             if (AddEmployeeForm.getInstancesCounter() < 1)
-                addEmployeeForm = new AddEmployeeForm();
+                addEmployeeForm = new AddEmployeeForm(false, 0);
             else
                 addEmployeeForm.requestFocus();
         }

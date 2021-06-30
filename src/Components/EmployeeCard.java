@@ -4,6 +4,7 @@ import Common.Constants;
 import Common.Employee;
 import Common.Message;
 import Common.WorkLabel;
+import Components.AddForms.AddEmployeeForm;
 import Components.Panels.EmployeesPanel;
 import Services.DBConnection;
 
@@ -21,6 +22,9 @@ public class EmployeeCard extends JPanel implements ActionListener
     private final JButton deleteButton;
     private final JButton sendEmailButton;
     private static JPanel assignedWorkLabelsPanel;
+    private JPanel titlePanel;
+    private final JLabel employeeFullName = new JLabel();
+    ;
     private static ArrayList<WorkLabel> employeeWorkLabels = new ArrayList<>();
 
     public EmployeeCard(Employee employee)
@@ -50,32 +54,37 @@ public class EmployeeCard extends JPanel implements ActionListener
 
     private JPanel getTitlePanel()
     {
-        JPanel titlePanel = new JPanel();
+        titlePanel = new JPanel();
         titlePanel.setLayout(new GridBagLayout());
         titlePanel.setBackground(Color.white);
         titlePanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(0, 0, 1, 0, Constants.secondaryColor),
                 new EmptyBorder(5, 0, 5, 0)
         ));
-        Font titleFont = new Font("Arial", Font.BOLD, 15);
 
-        JLabel employeeFullName = new JLabel(employee.getLastName() + " " +
-                employee.getFirstName().toUpperCase().charAt(0) + ".");
-        employeeFullName.setFont(titleFont);
-        employeeFullName.setForeground(Constants.secondaryColor);
-
+        this.setEmployeeFullName(employee);
         titlePanel.add(employeeFullName, new GridBagConstraints());
         return titlePanel;
     }
+
+    private void setEmployeeFullName(Employee employee)
+    {
+        Font titleFont = new Font("Arial", Font.BOLD, 15);
+        employeeFullName.setText(employee.getLastName() + " " +
+                employee.getFirstName().toUpperCase().charAt(0) + ".");
+        employeeFullName.setFont(titleFont);
+        employeeFullName.setForeground(Constants.secondaryColor);
+    }
+
 
     private JScrollPane getWorkLabelsAssignedPanel()
     {
         assignedWorkLabelsPanel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(assignedWorkLabelsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBorder(new EmptyBorder(0,0,0,0));
+        scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         assignedWorkLabelsPanel.setBackground(Color.white);
-        assignedWorkLabelsPanel.setLayout(new WrapLayout(WrapLayout.LEFT,5,5));
+        assignedWorkLabelsPanel.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
 
         employeeWorkLabels = DBConnection.getInstance().getWorkLabelsAssignedToEmployee(employee.getId());
 
@@ -94,8 +103,6 @@ public class EmployeeCard extends JPanel implements ActionListener
         assignedWorkLabelsPanel.revalidate();
         assignedWorkLabelsPanel.repaint();
     }
-
-
 
     private JPanel getEditionPanel()
     {
@@ -148,18 +155,27 @@ public class EmployeeCard extends JPanel implements ActionListener
         return this.employee;
     }
 
+    public void revalidateTitlePanel(Employee employee)
+    {
+        this.setEmployeeFullName(employee);
+        titlePanel.revalidate();
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == editButton)
-            System.out.println("Do something");
-        else if (e.getSource() == deleteButton)
-        {
-            int confirmationDelete = MessageDialog.showConfirmationDialog(null,
-                    Message.CONFIRM_REMOVE_EMPLOYEE + employee.getFullName() + " ?");
-            if (confirmationDelete == JOptionPane.YES_OPTION)
-                EmployeesPanel.getInstance().deleteEmployee(this);
-        }
+            if (AddEmployeeForm.getInstancesCounter() < 1)
+                new AddEmployeeForm(true, employee.getId());
+
+            else if (e.getSource() == deleteButton)
+            {
+                int confirmationDelete = MessageDialog.showConfirmationDialog(null,
+                        Message.CONFIRM_REMOVE_EMPLOYEE + employee.getFullName() + " ?");
+                if (confirmationDelete == JOptionPane.YES_OPTION)
+                    EmployeesPanel.getInstance().deleteEmployee(this);
+            }
 
     }
 }

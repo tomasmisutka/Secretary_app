@@ -94,7 +94,6 @@ public class DBConnection
             prepareStatement.setInt(8, employee.getWorkPointsEN());
             prepareStatement.setBoolean(9, employee.isDoctoral());
             prepareStatement.setDouble(10, employee.getWorkLoad());
-            prepareStatement.setNull(11, Types.INTEGER);
             prepareStatement.execute();
 
             connection.close();
@@ -168,6 +167,38 @@ public class DBConnection
             return employees;
         }
         return employees;
+    }
+
+    /* This method update an employee according to id */
+    public boolean updateEmployee(Employee employee)
+    {
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
+                    Constants.dbLoginName, Constants.dbLoginPassword);
+
+            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.UPDATE_EMPLOYEE_BY_ID);
+            prepareStatement.setString(1,employee.getFirstName());
+            prepareStatement.setString(2,employee.getLastName());
+            prepareStatement.setString(3,employee.getFullName());
+            prepareStatement.setString(4, employee.getPrivateEmail());
+            prepareStatement.setString(5, employee.getJobEmail());
+            prepareStatement.setInt(6, employee.getWorkPoints());
+            prepareStatement.setInt(7, employee.getWorkPointsEN());
+            prepareStatement.setBoolean(8, employee.isDoctoral());
+            prepareStatement.setDouble(9, employee.getWorkLoad());
+            prepareStatement.setInt(10,employee.getId());
+            prepareStatement.execute();
+
+            connection.close();
+
+        } catch (SQLException throwable)
+        {
+            throwable.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 
@@ -325,7 +356,7 @@ public class DBConnection
         return workLabels;
     }
 
-    private Employee getEmployeeById(int id)
+    public Employee getEmployeeById(int id)
     {
         Employee employee = null;
         Connection connection = null;

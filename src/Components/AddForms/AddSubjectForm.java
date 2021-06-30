@@ -45,7 +45,7 @@ public class AddSubjectForm extends JFrame
         this.setLayout(new GridBagLayout());
         FormTitlePanel titlePanel = new FormTitlePanel("Add new subject");
         JPanel dataPanel = new JPanel();
-        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Subject, this);
+        FormConfirmationsPanel buttonsPanel = new FormConfirmationsPanel(FormPanelType.Subject, this, false); //todo - edit later maybe
 
         this.initDataPanel(dataPanel);
 
