@@ -22,9 +22,7 @@ public class EmployeeCard extends JPanel implements ActionListener
     private final JButton deleteButton;
     private final JButton sendEmailButton;
     private static JPanel assignedWorkLabelsPanel;
-    private JPanel titlePanel;
     private final JLabel employeeFullName = new JLabel();
-    ;
     private static ArrayList<WorkLabel> employeeWorkLabels = new ArrayList<>();
 
     public EmployeeCard(Employee employee)
@@ -54,7 +52,7 @@ public class EmployeeCard extends JPanel implements ActionListener
 
     private JPanel getTitlePanel()
     {
-        titlePanel = new JPanel();
+        JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new GridBagLayout());
         titlePanel.setBackground(Color.white);
         titlePanel.setBorder(BorderFactory.createCompoundBorder(
@@ -155,27 +153,25 @@ public class EmployeeCard extends JPanel implements ActionListener
         return this.employee;
     }
 
-    public void revalidateTitlePanel(Employee employee)
+    public void updateEmployeeName(Employee employee)
     {
         this.setEmployeeFullName(employee);
-        titlePanel.revalidate();
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == editButton)
+        {
             if (AddEmployeeForm.getInstancesCounter() < 1)
                 new AddEmployeeForm(true, employee.getId());
-
-            else if (e.getSource() == deleteButton)
-            {
-                int confirmationDelete = MessageDialog.showConfirmationDialog(null,
-                        Message.CONFIRM_REMOVE_EMPLOYEE + employee.getFullName() + " ?");
-                if (confirmationDelete == JOptionPane.YES_OPTION)
-                    EmployeesPanel.getInstance().deleteEmployee(this);
-            }
+        } else if (e.getSource() == deleteButton)
+        {
+            int confirmationDelete = MessageDialog.showConfirmationDialog(null,
+                    Message.CONFIRM_REMOVE_EMPLOYEE + employee.getFullName() + " ?");
+            if (confirmationDelete == JOptionPane.YES_OPTION)
+                EmployeesPanel.getInstance().deleteEmployee(this);
+        }
 
     }
 }

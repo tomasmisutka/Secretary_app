@@ -69,10 +69,10 @@ public class EmployeesPanel extends JPanel
         boolean success = false;
         for (Component component : this.getComponents())
         {
-            EmployeeCard employeeCard = (EmployeeCard)component;
+            EmployeeCard employeeCard = (EmployeeCard) component;
             if (employeeCard.getEmployee().getId() == employee.getId())
             {
-                employeeCard.revalidateTitlePanel(employee);
+                employeeCard.updateEmployeeName(employee);
                 success = true;
                 break;
             }

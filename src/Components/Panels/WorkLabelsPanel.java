@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class WorkLabelsPanel extends JPanel
 
 {
-    private boolean isVisible = true;
     private final static WorkLabelsPanel labelsPanel = new WorkLabelsPanel();
     private ArrayList<WorkLabel> workLabels = new ArrayList<>();
 
@@ -32,15 +31,7 @@ public class WorkLabelsPanel extends JPanel
         this.setBorder(new EmptyBorder(0, 10, 0, 10));
         this.setBackground(Color.white);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setVisible(isVisible);
         this.initContent();
-    }
-
-    public void changeVisibility()
-    {
-        isVisible = !isVisible;
-        this.setVisible(isVisible);
-        this.revalidate();
     }
 
     private void initContent()

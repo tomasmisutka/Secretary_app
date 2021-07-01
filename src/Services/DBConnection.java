@@ -179,16 +179,16 @@ public class DBConnection
                     Constants.dbLoginName, Constants.dbLoginPassword);
 
             PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.UPDATE_EMPLOYEE_BY_ID);
-            prepareStatement.setString(1,employee.getFirstName());
-            prepareStatement.setString(2,employee.getLastName());
-            prepareStatement.setString(3,employee.getFullName());
+            prepareStatement.setString(1, employee.getFirstName());
+            prepareStatement.setString(2, employee.getLastName());
+            prepareStatement.setString(3, employee.getFullName());
             prepareStatement.setString(4, employee.getPrivateEmail());
             prepareStatement.setString(5, employee.getJobEmail());
             prepareStatement.setInt(6, employee.getWorkPoints());
             prepareStatement.setInt(7, employee.getWorkPointsEN());
             prepareStatement.setBoolean(8, employee.isDoctoral());
             prepareStatement.setDouble(9, employee.getWorkLoad());
-            prepareStatement.setInt(10,employee.getId());
+            prepareStatement.setInt(10, employee.getId());
             prepareStatement.execute();
 
             connection.close();
