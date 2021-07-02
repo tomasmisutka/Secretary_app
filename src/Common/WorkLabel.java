@@ -3,7 +3,9 @@ package Common;
 import Common.Enums.EventType;
 import Common.Enums.Language;
 
-public class WorkLabel
+import java.io.Serializable;
+
+public class WorkLabel implements Serializable
 {
     private int id;
     private String name = "";

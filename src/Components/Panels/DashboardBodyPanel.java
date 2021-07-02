@@ -12,7 +12,6 @@ public class DashboardBodyPanel extends JPanel
     private final EmployeesPanel employeesPanel = EmployeesPanel.getInstance();
 //    private final StudyGroupsPanel studyGroupsPanel = StudyGroupsPanel.getInstance(); // todo - here must be placed subjectPanel no study group panel
 
-
     public DashboardBodyPanel()
     {
         this.createPanel();

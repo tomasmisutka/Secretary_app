@@ -1,8 +1,9 @@
 package Common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Employee
+public class Employee implements Serializable
 {
     private int id = 0;
     private String firstName = "";

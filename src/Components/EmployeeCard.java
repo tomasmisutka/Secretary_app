@@ -5,8 +5,12 @@ import Common.Employee;
 import Common.Message;
 import Common.WorkLabel;
 import Components.AddForms.AddEmployeeForm;
+import Components.Panels.EmployeeWorkLabelsPanel;
 import Components.Panels.EmployeesPanel;
 import Services.DBConnection;
+import dragNdrop.DragListener;
+import dragNdrop.DropListener;
+import layout.WrapLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,7 +25,6 @@ public class EmployeeCard extends JPanel implements ActionListener
     private final JButton editButton;
     private final JButton deleteButton;
     private final JButton sendEmailButton;
-    private static JPanel assignedWorkLabelsPanel;
     private final JLabel employeeFullName = new JLabel();
     private static ArrayList<WorkLabel> employeeWorkLabels = new ArrayList<>();
 
@@ -42,7 +45,7 @@ public class EmployeeCard extends JPanel implements ActionListener
 
         this.add(this.getTitlePanel(), new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        this.add(this.getWorkLabelsAssignedPanel(), new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
+        this.add(this.getEmployeeWorkLabelsPanel(), new GridBagConstraints(0, 1, 1, 1, 1.0, 1.0,
                 GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         this.add(this.getEditionPanel(), new GridBagConstraints(0, 2, 1, 1, 1.0, 0.0,
                 GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
@@ -61,45 +64,37 @@ public class EmployeeCard extends JPanel implements ActionListener
         ));
 
         this.setEmployeeFullName(employee);
+        Font titleFont = new Font("Arial", Font.BOLD, 15);
+        employeeFullName.setFont(titleFont);
+        employeeFullName.setForeground(Constants.secondaryColor);
         titlePanel.add(employeeFullName, new GridBagConstraints());
         return titlePanel;
     }
 
     private void setEmployeeFullName(Employee employee)
     {
-        Font titleFont = new Font("Arial", Font.BOLD, 15);
-        employeeFullName.setText(employee.getLastName() + " " +
-                employee.getFirstName().toUpperCase().charAt(0) + ".");
-        employeeFullName.setFont(titleFont);
-        employeeFullName.setForeground(Constants.secondaryColor);
+        employeeFullName.setText(employee.getLastName() + " " + employee.getFirstName().toUpperCase().charAt(0) + ".");
     }
 
-
-    private JScrollPane getWorkLabelsAssignedPanel()
+    private JScrollPane getEmployeeWorkLabelsPanel()
     {
-        assignedWorkLabelsPanel = new JPanel();
-        JScrollPane scrollPane = new JScrollPane(assignedWorkLabelsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        EmployeeWorkLabelsPanel workLabelsPanel = new EmployeeWorkLabelsPanel(employee);
+        JScrollPane scrollPane = new JScrollPane(workLabelsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-        assignedWorkLabelsPanel.setBackground(Color.white);
-        assignedWorkLabelsPanel.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
+        workLabelsPanel.setBackground(Color.white);
+        workLabelsPanel.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 3));
 
         employeeWorkLabels = DBConnection.getInstance().getWorkLabelsAssignedToEmployee(employee.getId());
 
         for (WorkLabel workLabel : employeeWorkLabels)
         {
             WorkLabelComponent workLabelComponent = new WorkLabelComponent(workLabel);
-            assignedWorkLabelsPanel.add(workLabelComponent);
+            workLabelsPanel.add(workLabelComponent);
+            new DragListener(workLabelComponent, workLabelsPanel);
         }
+        new DropListener(workLabelsPanel);
         return scrollPane;
-    }
-
-    public static void releaseWorkLabelFromEmployee(WorkLabelComponent workLabelToRelease)
-    {
-        assignedWorkLabelsPanel.remove(workLabelToRelease);
-        employeeWorkLabels.remove(workLabelToRelease.getWorkLabel());
-        assignedWorkLabelsPanel.revalidate();
-        assignedWorkLabelsPanel.repaint();
     }
 
     private JPanel getEditionPanel()

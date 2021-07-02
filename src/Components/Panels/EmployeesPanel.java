@@ -2,7 +2,7 @@ package Components.Panels;
 
 import Common.Employee;
 import Components.EmployeeCard;
-import Components.WrapLayout;
+import layout.WrapLayout;
 import Services.DBConnection;
 
 import javax.swing.*;

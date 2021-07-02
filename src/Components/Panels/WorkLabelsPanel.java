@@ -4,6 +4,8 @@ import Common.Employee;
 import Common.WorkLabel;
 import Components.WorkLabelComponent;
 import Services.DBConnection;
+import dragNdrop.DragListener;
+import layout.VFlowLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -30,7 +32,7 @@ public class WorkLabelsPanel extends JPanel
     {
         this.setBorder(new EmptyBorder(0, 10, 0, 10));
         this.setBackground(Color.white);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new VFlowLayout());
         this.initContent();
     }
 
@@ -41,6 +43,7 @@ public class WorkLabelsPanel extends JPanel
         for (WorkLabel workLabel : workLabels)
         {
             WorkLabelComponent workLabelComponent = new WorkLabelComponent(workLabel);
+            new DragListener(workLabelComponent, this);
             this.add(workLabelComponent);
         }
     }

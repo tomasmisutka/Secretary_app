@@ -1,6 +1,7 @@
 package Frames;
 
 import Components.Panels.*;
+import dragNdrop.DropListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class Dashboard extends JFrame
         ActionWrapperPanel actionWrapperPanel = new ActionWrapperPanel(workLabelsPanel, studyGroupsPanel);
 
         DashboardBodyPanel bodyPanel = new DashboardBodyPanel();
+        new DropListener(bodyPanel);
         this.initFrame(new DashboardNavigationPanel(), new DashboardSidePanelLeft(bodyPanel, actionWrapperPanel),
                 bodyPanel, actionWrapperPanel);
     }

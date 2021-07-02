@@ -10,13 +10,11 @@ import java.awt.*;
 
 public class WorkLabelComponent extends CommonRoundedPanel
 {
-    private WorkLabel workLabel;
+    private final WorkLabel workLabel;
 
     public WorkLabelComponent(WorkLabel workLabel)
     {
-        super();
-        super.setBackgroundColor(Constants.secondaryColor);
-        super.setCornerRadius(15);
+        super(Constants.secondaryColor, 15);
         this.workLabel = workLabel;
         this.initPanel();
     }
