@@ -1,11 +1,10 @@
 package Components.Panels;
 
-import Common.Employee;
 import Common.WorkLabel;
 import Components.WorkLabelComponent;
 import Services.DBConnection;
 import dragNdrop.DragListener;
-import layout.VFlowLayout;
+import layouts.VerticalFlowLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -30,9 +29,9 @@ public class WorkLabelsPanel extends JPanel
 
     private void createPanel()
     {
-        this.setBorder(new EmptyBorder(0, 10, 0, 10));
+        this.setBorder(new EmptyBorder(0, 5, 0, 5));
         this.setBackground(Color.white);
-        this.setLayout(new VFlowLayout());
+        this.setLayout(new VerticalFlowLayout());
         this.initContent();
     }
 
@@ -48,48 +47,8 @@ public class WorkLabelsPanel extends JPanel
         }
     }
 
-    public boolean assignWorkLabelToEmployee(WorkLabelComponent workLabelToDelete, Employee employee)
+    public ArrayList<WorkLabel> getWorkLabels()
     {
-        boolean success = DBConnection.getInstance().updateEmployeeIdInWorkLabel(employee.getId(),
-                workLabelToDelete.getWorkLabel().getId());
-        if (success)
-        {
-            workLabels.remove(workLabelToDelete.getWorkLabel());
-            this.remove(workLabelToDelete);
-//            int indexToRemove = getWorkLabelPositionToRemove(workLabelToDelete);
-//            this.remove(indexToRemove);
-            this.revalidate();
-            this.repaint();
-        }
-        return success;
-    }
-
-
-    // todo - maybe use it later
-//    private int getWorkLabelPositionToRemove(WorkLabelComponent workLabelComponent)
-//    {
-//        int index = 0;
-//        for (Component component : this.getComponents())
-//        {
-//            if (component instanceof WorkLabelComponent)
-//            {
-//                if (((WorkLabelComponent) component).getWorkLabel().getId() == workLabelComponent.getWorkLabel().getId())
-//                    break;
-//                else
-//                    index++;
-//            }
-//        }
-//        return index;
-//    }
-
-    public void addWorkLabelToPanel(WorkLabelComponent workLabelComponent)
-    {
-        boolean success = DBConnection.getInstance().updateEmployeeIdInWorkLabel(0, workLabelComponent.getWorkLabel().getId());
-        if (success)
-        {
-            workLabels.add(workLabelComponent.getWorkLabel());
-            this.add(workLabelComponent);
-            this.revalidate();
-        }
+        return this.workLabels;
     }
 }

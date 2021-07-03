@@ -20,8 +20,7 @@ public class DragListener implements DragGestureListener, Transferable
         this.component = component;
         this.parentComponent = parentComponent;
         DragSource ds = new DragSource();
-        ds.createDefaultDragGestureRecognizer(this.component,
-                DnDConstants.ACTION_MOVE, this);
+        ds.createDefaultDragGestureRecognizer(this.component, DnDConstants.ACTION_MOVE, this);
     }
 
     @Override
@@ -48,5 +47,8 @@ public class DragListener implements DragGestureListener, Transferable
     }
 
     @Override
-    public void dragGestureRecognized(DragGestureEvent dge) { dge.startDrag(DragSource.DefaultCopyDrop, this); }
+    public void dragGestureRecognized(DragGestureEvent dge)
+    {
+        dge.startDrag(DragSource.DefaultCopyDrop, this);
+    }
 }

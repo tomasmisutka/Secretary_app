@@ -1,4 +1,4 @@
-package layout;
+package layouts;
 
 import java.awt.*;
 
@@ -12,7 +12,7 @@ import java.awt.*;
  * prohibit multi-column output. Additionally there is a vertical fill flag,
  * which fills the last component to the remaining height of the container.
  */
-public class VFlowLayout extends FlowLayout
+public class VerticalFlowLayout extends FlowLayout
 {
     /**
      *
@@ -43,9 +43,9 @@ public class VFlowLayout extends FlowLayout
      * Construct a new VerticalFlowLayout with a middle alignment, and the fill
      * to edge flag set.
      */
-    public VFlowLayout()
+    public VerticalFlowLayout()
     {
-        this(TOP, 5, 5, true, false);
+        this(TOP, 5, 5, true, true);
     }
 
     /**
@@ -56,7 +56,7 @@ public class VFlowLayout extends FlowLayout
      * @param vfill
      *            the vertical fill in pixels.
      */
-    public VFlowLayout(boolean hfill, boolean vfill)
+    public VerticalFlowLayout(boolean hfill, boolean vfill)
     {
         this(TOP, 5, 5, hfill, vfill);
     }
@@ -67,7 +67,7 @@ public class VFlowLayout extends FlowLayout
      * @param align
      *            the alignment value
      */
-    public VFlowLayout(int align)
+    public VerticalFlowLayout(int align)
     {
         this(align, 5, 5, true, false);
     }
@@ -82,7 +82,7 @@ public class VFlowLayout extends FlowLayout
      * @param vfill
      *            the vertical fill in pixels.
      */
-    public VFlowLayout(int align, boolean hfill, boolean vfill)
+    public VerticalFlowLayout(int align, boolean hfill, boolean vfill)
     {
         this(align, 5, 5, hfill, vfill);
     }
@@ -101,7 +101,7 @@ public class VFlowLayout extends FlowLayout
      * @param vfill
      *            true if the panel should vertically fill.
      */
-    public VFlowLayout(int align, int hgap, int vgap, boolean hfill, boolean vfill)
+    public VerticalFlowLayout(int align, int hgap, int vgap, boolean hfill, boolean vfill)
     {
         setAlignment(align);
         this.hgap = hgap;

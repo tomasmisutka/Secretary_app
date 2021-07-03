@@ -6,12 +6,12 @@ import java.awt.*;
 
 public class ActionWrapperPanel extends JPanel
 {
-    private final JPanel workLabelPanel;
-    private final JPanel studyGroupPanel;
+    private final JComponent workLabelPanel;
+    private final JComponent studyGroupPanel;
     private static int activePanel;
     private boolean visibility;
 
-    public ActionWrapperPanel(JPanel workLabelPanel, JPanel studyGroupPanel)
+    public ActionWrapperPanel(JComponent workLabelPanel, JComponent studyGroupPanel)
     {
         this.workLabelPanel = workLabelPanel; // 1 - active work label panel
         this.studyGroupPanel = studyGroupPanel; // 2 - active study group panel

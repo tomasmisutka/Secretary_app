@@ -2,7 +2,7 @@ package Components.Panels;
 
 import Common.Employee;
 import Components.EmployeeCard;
-import layout.WrapLayout;
+import layouts.WrapLayout;
 import Services.DBConnection;
 
 import javax.swing.*;
@@ -29,7 +29,7 @@ public class EmployeesPanel extends JPanel
 
     private void prepareContent()
     {
-        employees = DBConnection.getInstance().getAllEmployees();
+        employees = DBConnection.getInstance().getEmployees();
 
         for (Employee employee : employees)
             this.add(new EmployeeCard(employee));

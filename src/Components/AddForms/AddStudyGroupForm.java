@@ -6,9 +6,12 @@ import Common.Enums.Language;
 import Common.Enums.StudyForm;
 import Common.Enums.StudyType;
 import Common.Enums.Term;
+import Common.SQLStatements;
+import Common.SettingsChecker;
 import Common.StudyGroup;
 import Components.Panels.FormConfirmationsPanel;
 import Components.Panels.FormTitlePanel;
+import Services.DBConnection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -184,7 +187,10 @@ public class AddStudyGroupForm extends JFrame
         Language selectedLanguage = Language.CZ;
         if (languageGroup.getSelection().getActionCommand().equals("EN"))
             selectedLanguage = Language.EN;
+        int studyGroupId = SettingsChecker.prepareDBId(DBConnection.getInstance().getAvailableIndex
+                (SQLStatements.TABLE_NAME_STUDY_GROUPS));
 
+        newStudyGroup.setId(studyGroupId);
         newStudyGroup.setAbbreviation(abbreviationTextField.getText());
         newStudyGroup.setYear(studyYear == null ? 2021 : studyYear);
         newStudyGroup.setTerm(selectedTerm);
@@ -192,7 +198,6 @@ public class AddStudyGroupForm extends JFrame
         newStudyGroup.setStudyForm(selectedStudyForm);
         newStudyGroup.setStudyType(selectedStudyType);
         newStudyGroup.setLanguage(selectedLanguage);
-
         return newStudyGroup;
     }
 }

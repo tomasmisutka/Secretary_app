@@ -1,10 +1,6 @@
 package Services;
 
 import Common.*;
-import Common.Enums.Classification;
-import Common.Enums.EventType;
-import Common.Enums.Language;
-import Components.MessageDialog;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,9 +8,17 @@ import java.util.ArrayList;
 public class DBConnection
 {
     private static DBConnection dbConnection = null;
+    private final DBEmployees dbEmployees;
+    private final DBSubjects dbSubjects;
+    private final DBWorkLabels dbWorkLabels;
+    private final DBStudyGroup dbStudyGroup;
 
     private DBConnection()
     {
+        this.dbEmployees = new DBEmployees();
+        this.dbSubjects = new DBSubjects();
+        this.dbWorkLabels = new DBWorkLabels();
+        this.dbStudyGroup = new DBStudyGroup();
     }
 
     public static DBConnection getInstance()
@@ -34,7 +38,7 @@ public class DBConnection
                     Constants.dbLoginName, Constants.dbLoginPassword);
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(SQLStatements.SELECT_GLOBAL_CONFIGS_STATEMENT);
+            ResultSet resultSet = statement.executeQuery(SQLStatements.SELECT_GLOBAL_CONFIGS);
 
             while (resultSet.next())
             {
@@ -52,247 +56,36 @@ public class DBConnection
         return globalConfig;
     }
 
-    /* This method sends new employee to DB */
     public boolean sendEmployeeToDB(Employee employee)
     {
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            int sameFullNameCounter = 0;
-            String originalFullName = employee.getFullName();
-            String originalLastName = employee.getLastName();
-            while (true)
-            {
-                sameFullNameCounter++;
-                int userExistential = this.checkFullNameExistential(connection, employee.getFullName());
-
-                if (userExistential == Constants.ERROR_OCCURS)
-                {
-                    MessageDialog.showErrorDialog(null, Message.DB_EMPLOYEE_NAME_CHECK_ERROR);
-                    return false;
-                }
-                if (userExistential == Constants.NAME_AVAILABLE)
-                    break;
-
-                if (userExistential == Constants.EMPLOYEE_EXISTS)
-                {
-                    employee.setFullName(originalFullName + sameFullNameCounter);
-                    employee.setLastName(originalLastName + sameFullNameCounter);
-                }
-            }
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_EMPLOYEE_STATEMENT);
-            prepareStatement.setInt(1, employee.getId());
-            prepareStatement.setString(2, employee.getFirstName());
-            prepareStatement.setString(3, employee.getLastName());
-            prepareStatement.setString(4, employee.getFullName());
-            prepareStatement.setString(5, employee.getPrivateEmail().toLowerCase());
-            prepareStatement.setString(6, employee.getJobEmail().toLowerCase());
-            prepareStatement.setInt(7, employee.getWorkPoints());
-            prepareStatement.setInt(8, employee.getWorkPointsEN());
-            prepareStatement.setBoolean(9, employee.isDoctoral());
-            prepareStatement.setDouble(10, employee.getWorkLoad());
-            prepareStatement.execute();
-
-            connection.close();
-        } catch (SQLException throwable)
-        {
-            throwable.printStackTrace();
-            return false;
-        }
-        return true;
+        return dbEmployees.sendEmployeeToDB(employee);
     }
 
-    /* This method check, if this full name already exists in DB
-        return 0 - any error occurs
-        return 1 - this employee name already exists
-        return 2 - this name is available
-    * */
-    private int checkFullNameExistential(Connection connection, String employeesFullName)
+    public ArrayList<Employee> getEmployees()
     {
-        try
-        {
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.COMPARE_EMPLOYEE_NAME_STATEMENT);
-            prepareStatement.setString(1, employeesFullName);
-            ResultSet resultSet = prepareStatement.executeQuery();
-
-            if (resultSet.next())
-                return Constants.EMPLOYEE_EXISTS;
-
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return Constants.ERROR_OCCURS;
-        }
-        return Constants.NAME_AVAILABLE;
+        return dbEmployees.getEmployees();
     }
 
-    /* This method return all employees from DB */
-    public ArrayList<Employee> getAllEmployees()
-    {
-        ArrayList<Employee> employees = new ArrayList<>();
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_ALL_EMPLOYEES_STATEMENT);
-            ResultSet resultSet = prepareStatement.executeQuery();
-
-            while (resultSet.next())
-            {
-                Employee employee = new Employee();
-
-                employee.setId(resultSet.getInt("id"));
-                employee.setFirstName(resultSet.getString("first_name"));
-                employee.setLastName(resultSet.getString("last_name"));
-                employee.setFullName(resultSet.getString("full_name"));
-                employee.setPrivateEmail(resultSet.getString("private_email"));
-                employee.setJobEmail(resultSet.getString("job_email"));
-                employee.setWorkPoints(resultSet.getInt("work_points"));
-                employee.setWorkPointsEN(resultSet.getInt("work_points_en"));
-                employee.setDoctoral(resultSet.getBoolean("is_doctoral"));
-                employee.setWorkLoad(resultSet.getDouble("work_load"));
-
-                employees.add(employee);
-            }
-            connection.close();
-
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return employees;
-        }
-        return employees;
-    }
-
-    /* This method update an employee according to id */
     public boolean updateEmployee(Employee employee)
     {
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.UPDATE_EMPLOYEE_BY_ID);
-            prepareStatement.setString(1, employee.getFirstName());
-            prepareStatement.setString(2, employee.getLastName());
-            prepareStatement.setString(3, employee.getFullName());
-            prepareStatement.setString(4, employee.getPrivateEmail());
-            prepareStatement.setString(5, employee.getJobEmail());
-            prepareStatement.setInt(6, employee.getWorkPoints());
-            prepareStatement.setInt(7, employee.getWorkPointsEN());
-            prepareStatement.setBoolean(8, employee.isDoctoral());
-            prepareStatement.setDouble(9, employee.getWorkLoad());
-            prepareStatement.setInt(10, employee.getId());
-            prepareStatement.execute();
-
-            connection.close();
-
-        } catch (SQLException throwable)
-        {
-            throwable.printStackTrace();
-            return false;
-        }
-        return true;
+        return dbEmployees.updateEmployee(employee);
     }
 
-
-    /* This method sends new Subject to DB*/
-    public boolean sendSubjectToDB(Subject newSubject)
+    public boolean sendSubjectToDB(Subject newSubject, int studyGroupID)
     {
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_SUBJECT_STATEMENT);
-            prepareStatement.setString(1, newSubject.getAbbreviation().toLowerCase());
-            prepareStatement.setInt(2, newSubject.getWeeksCount());
-            prepareStatement.setInt(3, newSubject.getLecturesCount());
-            prepareStatement.setInt(4, newSubject.getPracticesCount());
-            prepareStatement.setInt(5, newSubject.getSeminarsCount());
-            prepareStatement.setString(6, newSubject.getClassification().toString().toLowerCase());
-            prepareStatement.setString(7, newSubject.getLanguage().toString().toLowerCase());
-            prepareStatement.setInt(8, newSubject.getDefaultGroupSize());
-            prepareStatement.setNull(9, Types.INTEGER);
-            prepareStatement.execute();
-            //todo here will be private method to calculate and create new work labels
-            connection.close();
-
-        } catch (SQLException throwable)
-        {
-            throwable.printStackTrace();
-            return false;
-        }
-        return true;
+        return dbSubjects.sendSubjectToDB(newSubject, studyGroupID);
     }
 
-    /* This method sends new Study Group to DB */
     public boolean sendStudyGroupToDB(StudyGroup newStudyGroup)
     {
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_STUDY_GROUP_STATEMENT);
-            prepareStatement.setString(1, newStudyGroup.getAbbreviation().toLowerCase());
-            prepareStatement.setInt(2, newStudyGroup.getYear());
-            prepareStatement.setString(3, newStudyGroup.getTerm().toString().toLowerCase());
-            prepareStatement.setInt(4, newStudyGroup.getStudentsCount());
-            prepareStatement.setString(5, newStudyGroup.getStudyForm().toString().toLowerCase());
-            prepareStatement.setString(6, newStudyGroup.getStudyType().toString().toLowerCase());
-            prepareStatement.setString(7, newStudyGroup.getLanguage().toString().toLowerCase());
-
-            prepareStatement.execute();
-            connection.close();
-        } catch (SQLException throwable)
-        {
-            throwable.printStackTrace();
-            return false;
-        }
-        return true;
+        return dbStudyGroup.sendStudyGroupToDB(newStudyGroup);
     }
 
-    /* This method sends new WorkLabel to DB */
     private boolean sendWorkLabelToDB(WorkLabel newWorkLabel)
     {
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.NEW_WORK_LABEL_STATEMENT);
-            prepareStatement.setInt(1, this.getAvailableIndex(SQLStatements.TABLE_NAME_WORK_LABELS));
-            prepareStatement.setString(1, newWorkLabel.getName());
-            prepareStatement.setNull(2, Types.INTEGER);
-            prepareStatement.setNull(3, Types.INTEGER);
-            prepareStatement.setString(4, newWorkLabel.getEventType().toString().toLowerCase());
-            prepareStatement.setInt(5, newWorkLabel.getStudentsCount());
-            prepareStatement.setInt(6, newWorkLabel.getHoursCount());
-            prepareStatement.setInt(7, newWorkLabel.getWeeksCount());
-            prepareStatement.setString(8, newWorkLabel.getLanguage().toString().toLowerCase());
-            prepareStatement.setInt(9, newWorkLabel.getTotalPoints());
-
-            prepareStatement.execute();
-            connection.close();
-        } catch (SQLException throwable)
-        {
-            throwable.printStackTrace();
-            return false;
-        }
-        return true;
+        return dbWorkLabels.sendWorkLabelToDB(newWorkLabel);
     }
 
-    /* Method return the smallest available id from table */
     public int getAvailableIndex(String tableNameWorkLabels)
     {
         int availableIndex = 0;
@@ -319,199 +112,56 @@ public class DBConnection
 
     public ArrayList<WorkLabel> getUnassignedWorkLabels()
     {
-        ArrayList<WorkLabel> workLabels = new ArrayList<>();
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_UNASSIGNED_WORK_LABELS_STATEMENT);
-            ResultSet resultSet = prepareStatement.executeQuery();
-
-            while (resultSet.next())
-            {
-                WorkLabel workLabel = new WorkLabel();
-
-                workLabel.setId(resultSet.getInt("id"));
-                workLabel.setName(resultSet.getString("name"));
-                workLabel.setEmployee(this.getEmployeeById(0));
-                workLabel.setSubject(this.getSubjectById(0));
-                workLabel.setEventType(EventType.valueOf(resultSet.getString("event_type").toUpperCase()));
-                workLabel.setStudentsCount(resultSet.getInt("students_count"));
-                workLabel.setHoursCount(resultSet.getInt("hours_count"));
-                workLabel.setWeeksCount(resultSet.getInt("weeks_count"));
-                workLabel.setLanguage(Language.valueOf(resultSet.getString("language_used").toUpperCase()));
-                workLabel.setTotalPoints(resultSet.getInt("total_points"));
-
-                workLabels.add(workLabel);
-            }
-            connection.close();
-
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return workLabels;
-        }
-        return workLabels;
+        return dbWorkLabels.getUnassignedWorkLabels();
     }
 
     public Employee getEmployeeById(int id)
     {
-        Employee employee = null;
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_EMPLOYEE_BY_ID);
-            prepareStatement.setInt(1, id);
-            ResultSet resultSet = prepareStatement.executeQuery();
-
-            if (resultSet.next())
-            {
-                employee = new Employee();
-                employee.setId(resultSet.getInt("id"));
-                employee.setFirstName(resultSet.getString("first_name"));
-                employee.setLastName(resultSet.getString("last_name"));
-                employee.setFullName(resultSet.getString("full_name"));
-                employee.setPrivateEmail(resultSet.getString("private_email"));
-                employee.setJobEmail(resultSet.getString("job_email"));
-                employee.setWorkPoints(resultSet.getInt("work_points"));
-                employee.setWorkPointsEN(resultSet.getInt("work_points_en"));
-                employee.setDoctoral(resultSet.getBoolean("is_doctoral"));
-                employee.setWorkLoad(resultSet.getDouble("work_load"));
-            }
-            connection.close();
-
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return null;
-        }
-        return employee;
+        return dbEmployees.getEmployeeById(id);
     }
 
     private Subject getSubjectById(int id)
     {
-        Subject subject = null;
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_SUBJECT_BY_ID);
-            prepareStatement.setInt(1, id);
-            ResultSet resultSet = prepareStatement.executeQuery();
-
-            if (resultSet.next())
-            {
-                subject = new Subject();
-                subject.setId(resultSet.getInt("id"));
-                subject.setAbbreviation(resultSet.getString("abbreviation"));
-                subject.setWeeksCount(resultSet.getInt("weeks_count"));
-                subject.setLecturesCount(resultSet.getInt("lectures_count"));
-                subject.setPracticesCount(resultSet.getInt("practises_count"));
-                subject.setSeminarsCount(resultSet.getInt("seminars_count"));
-                subject.setClassification(Classification.valueOf(resultSet.getString("classification").toUpperCase()));
-                subject.setLanguage(Language.valueOf(resultSet.getString("teach_language").toUpperCase()));
-                subject.setDefaultGroupSize(resultSet.getInt("class_size"));
-                //todo - here will be maybe implementation to add new study group to array list
-//                subject.get(resultSet.getDouble("study_group_id"));
-            }
-            connection.close();
-
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return null;
-        }
-        return subject;
+        return dbSubjects.getSubjectById(id);
     }
 
     public boolean deleteEmployeeById(int employeeId)
     {
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.REMOVE_EMPLOYEE_BY_ID);
-            prepareStatement.setInt(1, employeeId);
-
-            prepareStatement.executeUpdate();
-            connection.close();
-
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return false;
-        }
-        return true;
+        return dbEmployees.deleteEmployeeById(employeeId);
     }
 
     public boolean updateEmployeeIdInWorkLabel(int employeeId, int workLabelID)
     {
-        Connection connection = null;
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
-
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.UPDATE_EMPLOYEE_ID_IN_WORK_LABEL);
-            prepareStatement.setInt(1, employeeId);
-            prepareStatement.setInt(2, workLabelID);
-            prepareStatement.executeUpdate();
-            connection.close();
-
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return false;
-        }
-        return true;
+        return dbEmployees.updateEmployeeIdInWorkLabel(employeeId, workLabelID);
     }
 
     public ArrayList<WorkLabel> getWorkLabelsAssignedToEmployee(int employeeId)
     {
-        ArrayList<WorkLabel> workLabels = new ArrayList<>();
-        Connection connection;
+        return dbWorkLabels.getWorkLabelsAssignedToEmployee(employeeId, dbEmployees, dbSubjects);
+    }
 
-        try
-        {
-            connection = DriverManager.getConnection(SQLStatements.CONNECTION,
-                    Constants.dbLoginName, Constants.dbLoginPassword);
+    public ArrayList<Subject> getSubjects()
+    {
+        return dbSubjects.getSubjects();
+    }
 
-            PreparedStatement prepareStatement = connection.prepareStatement(SQLStatements.GET_WORK_LABELS_ASSIGNED_TO_EMPLOYEE);
-            prepareStatement.setInt(1, employeeId);
-            ResultSet resultSet = prepareStatement.executeQuery();
+    public ArrayList<StudyGroup> getStudyGroups()
+    {
+        return dbStudyGroup.getStudyGroups();
+    }
 
-            while (resultSet.next())
-            {
-                WorkLabel workLabel = new WorkLabel();
-                workLabel.setId(resultSet.getInt("id"));
-                workLabel.setName(resultSet.getString("name"));
-                workLabel.setEmployee(this.getEmployeeById(resultSet.getInt("employee_id")));
-                workLabel.setSubject(this.getSubjectById(resultSet.getInt("subject_id")));
-                workLabel.setEventType(EventType.valueOf(resultSet.getString("event_type").toUpperCase()));
-                workLabel.setStudentsCount(resultSet.getInt("students_count"));
-                workLabel.setHoursCount(resultSet.getInt("hours_count"));
-                workLabel.setWeeksCount(resultSet.getInt("weeks_count"));
-                workLabel.setLanguage(Language.valueOf(resultSet.getString("language_used").toUpperCase()));
-                workLabel.setTotalPoints(resultSet.getInt("total_points"));
+    public boolean removeSubject(Subject subject)
+    {
+        return dbSubjects.removeSubject(subject);
+    }
 
-                workLabels.add(workLabel);
-            }
-            connection.close();
+    public boolean addStudyGroupToSubject(Subject subject, StudyGroup studyGroup)
+    {
+        return dbSubjects.sendSubjectToDB(subject, studyGroup.getId());
+    }
 
-        } catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            return workLabels;
-        }
-        return workLabels;
+    public ArrayList<StudyGroup> getStudyGroupsForSubject(Subject subject)
+    {
+        return dbStudyGroup.getStudyGroupsForSubject(subject);
     }
 }

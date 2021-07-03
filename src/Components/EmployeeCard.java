@@ -3,21 +3,15 @@ package Components;
 import Common.Constants;
 import Common.Employee;
 import Common.Message;
-import Common.WorkLabel;
 import Components.AddForms.AddEmployeeForm;
 import Components.Panels.EmployeeWorkLabelsPanel;
 import Components.Panels.EmployeesPanel;
-import Services.DBConnection;
-import dragNdrop.DragListener;
-import dragNdrop.DropListener;
-import layout.WrapLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class EmployeeCard extends JPanel implements ActionListener
 {
@@ -26,7 +20,7 @@ public class EmployeeCard extends JPanel implements ActionListener
     private final JButton deleteButton;
     private final JButton sendEmailButton;
     private final JLabel employeeFullName = new JLabel();
-    private static ArrayList<WorkLabel> employeeWorkLabels = new ArrayList<>();
+//    private static ArrayList<WorkLabel> employeeWorkLabels = new ArrayList<>();
 
     public EmployeeCard(Employee employee)
     {
@@ -82,18 +76,6 @@ public class EmployeeCard extends JPanel implements ActionListener
         JScrollPane scrollPane = new JScrollPane(workLabelsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-        workLabelsPanel.setBackground(Color.white);
-        workLabelsPanel.setLayout(new WrapLayout(WrapLayout.CENTER, 0, 3));
-
-        employeeWorkLabels = DBConnection.getInstance().getWorkLabelsAssignedToEmployee(employee.getId());
-
-        for (WorkLabel workLabel : employeeWorkLabels)
-        {
-            WorkLabelComponent workLabelComponent = new WorkLabelComponent(workLabel);
-            workLabelsPanel.add(workLabelComponent);
-            new DragListener(workLabelComponent, workLabelsPanel);
-        }
-        new DropListener(workLabelsPanel);
         return scrollPane;
     }
 

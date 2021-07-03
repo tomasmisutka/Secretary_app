@@ -1,15 +1,21 @@
 package Components.Panels;
 
-import Common.WorkLabel;
+import Common.StudyGroup;
+import Components.AddForms.AddStudyGroupForm;
+import Components.StudyGroupComponent;
+import Services.DBConnection;
+import dragNdrop.DragListener;
+import layouts.VerticalFlowLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class StudyGroupsPanel extends JPanel
 {
     private final static StudyGroupsPanel studyGroupsPanel = new StudyGroupsPanel();
-    private ArrayList<WorkLabel> studyGroups = new ArrayList<>();
+    private ArrayList<StudyGroup> studyGroups = new ArrayList<>();
 
     private StudyGroupsPanel()
     {
@@ -23,34 +29,36 @@ public class StudyGroupsPanel extends JPanel
 
     private void createPanel()
     {
-        JLabel test = new JLabel("TEST ONLY");
-        this.setBorder(new EmptyBorder(0, 10, 0, 10));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(test);
+        this.setBorder(new EmptyBorder(0, 5, 0, 5));
+        this.setBackground(Color.white);
+        this.setLayout(new VerticalFlowLayout());
         this.initContent();
     }
 
     private void initContent()
     {
-//        studyGroups = DBConnection.getInstance().getUnassignedWorkLabels(); //todo will be changed to getUnassignedStudyGroups();
+        studyGroups = DBConnection.getInstance().getStudyGroups();
 
-//        for (WorkLabel workLabel : studyGroups)
-//        {
-//            WorkLabelComponent workLabelComponent = new WorkLabelComponent(workLabel);
-//            this.add(workLabelComponent);
-//        } //todo - here will be created a new StudyGroupComponent
+        for (StudyGroup studyGroup : studyGroups)
+        {
+            StudyGroupComponent studyGroupComponent = new StudyGroupComponent(studyGroup);
+            new DragListener(studyGroupComponent, this);
+            this.add(studyGroupComponent);
+        }
     }
 
-    //todo - also here will be method to add new studyGroup to panel
-//    public void addStudyGroupToPanel(StudyGroupComponent studyGroupComponent)
-//    {
-//        boolean success = DBConnection.getInstance().updateEmployeeIdInWorkLabel(0, workLabelComponent.getWorkLabel().getId());
-//        if (success)
-//        {
-//            studyGroups.add(workLabelComponent.getWorkLabel());
-//            this.add(workLabelComponent);
-//            this.revalidate();
-//        }
-//    }
+    public boolean addStudyGroupToPanel(StudyGroup studyGroup)
+    {
+        boolean success = DBConnection.getInstance().sendStudyGroupToDB(AddStudyGroupForm.getNewStudyGroup());
+        if (success)
+        {
+            StudyGroupComponent studyGroupComponent = new StudyGroupComponent(studyGroup);
+            studyGroups.add(studyGroup);
+            this.add(studyGroupComponent);
+            this.revalidate();
+            new DragListener(studyGroupComponent, this);
+        }
+        return success;
+    }
 }
 

@@ -5,8 +5,11 @@ import Common.Enums.StudyForm;
 import Common.Enums.StudyType;
 import Common.Enums.Term;
 
-public class StudyGroup
+import java.io.Serializable;
+
+public class StudyGroup implements Serializable
 {
+    private int id;
     private String abbreviation = "";
     private int year = 2021;
     private Term term = Term.WINTER;
@@ -18,6 +21,8 @@ public class StudyGroup
     public StudyGroup()
     {
     }
+
+    public int getId() { return id; }
 
     public String getAbbreviation()
     {
@@ -53,6 +58,8 @@ public class StudyGroup
     {
         return language;
     }
+
+    public void setId(int id) { this.id = id; }
 
     public void setAbbreviation(String abbreviation)
     {

@@ -8,7 +8,6 @@ import Components.AddForms.AddEmployeeForm;
 import Components.AddForms.AddStudyGroupForm;
 import Components.AddForms.AddSubjectForm;
 import Components.MessageDialog;
-import Services.DBConnection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -97,9 +96,8 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
             this.parent.dispose();
         } else if (e.getSource() == this.submitButton)
         {
-            //todo - here will be called nor dbConnection but Subject panel instead
-            boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendSubjectToDB(AddSubjectForm.getNewSubject());
-            if (!isSuccessfulCreatedSubject)
+            boolean success = SubjectPanel.getInstance().addNewSubject(AddSubjectForm.getSubject());
+            if (!success)
                 MessageDialog.showErrorDialog(this, Message.DB_SUBJECT_ERROR);
             else
             {
@@ -117,8 +115,8 @@ public class FormConfirmationsPanel extends CommonRoundedPanel implements Action
             this.parent.dispose();
         } else if (e.getSource() == this.submitButton)
         {
-            //todo - here will be call not dbConnection but study group panel
-            boolean isSuccessfulCreatedSubject = DBConnection.getInstance().sendStudyGroupToDB(AddStudyGroupForm.getNewStudyGroup());
+            StudyGroupsPanel studyGroupsPanel = StudyGroupsPanel.getInstance();
+            boolean isSuccessfulCreatedSubject = studyGroupsPanel.addStudyGroupToPanel(AddStudyGroupForm.getNewStudyGroup());
             if (!isSuccessfulCreatedSubject)
                 MessageDialog.showErrorDialog(this, Message.DB_STUDY_GROUP_ERROR);
             else

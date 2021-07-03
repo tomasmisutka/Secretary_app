@@ -3,9 +3,10 @@ package Common;
 import Common.Enums.Classification;
 import Common.Enums.Language;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Subject
+public class Subject implements Serializable
 {
     private int id;
     private String abbreviation = "";

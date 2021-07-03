@@ -4,9 +4,12 @@ import Common.Constants;
 import Common.Enums.Classification;
 import Common.Enums.FormPanelType;
 import Common.Enums.Language;
+import Common.SQLStatements;
+import Common.SettingsChecker;
 import Common.Subject;
 import Components.Panels.FormConfirmationsPanel;
 import Components.Panels.FormTitlePanel;
+import Services.DBConnection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -127,7 +130,7 @@ public class AddSubjectForm extends JFrame
 
     }
 
-    public static Subject getNewSubject()
+    public static Subject getSubject()
     {
         Subject subject = new Subject();
 
@@ -136,7 +139,10 @@ public class AddSubjectForm extends JFrame
         if (languageGroup.getSelection().getActionCommand().equals("EN"))
             selectedLanguage = Language.EN;
         Integer selectedGroupSize = (Integer) groupSizeComboBox.getSelectedItem();
+        int subjectNewId = SettingsChecker.prepareDBId(DBConnection.getInstance().getAvailableIndex
+                (SQLStatements.TABLE_NAME_SUBJECTS));
 
+        subject.setId(subjectNewId);
         subject.setAbbreviation(abbreviationTextField.getText());
         subject.setLecturesCount(new Integer(lecturesTextField.getText()));
         subject.setPracticesCount(new Integer(practiseTextField.getText()));

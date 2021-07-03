@@ -133,7 +133,7 @@ public class AddEmployeeForm extends JFrame
         String name = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
         boolean isDoctoral = doctoralGroup.getSelection().getActionCommand().equals("YES");
-        int employeeNewID = SettingsChecker.checkAndConvertEmployeesNewID(DBConnection.getInstance().getAvailableIndex
+        int employeeNewID = SettingsChecker.prepareDBId(DBConnection.getInstance().getAvailableIndex
                 (SQLStatements.TABLE_NAME_EMPLOYEES));
 
         if (isEditingMode)
