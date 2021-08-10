@@ -11,7 +11,7 @@ public interface SQLStatements
 
     String SELECT_GLOBAL_CONFIGS = "SELECT * FROM global_configs";
     String NEW_EMPLOYEE = "INSERT INTO " + TABLE_NAME_EMPLOYEES +" (id, first_name, last_name, full_name, private_email, " +
-            "job_email, work_points, work_points_en, is_doctoral, work_load, work_label_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "job_email, work_points, work_points_en, is_doctoral, work_load) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     String NEW_SUBJECT = "INSERT INTO " +  TABLE_NAME_SUBJECTS + " (id, abbreviation, weeks_count, lectures_count, " +
             "practises_count, seminars_count, classification, teach_language, class_size, study_group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     String NEW_STUDY_GROUP = "INSERT INTO " + TABLE_NAME_STUDY_GROUPS + " (abbreviation, study_year, term, students_count, " +
